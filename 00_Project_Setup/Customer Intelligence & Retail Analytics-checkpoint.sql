@@ -1,0 +1,4050 @@
+-- create database customer_intelligence_db;
+use customer_intelligence_db;
+
+-- CREATE TABLE customers (
+--     cust_id INT AUTO_INCREMENT PRIMARY KEY,
+--     cust_name VARCHAR(100) NOT NULL,
+--     gender ENUM('Male','Female','Other'),
+--     dob DATE,
+--     email VARCHAR(100) UNIQUE,
+--     phone VARCHAR(15) UNIQUE,
+--     city VARCHAR(50),
+--     state VARCHAR(50),
+--     signup_date DATE NOT NULL,
+--     customer_status ENUM('Active','Inactive') DEFAULT 'Active'
+-- );
+
+-- CREATE TABLE products (
+--     prod_id INT AUTO_INCREMENT PRIMARY KEY,
+--     prod_name VARCHAR(120) NOT NULL,
+--     category VARCHAR(50),
+--     brand VARCHAR(50),
+--     price DECIMAL(10,2) NOT NULL,
+--     cost_price DECIMAL(10,2) NOT NULL,
+--     stock INT DEFAULT 0
+-- );
+
+-- CREATE TABLE orders(
+--     order_id INT AUTO_INCREMENT PRIMARY KEY,
+--     cust_id INT NOT NULL,
+--     order_date DATE NOT NULL,
+--     order_status ENUM(
+--         'Pending',
+--         'Shipped',
+--         'Delivered',
+--         'Cancelled',
+--         'Returned'
+--     ) DEFAULT 'Pending',
+--     FOREIGN KEY(cust_id)
+--     REFERENCES customers(cust_id)
+-- );
+
+-- CREATE TABLE order_items(
+--     item_id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_id INT NOT NULL,
+--     prod_id INT NOT NULL,
+--     quantity INT NOT NULL,
+--     selling_price DECIMAL(10,2),
+--     FOREIGN KEY(order_id)
+--     REFERENCES orders(order_id),
+--     FOREIGN KEY(prod_id)
+--     REFERENCES products(prod_id)
+-- );
+
+-- CREATE TABLE payments(
+--     payment_id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_id INT UNIQUE,
+
+--     payment_method ENUM(
+--         'UPI',
+--         'Credit Card',
+--         'Debit Card',
+--         'Cash',
+--         'Net Banking',
+--         'Wallet'
+--     ),
+
+--     payment_status ENUM(
+--         'Success',
+--         'Pending',
+--         'Failed',
+--         'Refunded'),
+--     amount DECIMAL(10,2),
+--     payment_date DATE,
+--     FOREIGN KEY(order_id)
+--     REFERENCES orders(order_id)
+-- );
+
+-- CREATE TABLE reviews(
+--     review_id INT AUTO_INCREMENT PRIMARY KEY,
+--     cust_id INT,
+--     prod_id INT,
+--     rating INT,
+--     review_text TEXT,
+--     review_date DATE,
+--     FOREIGN KEY(cust_id)
+--     REFERENCES customers(cust_id),
+--     FOREIGN KEY(prod_id)
+--     REFERENCES products(prod_id)
+-- );
+
+-- CREATE TABLE returns(
+--     return_id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_id INT,
+--     prod_id INT,
+--     quantity INT,
+--     reason VARCHAR(150),
+--     return_date DATE,
+--     FOREIGN KEY(order_id)
+--     REFERENCES orders(order_id),
+--     FOREIGN KEY(prod_id)
+--     REFERENCES products(prod_id)
+-- );
+
+-- CREATE TABLE marketing_campaigns(
+--     campaign_id INT AUTO_INCREMENT PRIMARY KEY,
+--     campaign_name VARCHAR(100),
+--     campaign_type VARCHAR(50),
+--     start_date DATE,
+--     end_date DATE,
+--     budget DECIMAL(12,2)
+-- );
+
+-- CREATE TABLE customer_campaigns(
+--     campaign_customer_id INT AUTO_INCREMENT PRIMARY KEY,
+--     campaign_id INT,
+--     cust_id INT,
+--     campaign_status ENUM(
+--         'Sent',
+--         'Opened',
+--         'Clicked',
+--         'Purchased'),
+--     FOREIGN KEY(campaign_id)
+--     REFERENCES marketing_campaigns(campaign_id),
+--     FOREIGN KEY(cust_id)
+--     REFERENCES customers(cust_id)
+-- );
+
+-- CREATE TABLE wishlist(
+--     wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
+--     cust_id INT,
+--     prod_id INT,
+--     added_date DATE,
+--     FOREIGN KEY(cust_id)
+--     REFERENCES customers(cust_id),
+--     FOREIGN KEY(prod_id)
+--     REFERENCES products(prod_id)
+-- );
+
+-- --- ----------------------------------Q11
+-- with daily_revenue as(
+-- 	select
+-- 		date_format(o.order_date, "%Y-%m-01") as month_date,
+--         date_format(o.order_date, "%Y-%m") as month,
+--         count(distinct o.order_id) as total_orders,
+--         sum(oi.quantity) as unit_sold,
+--         round(sum(oi.quantity*oi.selling_price),2) as revenue
+-- 	from orders o
+--     inner join order_items oi on oi.order_id = o.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+--     group by DATE_FORMAT(o.order_date, '%Y-%m-01'), DATE_FORMAT(o.order_date, '%Y-%m')
+-- )
+-- select
+-- 	month_date,
+--     month,
+--     total_orders,
+--     unit_sold,
+--     revenue,
+--     round(sum(revenue) over(order by month_date),2) as running_revenue,
+--     round(100* (revenue - lag(revenue,1) over(order by month_date)) / nullif(lag(revenue,1) over(order by month_date),0),2) as revenue_growth_percent
+-- from daily_revenue
+-- order by month_date
+
+-- ---------------------------------------- Q12
+-- with cust_revenue as(
+-- 	select
+-- 		o.order_date,
+-- 		date_format(o.order_date,"%W") as day_name,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity),0) as total_unit_sold
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by o.order_date
+-- )
+-- select
+-- 	order_date,
+--     day_name,
+--     revenue,
+--     total_orders,
+--     total_unit_sold,
+--     lag(revenue,1) over(order by order_date) as previous_day_revenue,
+--     round(
+-- 		100* (revenue - lag(revenue,1) over(order by order_date))/
+--         nullif(lag(revenue,1) over(order by order_date),0),2
+--     ) as growth_percentage
+-- from cust_revenue 
+-- order by order_date desc
+--     -----------------------------------Q13
+
+-- with monthly_revenue as (
+-- 	select
+-- 		date_format(o.order_date,"%Y-%m-01") as month_date,
+--         date_format(o.order_date,"%M %Y") as month,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity),0) as total_unit_sold
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by date_format(o.order_date,"%Y-%m-01"),
+--         date_format(o.order_date,"%M %Y")
+-- )
+-- select
+-- 	month_date,
+--     month,
+--     revenue,
+--     total_orders,
+--     total_unit_sold,
+--     round(
+-- 		100*(revenue - lag(revenue,1) over(order by month_date))/
+--         nullif(lag(revenue,1) over(order by month_date),0),2
+--         ) as growth_percentage,
+-- 	case
+--         when revenue > lag(revenue, 1) over(order by month_date) then 'Growth'
+--         when revenue < lag(revenue, 1) over(order by month_date) then 'Decline'
+--         else 'Flat'
+--     end as trend
+-- from monthly_revenue
+-- order by month_date;
+
+-- -----------------------------------------------Q14
+
+-- with seasonal_sales as (
+-- 	select
+-- 		o.order_id,
+--         o.order_date,
+--         quarter(o.order_date) as quarter,
+--         year(o.order_date) as year,
+--         oi.quantity * oi.selling_price as order_amount
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- )
+-- select
+-- 	concat('Q', quarter,' ' , year) as quarter,
+--     case
+-- 		when quarter = 1 then 'Winter'
+--         when quarter = 2 then 'Spring'
+--         when quarter = 3 then 'Summer'
+--         when quarter = 4 then 'Fall'
+--     end as season,
+--     count(distinct order_id) as total_orders,
+--     round(sum(order_amount),2) as revenue,
+--     round(avg(order_amount),2) as avg_order_value,
+--     round(sum(order_amount) / (select sum(order_amount) from seasonal_sales) * 100, 2) as revenue_percentage
+-- from seasonal_sales
+-- group by year, quarter
+-- order by year, quarter
+
+-- ------------------------------------------------Q15
+-- with product_sales as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+-- 		coalesce(sum(oi.quantity),0) as units_sold,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     inner join order_items oi on p.prod_id = oi.prod_id
+--     inner join orders o on oi.order_id = o.order_id
+--     inner join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.prod_id,p.prod_name,p.category, p.brand
+-- )
+-- select
+-- 	rank() over(order by revenue desc) as rank_no,
+--     prod_name,
+--     category,
+--     brand,
+--     units_sold,
+--     revenue,
+-- 	round(100* revenue/ sum(revenue) over(),2) as revenue_share_percent,
+--     round(100* sum(revenue) over(order by revenue desc)/ sum(revenue) over(), 2) as cumulative_percent
+-- from product_sales
+-- where revenue > 0
+-- order by rank_no;
+
+-- ------------------------------------------------Q16
+-- with category_sales as(
+-- 	select
+-- 		p.category,
+--         coalesce(count(distinct o.order_id),0) as total_order,
+-- 		coalesce(sum(oi.quantity),0) as total_units_sold,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     inner join order_items oi on p.prod_id = oi.prod_id
+--     inner join orders o on oi.order_id = o.order_id
+--     inner join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.category
+-- )
+-- select
+-- 	rank() over(order by revenue desc) as rank_no,
+--     category,
+--     revenue,
+--     total_order,
+--     total_units_sold,
+--     round(revenue/ total_orders, 2) as avg_order_value,
+--     round(100* revenue/ sum(revenue) over() ,2) as revenue_percent,
+--     round(100* total_orders / sum(total_orders) over(), 2) as order_percent,
+--     round(100.0 * total_units_sold / SUM(total_units_sold) over(), 2) as unit_percent,
+--     round(100.0 * sum(revenue) over(order by revenue desc) / sum(revenue) over(), 2) as cumulative_percent
+-- from category_sales
+-- where revenue > 0
+-- order by rank_no;
+
+-- ------------------------------------------------------Q17
+-- with basket_analysis as (
+-- 	select
+-- 		o.order_id,
+--         o.cust_id,
+--         o.order_date,
+--         count(distinct oi.prod_id) as unique_products,
+--         sum(oi.quantity) as total_units,
+--         count(distinct oi.item_id) as total_items,
+--         round(sum(oi.quantity* oi.selling_price),2) as order_value
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by o.order_id, o.cust_id, o.order_date
+-- ) 
+-- select
+-- 	order_id,
+--     cust_id,
+--     order_date,
+--     unique_products AS distinct_products,
+--     total_units AS total_units,
+--     order_value,
+--     case
+--         when total_units = 1 then 'Single Item'
+--         when total_units between 2 and 3 then 'Small Basket'
+--         when total_units between 4 and 6 then 'Medium Basket'
+--         else 'Large Basket'
+--     end as basket_size
+-- from basket_analysis
+-- order by total_units desc;
+
+-- ---------------------------------- Ques18
+-- with aov_analysis as (
+-- 	select
+-- 		date_format(o.order_date,"%Y-%m-01") as month_date,
+--         date_format(o.order_date,"%M %Y") as month,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         sum(oi.quantity * oi.selling_price) / count(distinct o.order_id) as avg_order_value
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by date_format(o.order_date,"%Y-%m-01"),
+--         date_format(o.order_date,"%M %Y")
+-- )
+-- select
+-- 	month_date,
+--     month,
+--     total_orders,
+--     revenue,
+--     avg_order_value,
+--     lag(avg_order_value,1) over(order by month_date) as previous_aov,
+--     round(
+-- 		100* (avg_order_value- lag(avg_order_value,1) over(order by month_date))/
+--         nullif(lag(avg_order_value,1) over(order by month_date),0),2
+--     ) as aov_growth_percent
+-- from aov_analysis
+-- order by month_date
+
+-- ------------------------------------------------------ques19
+-- with weekday_sales as(
+-- 	select
+-- 		dayname(o.order_date) as weekday_name,
+--         dayofweek(o.order_date) as weekday_number,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as total_revenue
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by dayname(o.order_date), dayofweek(o.order_date)
+-- )
+-- select
+-- 	weekday_name,
+--     total_orders,
+--     total_revenue,
+--     rank() over(order by total_revenue desc) as revenue_rank,
+--     round(100* total_revenue / sum(total_revenue) over(),2) as revenue_percentage
+-- from weekday_sales
+-- order by revenue_rank
+
+-- -- ---------------------------------------------Ques 20
+-- with monthly_revenue as(
+-- 	select
+-- 		date_format(o.order_date,"%Y-%m-01") as month_date,
+--         date_format(o.order_date,"%M %Y") as month,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from orders o
+--     inner join order_items oi on o.order_id = oi.order_id
+--     inner join payments p on o.order_id = p.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and p.payment_status = 'Success'
+-- 	group by date_format(o.order_date,"%Y-%m-01"),
+--         date_format(o.order_date,"%M %Y")
+-- ),
+-- moving_avg as (
+-- 	select
+--         month_date,
+--         month,
+--         revenue,
+--         round(avg(revenue) over(order by month_date rows between 2 preceding and 1 preceding), 2) as three_month_moving_avg,
+--         round(avg(revenue) over(order by month_date rows between 5 preceding and 1 preceding), 2) as six_month_moving_avg,
+--         round(avg(revenue) over(order by month_date rows between 2 preceding and current row), 2) as three_month_rolling_avg,
+--         round(sum(revenue) over(order by month_date rows between 2 preceding and 1 preceding)/3 ,2) as forecast_3month_avg,
+--         round(lag(revenue,1) over(order by month_date)* 1.05,2) as  forecast_5_percent_growth
+-- 	from monthly_revenue
+-- )
+-- select 
+-- 	month,
+--     revenue,
+--     three_month_moving_avg,
+--     six_month_moving_avg,
+--     three_month_rolling_avg,
+--     forecast_3month_avg AS forecast_next_month,
+--     forecast_5_percent_growth AS forecast_alternative
+-- from moving_avg
+-- order by month_date;
+
+-- -------------------------------------------------------------Ques 21
+-- with product_sales as (
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity),0) as total_quantity,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     inner join order_items oi on p.prod_id = oi.prod_id
+--     inner join orders o on o.order_id = oi.order_id
+--     inner join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand
+-- ),
+-- total_revenue as(
+-- 	select
+-- 		sum(revenue) as total
+-- 	from product_sales
+-- )
+-- select
+-- 	rank() over(order by revenue desc) as product_rank,
+-- 	p.prod_name,
+--     p.category,
+--     p.brand,
+--     p.total_orders,
+--     p.total_quantity,
+--     p.revenue,
+--     round(100* p.revenue/t.total) as revenue_percent,
+-- 	round(sum(p.revenue) over(order by p.revenue desc) / t.total, 2) as cumulative_percent
+-- from product_sales p
+-- cross join total_revenue t
+-- where p.revenue >0
+-- order by product_rank
+
+-- ------------------------------------------------------------Ques 22
+-- with product_performance as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         p.price,
+--         p.stock,
+--         coalesce(sum(oi.quantity),0) as units_sold,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         max(o.order_date) as last_sale_date,
+--         datediff(curdate(),min(o.order_date)) as days_since_last_sale
+-- 	from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on o.order_id = oi.order_id
+--     left join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand, p.price, p.stock
+-- )
+-- select
+-- 	prod_name,
+--     category,
+--     brand,
+--     price,
+--     stock,
+--     units_sold,
+--     revenue,
+--     last_sale_date,
+--     days_since_last_sale,
+--     coalesce(last_sale_date, "Never Sold") as last_sale_date,
+-- 	days_since_last_sale,
+--     case
+-- 		when units_sold = 0 or last_sale_date is null then 'Dead Stock'
+--         when days_since_last_sale >= 180 then 'Slow Selling'
+--         when days_since_last_sale >= 90 then 'Average'
+--         else 'Good Selling'
+--     end as product_status,
+--     round(100.0 * revenue / NULLIF(SUM(revenue) OVER(), 0), 2) AS revenue_share
+-- from product_performance
+-- where units_sold <= 10 OR days_since_last_sale >= 90 OR units_sold = 0
+-- order by 
+-- case
+-- 	when units_sold = 0 then 1
+--     when days_since_last_sale >= 180 then 2
+--     when days_since_last_sale >= 90 then 3
+--     else 4
+-- end,
+-- units_sold asc
+
+-- --------------------------------------------------Ques 23
+-- with product_profit as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         coalesce(round(sum(oi.quantity*p.cost_price),2),0) as cost,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) - 
+--         coalesce(round(sum(oi.quantity*p.cost_price),2),0) as gross_profit,
+--         case
+-- 			when coalesce(round(sum(oi.quantity*oi.selling_price),2),0) = 0 then 0
+--             else
+-- 				round(
+-- 					100* (sum(oi.quantity*oi.selling_price) - sum(oi.quantity*p.cost_price)) /
+--                     nullif(sum(oi.quantity*oi.selling_price), 0), 2
+--                 )
+-- 		end as profit_margin_percent,
+--         coalesce(sum(oi.quantity),0) as units_sold
+-- 	from products p
+--     inner join order_items oi on p.prod_id = oi.prod_id
+--     inner join orders o on o.order_id = oi.order_id
+--     inner join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand
+-- )
+-- select
+-- 	rank() over(order by revenue desc) as profit_rank,
+--     prod_name,
+--     category,
+--     brand,
+--     units_sold,
+--     revenue,
+--     cost,
+--     gross_profit,
+-- 	profit_margin_percent,
+--     case
+-- 		when  profit_margin_percent >= 40  then "High Margin"
+--         when  profit_margin_percent >= 20 then "Good Margin"
+--         when  profit_margin_percent >= 10 then "Medium Margin"
+--         when  profit_margin_percent  >= 0 then "Low Margin"
+--         else "Negative Margin"
+-- 	end as margin_category
+-- from product_profit
+-- WHERE revenue > 0
+-- ORDER BY profit_rank;
+
+-- ----------------------------------------------- Ques 24
+-- with product_rating as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         coalesce(count(r.review_id),0) as total_reviews,
+--         coalesce(round(avg(r.rating),2),0) as avg_rating,
+--         coalesce(round(100* sum(case when r.rating =5 then 1 else 0 end)/ nullif(count(r.review_id),0),2),0) as five_star_percent,
+--         coalesce(round(100* sum(case when r.rating >= 4 then 1 else 0 end)/ nullif(count(r.review_id),0),2),0) as positive_review_percentage,
+-- 		coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     left join reviews r on p.prod_id = r.prod_id
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on o.order_id = oi.order_id
+--     left join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--         and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand
+-- )
+-- select
+-- 	rank() over(order by avg_rating desc, total_reviews desc) as rating_rank,
+-- 	prod_id,
+-- 	prod_name,
+-- 	category,
+-- 	brand,
+--     total_reviews,
+--     avg_rating,
+--     five_star_percent,
+--     positive_review_percentage,
+--     revenue,
+-- 	case
+--         when total_reviews = 0 then 'No Reviews'
+--         when avg_rating >= 4.5 and total_reviews >= 10 then 'Top Rated'
+--         when avg_rating >= 4.0 then 'Good'
+--         when avg_rating >= 3.0 then 'Average'
+--         when avg_rating > 0 then 'Poor'
+--         else 'No Reviews'
+--     end as rating_category
+-- from product_rating
+-- order by rating_rank;
+
+-- --------------------------------------------------------Ques 25
+-- with wishlist_conversion as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         coalesce(count(distinct w.wishlist_id),0) as wishlist_count,
+--         coalesce(count(distinct o.order_id),0) as purchase_count
+-- 	from products p
+--     left join wishlist w on p.prod_id = w.prod_id
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('Delivered', 'Shipped')
+--     left join payments pm on o.order_id = pm.order_id
+--         and pm.payment_status = 'Success'
+--     group by p.prod_id, p.prod_name, p.category, p.brand
+-- )
+-- select
+-- 	prod_name,
+--     category,
+--     brand,
+--     wishlist_count,
+--     purchase_count,
+-- 	case
+-- 		when wishlist_count = 0 then 0
+--         else round(100* purchase_count/wishlist_count, 2)
+-- 	end as conversion_rate_percent,
+--     case
+--         when wishlist_count = 0 THEN 'No Wishlist Data'
+--         when (purchase_count * 1.0 / wishlist_count) >= 0.5 THEN 'Excellent'
+--         when (purchase_count * 1.0 / wishlist_count) >= 0.3 THEN 'Good'
+--         when (purchase_count * 1.0 / wishlist_count) >= 0.1 THEN 'Average'
+--         else 'Poor'
+--     end as conversion_category,
+--     rank() over(order by (100* purchase_count / wishlist_count) desc) as conversion_rank
+--     from wishlist_conversion
+--     where wishlist_count > 0
+--     order by conversion_rank;
+
+-- -------------------------------------------------------------Ques 26
+-- with order_products as(
+-- 	select
+--         o.order_id,
+--         oi.prod_id,
+--         p.prod_name
+-- 	from orders o 
+--     inner join order_items oi on oi.order_id = o.order_id
+--     inner join products p on oi.prod_id = p.prod_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--     group by  o.order_id, oi.prod_id, p.prod_name
+-- ),
+-- product_pairs as (
+-- 	select
+-- 		a.prod_id as prod_a_id ,
+--         b.prod_id as prod_b_id,
+-- 		a.prod_name as product_a,
+--         b.prod_name as product_b,
+--         a.order_id
+-- 	from order_products a
+--     inner join order_products b
+-- 		on a.order_id = b.order_id
+--         and a.prod_id < b.prod_id
+-- 	group by prod_a_id, prod_b_id, product_a, product_b, a.order_id
+-- ),
+-- pair_counts as(
+-- 	select
+-- 		product_a,
+--         product_b,
+-- 		prod_a_id,        
+--         prod_b_id,         
+--         count(*) as orders_together
+-- 	from product_pairs
+--     group by product_a, product_b, prod_a_id, prod_b_id
+-- ),
+-- total_orders as (
+-- 	select
+-- 		prod_id,
+--         count(distinct order_id) as total_orders
+-- 	from order_products 
+--     group by prod_id
+-- )
+-- select
+-- 	pc.product_a,
+-- 	pc.product_b,
+--     pc.orders_together,
+--     round(100* pc.orders_together/ nullif(t1.total_orders,0),2) as confidence_a_to_b,
+--     round(100* pc.orders_together/ nullif(t2.total_orders,0),2) as confidence_b_to_a,
+--     rank() over(order by pc.orders_together desc) as pair_rank
+-- from pair_counts pc
+-- join total_orders t1 on t1.prod_id = pc.prod_a_id 
+-- join total_orders t2 on t2.prod_id = pc.prod_b_id
+-- order by pair_rank
+-- limit 20
+
+-- --------------------------------------------------------Ques 27
+-- with product_returns as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         coalesce(sum(oi.quantity),0) as units_sold,
+--         coalesce(sum(r.quantity),0) as units_returned,
+--         coalesce(round(sum(oi.quantity * oi.selling_price),2),0) as revenue,
+--         coalesce(round(sum(r.quantity * oi.selling_price),2),0) as revenue_lost
+-- 	from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+-- 		and o.order_status in ('Delivered', 'Shipped')
+-- 	left join payments pm on o.order_id = pm.order_id
+-- 		and pm.payment_status = 'Success'
+-- 	left join returns r on oi.order_id = r.order_id
+-- 		and oi.prod_id =r.prod_id
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand
+-- )
+-- select
+-- 	rank() over(order by return_rate_percent desc) as return_rank,
+--     prod_id,
+--     prod_name,
+--     category,
+--     brand,
+--     units_sold,
+--     units_returned,
+--     return_rate_percent,
+--     revenue_lost,
+--     risk_level
+-- from (
+-- 	select *,
+-- 		case
+-- 			when units_sold = 0 then 0
+--             else round(100* units_returned / units_sold, 2)
+-- 		end as return_rate_percent,
+--         case
+--             when units_sold = 0 then 'No Data'
+--             when (units_returned * 1.0 / units_sold) >= 0.20 then 'High Risk'
+--             when (units_returned * 1.0 / units_sold) >= 0.10 then 'Medium Risk'
+--             when (units_returned * 1.0 / units_sold) >= 0.05 then 'Low Risk'
+--             else 'Very Low'
+--         END AS risk_level
+-- 	from  product_returns
+-- ) as return_analysis
+-- where  units_sold > 0
+-- order by return_rank;
+
+-- -----------------------------------------------------------Ques 28
+-- with product_inventory as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         p.stock as current_stock,
+--         coalesce(sum(oi.quantity),0) as units_sold,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     left join order_items oi on oi.prod_id = p.prod_id
+--     left join orders o on o.order_id = oi.order_id
+-- 		and o.order_status IN ('Delivered', 'Shipped')
+--     left join payments pm on o.order_id = pm.order_id
+-- 		and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand, p.stock
+-- )
+-- select
+--     prod_id,
+--     prod_name,
+--     category,
+--     brand,
+--     current_stock,
+--     units_sold,
+--     revenue,
+--     case
+-- 		when current_stock = 0 and units_sold >0 then units_sold
+-- 		when current_stock = 0 and units_sold = 0 then 0
+-- 		else round(units_sold / current_stock,2) 
+--      end as inventory_turnover_ratio,
+--      case
+-- 		when units_sold =0 then "0 units"
+--         when current_stock = 0 then '0 stock'
+--         else ROUND(current_stock / (units_sold / 365), 0)
+--     end as days_of_inventory,
+--     case
+--         when current_stock = 0 and units_sold > 0 then 'Fast Moving (Out of Stock)'
+--         when units_sold = 0 and current_stock > 0 then 'Dead Stock'
+--         when ROUND(units_sold / current_stock, 2) >= 5 then 'Fast Moving'
+--         when ROUND(units_sold / current_stock, 2) >= 2 then 'Normal'
+--         when ROUND(units_sold / current_stock, 2) > 0 then 'Slow Moving'
+--         else 'Overstocked'
+--     end as inventory_category,
+--     rank() over(order by (units_sold / NULLIF(current_stock, 0)) desc) as  turnover_rank
+-- from product_inventory
+-- where units_sold > 0 or current_stock > 0
+-- order by turnover_rank;
+
+-- -------------------------------------------------------Ques29
+-- with product_sales as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         p.stock as current_stock,
+--         round(p.price * p.stock, 2) as inventory_value,
+--         coalesce(sum(oi.quantity),0) as units_sold,
+--         coalesce(max(o.order_date),0) as last_sale_date,
+--         datediff(curdate(), coalesce(max(o.order_date), curdate())) as days_since_last_sale
+-- 	from products p
+--     left join order_items oi on oi.prod_id = p.prod_id
+--     left join orders o on o.order_id = oi.order_id
+-- 		and o.order_status IN ('Delivered', 'Shipped')
+--     left join payments pm on o.order_id = pm.order_id
+-- 		and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand, p.stock
+-- )   
+-- select
+-- 	prod_id,
+--     prod_name,
+--     category,
+--     brand,
+--     current_stock,
+--     inventory_value,
+--     units_sold,
+--     coalesce(last_sale_date, "Never_sold") as last_sale_date,
+--     days_since_last_sale,
+--     case
+-- 		when units_sold = 0 then "No sold"
+--         when days_since_last_sale >= 180 then "Very slow"
+--         when days_since_last_sale >= 90 then "Slow"
+--         when days_since_last_sale >=30 then "Moderate"
+--         else "Fast Moving"
+-- 	end as sale_status,
+--    case
+-- 		when units_sold = 0 then "Remove from Inventory"
+--         when days_since_last_sale >= 180 and current_stock > 0 then "Heavy Discount or Bundle"
+--         when days_since_last_sale >= 90 and current_stock > 10 then " Discount to Clear"
+--         when days_since_last_sale >=30 and current_stock > 5 then "Promote Actively"
+--         else "Maintain Stock"
+-- 	end as recommendation
+-- from  product_sales
+-- where current_stock > 0
+-- 	and (units_sold = 0 or days_since_last_sale >= 30)
+-- order by days_since_last_sale desc
+
+-- --------------------------------------------------------------Ques 30
+--  -- with product_revenue as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.brand,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue
+-- 	from products p
+--     left join order_items oi on oi.prod_id = p.prod_id
+--     left join orders o on o.order_id = oi.order_id
+-- 		and o.order_status IN ('Delivered', 'Shipped')
+--     left join payments pm on o.order_id = pm.order_id
+-- 		and pm.payment_status = 'Success'
+-- 	group by p.prod_id, p.prod_name, p.category, p.brand, p.stock
+-- ),
+-- revenue_ranked as(
+-- select
+-- 	prod_id,
+--     prod_name,
+--     category,
+--     brand,
+--     revenue,
+--     round(100* revenue/ sum(revenue) over(),2) as revenue_percent,
+--     round(100* sum(revenue) over(order by revenue desc)/ sum(revenue) over(),2) as cumulative_percent,
+--     row_number() over(order by revenue desc) as product_rank
+-- from product_revenue
+-- where revenue > 0
+-- )
+-- select
+-- 	product_rank,
+--     prod_name,
+--     category,
+--     brand,
+--     revenue,
+--     revenue_percent,
+--     cumulative_percent,
+--     case
+--         when cumulative_percent <= 80 then 'A - Top Revenue'
+--         when cumulative_percent <= 95 then 'B - Medium Revenue'
+--         else 'C - Low Revenue'
+--     end as abc_category,
+--     case
+--         when cumulative_percent <= 80 then 'High Priority'
+--         when cumulative_percent <= 95 then 'Medium Priority'
+--         else 'Low Priority'
+--     end as priority
+-- from revenue_ranked
+-- order by product_rank;
+
+-- -------------------------------------------------------------Ques 31
+-- with  campaign_revenue as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status = 'Clicked' then cc.cust_id end) as clicks,
+--         count(distinct case when cc.campaign_status = 'Purchased' then cc.cust_id end) as conversions,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue_generated,
+--         coalesce(round(sum(oi.quantity*oi.selling_price) - mc.budget ,2),0) as profit
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('Delivered', 'Shipped') or o.order_status is null
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- )
+-- select
+-- 	rank() over(order by roi_percent desc) as roi_rank,
+--     campaign_name,
+--     campaign_type,
+--     budget,
+--     customers_reached,
+--     clicks,
+--     conversions,
+--     round(100* clicks/nullif(customers_reached,0),2) as click_through_rate,
+--     round(100* conversions/ nullif(clicks,0),2) as conversion_rate,
+--     revenue_generated,
+--     profit,
+--     roi_percent,
+--     case
+-- 		when roi_percent >= 100 then "Excellent ROI"
+--         when roi_percent >= 50 then "Good ROI"
+--         when roi_percent >= 20 then "Average ROI"
+--         when roi_percent > 0 then "Poor ROI"
+--         else "Negative ROI"
+-- 	end as roi_category
+--     from (
+-- 		select
+-- 			*,
+--             case 
+-- 				when budget = 0 then 0
+--                 else round(100* (revenue_generated - budget) / budget, 2)
+-- 			end as roi_percent
+-- 		from campaign_revenue
+-- 	) as campaign_roi
+--     where budget > 0
+--     order by roi_rank
+-- --------------------------------------------------Ques 32
+
+-- with campaign_conversion as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_targeted,
+--         count(distinct case when cc.campaign_status = 'Clicked' then cc.cust_id end) as customers_clicked,
+--         count(distinct case when cc.campaign_status = 'Purchased' then cc.cust_id end) as customers_purchased,
+--         count(distinct case when cc.campaign_status = 'Opened' then cc.cust_id end) as customers_opened
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- ),
+-- campaign_metrics as(
+-- 	select
+-- 		*,
+-- 		round(100* customers_opened/ nullif(customers_targeted,0),2) as open_rate,
+-- 		round(100* customers_clicked/ nullif(customers_opened,0),2) as click_to_open_rate,
+-- 		round(100* customers_purchased/ nullif(customers_clicked,0),2) as purchase_from_click_rate,
+-- 		round(100* customers_purchased / nullif(customers_targeted,0),2) as conversion_rate
+-- 	from campaign_conversion
+-- )
+-- select
+-- 	rank() over(order by conversion_rate desc) as conversion_rank,
+--     campaign_name,
+--     campaign_type,
+--     budget,
+--     customers_targeted,
+--     customers_opened,
+--     customers_clicked,
+--     customers_purchased,
+--     case
+-- 		when conversion_rate >= 10 then "Execellent"
+--         when conversion_rate >= 5 then "Good"
+--         when conversion_rate >= 2 then "Average"
+--         else "Poor"
+-- 	end as conversion_category
+-- from campaign_metrics
+-- where customers_targeted > 0
+-- order by conversion_rank
+
+-- ----------------------------------------------------------Ques 33
+-- with channel_performance as(
+-- 	select
+--         mc.campaign_type,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct mc.campaign_id) as total_campaigns,
+--         count(distinct case when cc.campaign_status = 'Clicked' then cc.cust_id end) as clicks,
+--         count(distinct case when cc.campaign_status = 'Purchased' then cc.cust_id end) as conversions,
+--         round(sum(mc.budget), 2) AS total_budget,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue_generated,
+--         coalesce(round(sum(oi.quantity*oi.selling_price) - sum(mc.budget) ,2),0) as profit
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('Delivered', 'Shipped') or o.order_status is null
+--     group by mc.campaign_type
+-- )
+-- select
+-- 	rank() over(order by roi_percent desc) as channel_rank,
+-- 	campaign_type,
+--     total_campaigns,
+--     customers_reached,
+--     clicks,
+--     conversions,
+--     round(100.0 * clicks / nullif(customers_reached, 0), 2) as click_through_rate,
+--     round(100* conversions / nullif(customers_reached, 0), 2) as conversion_rate,
+--     round(conversions / nullif(total_campaigns, 0), 2) as avg_conversions_per_campaign,
+-- 	total_budget,
+--     revenue_generated,
+--     profit,
+--     roi_percent,
+-- 	case
+-- 		when  roi_percent >= 100 then 'Excellent'
+--         when  roi_percent >= 50 then 'Good'
+--         when  roi_percent >= 20 then 'Average'
+--         when  roi_percent >= 0 then 'Poor'
+--         else "Negative"
+-- 	end as channel_performance
+--     from (
+-- 		select
+-- 			*,
+--             case
+-- 				when total_budget = 0 then 0
+--                 else round(100.0 * profit / total_budget, 2)
+-- 			end as roi_percent
+-- 		from channel_performance
+--     ) as channel_roi
+--     where total_budget > 0
+--     order by channel_rank;
+
+-- -----------------------------------------------------Ques 34
+-- with campaign_conversion as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_sent,
+--         count(distinct case when cc.campaign_status in ('Opened', 'Clicked', 'Purchased') then cc.cust_id end) as customers_responded,
+--         count(distinct case when cc.campaign_status = 'Clicked' then cc.cust_id end) as customers_clicked,
+--         count(distinct case when cc.campaign_status = 'Purchased' then cc.cust_id end) as customers_purchased,
+--         count(distinct case when cc.campaign_status = 'Opened' then cc.cust_id end) as customers_opened
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- ),
+-- response as(
+-- 	select
+-- 		*,
+-- 		round(100* customers_responded/nullif(customers_sent, 0),2) as response_rate
+-- 	from campaign_conversion 
+-- )
+-- select
+-- 	rank() over(order by response_rate desc) as response_rank,
+-- 	campaign_name,
+--     campaign_type,
+--     budget,
+--     customers_sent,
+--     customers_opened,
+--     customers_clicked,
+--     customers_purchased,
+--     customers_responded,
+--     case
+-- 		when response_rate >= 50 then "Excellent Response"
+--         when response_rate >= 30 then "Good Response"
+--         when response_rate >= 15 then "Average Response"
+--         else "Low Response"
+-- 	end as response_category
+-- from response
+-- where customers_sent > 0
+-- order by response_rank;
+
+-- ------------------------------------------------Ques 35
+-- with campaign_revenue as (
+--     select
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status = 'Purchased' then cc.cust_id end) as customers_converted,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         round(sum(oi.quantity*oi.selling_price) / count(distinct o.order_id),2) as avg_order_value
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('Delivered', 'Shipped') or o.order_status is null
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget
+-- )
+-- select
+-- 	rank() over(order by revenue desc) as revenue_rank,
+-- 	campaign_name,
+--     campaign_type,
+--     budget,
+--     customers_reached,
+--     customers_converted,
+--     total_orders,
+--     revenue,
+--     avg_order_value,
+--     round(100*revenue /sum(revenue) over(),2) as revenue_percent,
+--     round(100.0 * customers_converted / nullif(customers_reached, 0), 2) AS conversion_rate,
+--     round(revenue / nullif(budget, 0), 2) AS revenue_per_budget
+-- from campaign_revenue
+-- where budget >0
+-- order by revenue_rank;
+
+-- ---------------------------------------------------Ques36
+-- with customer_first_purchase as(
+-- 	select
+-- 		c.cust_id,
+--         min(o.order_date) as first_purchase_date
+-- 	from customers c
+--     inner join orders o on o.cust_id = c.cust_id
+--     where o.order_status in ('Delivered', 'Shipped')
+--     group by  c.cust_id
+-- ),
+-- campaign_acquisition as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget as campaign_cost,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct cfp.cust_id) as new_customers,
+-- 		coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue_from_new_customers
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join customer_first_purchase cfp on c.cust_id = cfp.cust_id
+-- 		and cfp.first_purchase_date between mc.start_date and mc.end_date
+--     left join orders o on c.cust_id = o.cust_id
+-- 		and o.order_status in ('Delivered', 'Shipped') and
+-- 			o.order_date between mc.start_date and mc.end_date
+-- 	left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- )
+-- select
+-- 	rank() over(order by new_customers desc) as acquisition_rank,
+-- 	campaign_name,
+--     campaign_type,
+--     campaign_cost,
+--     customers_reached,
+--     new_customers,
+--     round(100* new_customers/ nullif(customers_reached, 0), 2) as  conversion_rate,
+--     revenue_from_new_customers,
+--     round(revenue_from_new_customers / nullif(new_customers,0),2) as revenue_per_customer,
+--     round(campaign_cost / nullif(new_customers,0),2) as customer_acquisition_cost,
+--     case
+-- 		when round(campaign_cost / nullif(new_customers,0),2) <= 500 then 'Low CPA'
+--         when round(campaign_cost / nullif(new_customers,0),2) <= 1000 then 'Moderate CPA'
+--         when round(campaign_cost / nullif(new_customers,0),2) <= 2000 then 'High CPA'
+--         else 'Very High CPA'
+-- 	end as cpa_category
+-- from campaign_acquisition
+-- where campaign_cost > 0
+-- order by acquisition_rank;
+
+-- ------------------------------------------------------Ques 37
+-- with campaign_conversion as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case 
+-- 			when o.order_date between mc.start_date and mc.end_date then cc.cust_id end) as customers_converted
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+-- 		and o.order_status in ('Delivered', 'Shipped')
+-- 	left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.start_date, mc.end_date
+-- ),
+-- repeat_purchase as(
+-- 	select
+-- 		cc.campaign_id,
+--         c.cust_id,
+--         min(o.order_date) as first_purchase_date,
+--         min(o2.order_date) as repeat_purchase_date,
+--         datediff(min(o2.order_date), min(o.order_date)) as days_until_repeat
+-- 	from customer_campaigns cc
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+-- 		and o.order_status in ('Delivered', 'Shipped')
+-- 	left join orders o2 on c.cust_id = o2.cust_id
+-- 		and o2.order_status in ('Delivered', 'Shipped') and
+--         o2.order_date > o.order_date
+-- 	group by cc.campaign_id, c.cust_id
+--     having repeat_purchase_date is not null
+-- )
+-- select
+--     mc.campaign_name,
+--     mc.campaign_type,
+--     mc.start_date,
+--     mc.end_date,
+--     cc.customers_converted,
+--     count(distinct rp.cust_id) as repeat_buyers,
+--     round(100* count(distinct rp.cust_id)/nullif(cc.customers_converted, 0), 2) as repeat_rate_percent,
+--     round(avg(rp.days_until_repeat),2) as avg_days_until_next_purchase,
+--     rank() over(order by (count(distinct rp.cust_id)/nullif(cc.customers_converted,0)) desc) as repeat_rank,
+--     case
+-- 		when  round(100* count(distinct rp.cust_id)/nullif(cc.customers_converted, 0), 2) >= 30 then "High Repeat"
+--         when  round(100* count(distinct rp.cust_id)/nullif(cc.customers_converted, 0), 2) >= 15 then "Moderate Repeat"
+--         when  round(100* count(distinct rp.cust_id)/nullif(cc.customers_converted, 0), 2) then "Low Repeat"
+--         else "Very low repeat"
+-- 	end as repeat_category
+-- from marketing_campaigns mc
+-- join campaign_conversion cc on mc.campaign_id = cc.campaign_id
+-- left join repeat_purchase rp on mc.campaign_id = rp.campaign_id
+-- group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.start_date, mc.end_date, cc.customers_converted
+-- order by repeat_rank;
+
+-- ------------------------------------------------------------------Ques 38
+-- with funnel_data as(
+-- 	select
+-- 		mc.campaign_id,
+--         mc.campaign_name,
+--         count(distinct cc.cust_id) as sent,
+--         count(distinct case when cc.campaign_status in ('Opened', 'Clicked', 'Purchased') then cc.cust_id end) as opened,
+--         count(distinct case when cc.campaign_status in ('Clicked', 'Purchased') then cc.cust_id end) as clicked,
+--         count(distinct case when cc.campaign_status  ='Purchased' then cc.cust_id end) as purchased,
+--         count(distinct case
+--             when cc.campaign_status  ='Purchased' and
+--             exists (
+-- 				select 1
+--                 from orders o2
+--                 where cc.cust_id = o2.cust_id
+--                 and o2.order_date > (
+-- 					select min(o.order_date) 
+--                     from orders o 
+--                     where o.cust_id = cc.cust_id and
+--                     o.order_date between  mc.start_date and mc.end_date)
+--             ) then cc.cust_id
+--             end) as repeat_purchased
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc ON mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_id, mc.campaign_name
+-- )
+-- select
+-- 	"Sent" as funnel_stage,
+--     sum(sent) as users,
+--     null as conversion_rate,  
+--     null as drop_off
+-- from funnel_data
+-- union all
+-- select
+-- 	"Opened",
+--     sum(opened),
+--     round(100* sum(opened)/ nullif(sum(sent),0),2) as conversion_rate,
+--     round(100* (sum(sent) - sum(opened))/ nullif(sum(sent),0),2) as drop_off
+-- from funnel_data
+-- union all
+-- select
+-- 	"Clicked",
+--     sum(clicked),
+--     round(100* sum(clicked)/ nullif(sum(sent),0),2) as conversion_rate,
+--     round(100* (sum(opened)- sum(clicked))/ nullif(sum(opened),0),2) as drop_off
+-- from funnel_data
+-- union all
+-- select
+-- 	"Purchased",
+--     sum(purchased),
+--     round(100* sum(purchased)/nullif(sum(sent),0),2) as conversion_rate,
+--     round(100* (sum(clicked)- sum(purchased))/ nullif(sum(clicked),0),2) as drop_off
+-- from funnel_data
+-- union all
+-- select
+-- 	"Repeat Purchased",
+--     sum(repeat_purchased),
+--     round(100* sum(repeat_purchased)/nullif(sum(sent),0),2) as conversion_rate,
+--     round(100* (sum(purchased)- sum(repeat_purchased))/nullif(sum(purchased),0),2) as drop_off
+-- from funnel_data
+
+-- --------------------------------------------------Ques 39
+-- with customer_first_purchase as(
+-- 	select
+-- 		c.cust_id,
+--         min(o.order_date) as first_purchase_date
+-- 	from customers c
+--     inner join orders o on c.cust_id = o.cust_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by c.cust_id
+-- ),
+-- campaign_acquisition as (
+--     select
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget as campaign_budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct c.cust_id) as customers_reached,
+--         count(distinct cfp.cust_id) as new_customers,
+--         coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue_from_new_customers
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join customer_first_purchase cfp on c.cust_id = cfp.cust_id
+-- 		and cfp.first_purchase_date between mc.start_date and mc.end_date
+-- 	left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--         and o.order_date between mc.start_date and mc.end_date
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- ),
+-- cpa as (
+-- 	select *,
+--     round(campaign_budget / nullif(new_customers, 0), 2) as cpa
+-- 	from campaign_acquisition
+-- )
+-- select
+-- 	rank() over(order by cpa asc) as cpa_rank,
+-- 	campaign_name,
+--     campaign_type,
+--     campaign_budget,
+--     customers_reached,
+--     new_customers,
+--     cpa,
+--     revenue_from_new_customers,
+--     round(revenue_from_new_customers / nullif(new_customers,0),2) as revenue_per_customer,
+--     round(revenue_from_new_customers - campaign_budget, 2) as profit,
+--     case
+-- 		when campaign_budget = 0 then 0
+--         else  round(100.0 * (revenue_from_new_customers - campaign_budget) / campaign_budget, 2)
+--     end as roi_percent,
+--     case
+-- 		when cpa <= 500 then 'low cpa'
+--         when cpa <= 1000 then 'moderate cpa'
+--         when cpa <= 2000 then 'high cpa'
+--         else 'very high cpa'
+--     end as cpa_category,
+--     case
+-- 		when round(100.0 * (revenue_from_new_customers - campaign_budget) / campaign_budget, 2) >= 50 then 'excellent roi'
+--         when round(100.0 * (revenue_from_new_customers - campaign_budget) / campaign_budget, 2) >= 20 then 'good roi'
+--         when round(100.0 * (revenue_from_new_customers - campaign_budget) / campaign_budget, 2) >= 0 then 'break even'
+--         else 'loss'
+--     end as roi_category
+-- from cpa
+-- where campaign_budget > 0
+-- order by cpa_rank;
+
+-- -- -----------------------------------------------------Ques 40
+-- with campaign_performance as (
+--     select
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status in ('opened', 'clicked', 'purchased') then cc.cust_id end) as customers_responded,
+--         count(distinct case when cc.campaign_status = 'clicked' then cc.cust_id end) as customers_clicked,
+--         count(distinct case when cc.campaign_status = 'purchased' then cc.cust_id end) as customers_converted,
+-- 		coalesce(round(sum(oi.quantity*oi.selling_price),2),0) as revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - mc.budget, 2), 0) as profit,
+--         count(distinct case
+-- 			when cc.campaign_status = 'purchased'
+--             and exists(
+-- 				select 1
+--                 from orders o2
+--                 where o2.cust_id = cc.cust_id
+--                 and o2.order_date > (select 
+-- 					min(order_date) 
+--                     from orders o
+--                     WHERE o.cust_id = cc.cust_id 
+--             AND o.order_date BETWEEN mc.start_date AND mc.end_date
+--         )
+--             ) then cc.cust_id
+--         END) AS repeat_buyers
+-- 	from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- ),
+-- customer_first_purchase as(
+-- 	select
+-- 		c.cust_id,
+-- 		min(o.order_date) as first_purchase_date
+-- 	from customers c
+--     inner join orders o on c.cust_id = o.cust_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by c.cust_id
+-- ),
+-- new_customers as (
+--     select
+--         mc.campaign_id,
+--         count(distinct cfp.cust_id) as new_customers
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join customer_first_purchase cfp on c.cust_id = cfp.cust_id
+--         and cfp.first_purchase_date between mc.start_date and mc.end_date
+--     group by mc.campaign_id
+-- )
+-- select
+--     cp.campaign_name,
+--     cp.campaign_type,
+--     cp.budget,
+--     cp.revenue,
+--     cp.profit,
+-- 	round(100.0 * cp.profit / nullif(cp.budget, 0), 2) as roi_percent,
+--     round(100.0 * cp.customers_converted / nullif(cp.customers_reached, 0), 2) as conversion_rate,
+--     round(100.0 * cp.customers_responded / nullif(cp.customers_reached, 0), 2) as response_rate,
+--     round(100.0 * cp.customers_converted / nullif(cp.customers_clicked, 0), 2) as purchase_from_click_rate,
+-- 	round(100.0 * nc.new_customers / nullif(cp.customers_converted, 0), 2) as new_customer_percent,
+--     round(100.0 * cp.repeat_buyers / nullif(cp.customers_converted, 0), 2) as repeat_rate,
+--     round(cp.budget / nullif(cp.customers_converted, 0), 2) as cpa,
+--     round(
+-- 		(round(100.0 * cp.profit / nullif(cp.budget, 0), 2)* 0.25) +
+--         (round(100* cp.customers_converted / nullif(cp.customers_reached, 0), 2) * 0.20) +
+--         (round(100.0 * cp.repeat_buyers / nullif(cp.customers_converted, 0), 2) * 0.20) +
+--         (round(100.0 * nc.new_customers / nullif(cp.customers_converted, 0), 2) * 0.15) +
+--         (round(100.0 * cp.customers_responded / nullif(cp.customers_reached, 0), 2) * 0.10) +
+--         (case when cp.profit > 0 then 10 else 0 end * 0.10)
+--     ,2) as combined_score,
+--     rank() over(order by 
+--         (round(100.0 * cp.profit / nullif(cp.budget, 0), 2) * 0.25) +
+--         (round(100.0 * cp.customers_converted / nullif(cp.customers_reached, 0), 2) * 0.20) +
+--         (round(100.0 * cp.repeat_buyers / nullif(cp.customers_converted, 0), 2) * 0.20) +
+--         (round(100.0 * nc.new_customers / nullif(cp.customers_converted, 0), 2) * 0.15) +
+--         (round(100.0 * cp.customers_responded / nullif(cp.customers_reached, 0), 2) * 0.10) +
+--         (case when cp.profit > 0 then 10 else 0 end * 0.10)
+--     desc) as campaign_rank
+-- from campaign_performance cp
+-- left join new_customers nc on cp.campaign_id = nc.campaign_id
+-- order by campaign_rank;
+
+-- -------------------------------------------------------------------Ques 41
+-- with revenue_metrics as(
+-- 	select
+-- 		coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(case when o.order_status = 'delivered' then oi.quantity * oi.selling_price else 0 end),2),0) as delivered_revenue,
+--         coalesce(round(sum(case when o.order_status = 'shipped' then oi.quantity * oi.selling_price else 0 end),2),0) as shipped_revenue,
+--         coalesce(round(sum(case when o.order_status in ('delivered', 'shipped') then oi.quantity * oi.selling_price else 0 end),2),0) as successful_revenue,
+--         coalesce(round(sum(case when o.order_status = 'cancelled' then oi.quantity * oi.selling_price else 0 end),2),0) as cancelled_revenue,
+--         coalesce(round(sum(
+-- 				case when date_format(o.order_date,"%Y-%m") = date_format(curdate(),"%Y-%m")
+--                 then oi.quantity * oi.selling_price else 0 end
+--             ),2),0) as  revenue_this_month,
+--          coalesce(round(sum(
+-- 				case when date_format(o.order_date,"%Y-%m") = date_format(date_sub(curdate(),interval 1 month), "%Y-%m")
+--                 then oi.quantity * oi.selling_price else 0 end
+--             ),2),0) as revenue_last_month,
+-- 		count(distinct o.order_id) as total_orders,
+--         count(distinct c.cust_id) as total_customers,
+--         count(distinct case when o.order_status in ('delivered', 'shipped') then c.cust_id end) as successful_orders
+-- 	from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join payments p on o.order_id = p.order_id
+--         and p.payment_status = 'success'
+--     where o.order_status is not null
+-- )
+-- select
+--     total_revenue,
+--     successful_revenue,
+--     cancelled_revenue,
+--     delivered_revenue,
+--     revenue_this_month,
+--     revenue_last_month,
+--     round(100* (revenue_this_month - revenue_last_month)/ nullif(revenue_last_month,0),2) as mom_growth_percent,
+--     round(total_revenue/ nullif(total_customers, 0),2) as revenue_per_customer,
+--     round( total_revenue/ nullif(total_orders,0),2) as revenue_per_order
+-- from revenue_metrics;
+
+-- -- ---------------------------------------------------------------------Ques 42
+-- with order_metrics as(
+-- 	select
+-- 		count(distinct o.order_id) as total_orders,
+--         count(distinct case when o.order_status = 'delivered' then o.order_id end) as delivered_orders, 
+--         count(distinct case when o.order_status = 'shipped' then o.order_id end) as shipped_orders,
+--         count(distinct case when o.order_status = 'cancelled'  then o.order_id end) as cancelled_orders,
+--         count(distinct case when o.order_status = 'pending'  then o.order_id end) as pending_orders,
+--         count(distinct case when o.order_status in ('delivered', 'shipped') then o.order_id end) as successful_orders,
+--         count(distinct
+-- 			case when o.order_date = curdate()
+--             then o.order_id 
+--         end) as orders_today,
+--         count(distinct
+-- 			case when date_format(o.order_date, "%Y-%m") = date_format(curdate(),"%Y-%m")
+--             then o.order_id
+--         end) as orders_this_month,
+--         count(distinct c.cust_id) as total_customers
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--     where o.order_status is not null
+-- ) 
+-- select
+--     total_orders,
+--     delivered_orders,
+--     shipped_orders,
+--     cancelled_orders,
+--     pending_orders,
+--     successful_orders,
+--     round(100* successful_orders/nullif(total_orders,0),2) as order_success_rate,
+--     round(total_orders / nullif(total_customers,0),2) as avg_orders_per_customer,
+--     orders_today,
+--     orders_this_month
+-- from order_metrics;
+
+-- -- ---------------------------------------------------------------Ques 43
+-- with customer_summary as (
+--     select
+--         c.cust_id,
+--         count(distinct o.order_id) as order_count,
+--         min(o.order_date) as first_order_date,
+--         max(o.order_date) as last_order_date,
+--         coalesce(sum(oi.quantity * oi.selling_price), 0) as total_spent
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by c.cust_id
+-- ),
+-- customer_metrics as (
+--     select
+--         count(*) as total_customers,
+--         sum(case 
+--             when datediff(curdate(), last_order_date) <= 30 
+--             then 1 else 0 
+--         end) as active_customers,
+--         sum(case 
+--             when datediff(curdate(), first_order_date) <= 30 
+--             then 1 else 0 
+--         end) as new_customers,
+--         sum(case 
+--             when order_count > 1 
+--             then 1 else 0 
+--         end) as repeat_customers,
+--         sum(case 
+--             when datediff(curdate(), last_order_date) between 90 and 180 
+--             then 1 else 0 
+--         end) as dormant_customers,
+--         sum(case 
+--             when datediff(curdate(), last_order_date) > 180 
+--             then 1 else 0 
+--         end) as churned_customers,
+--         sum(order_count) as total_orders,
+--         round(sum(total_spent), 2) as total_revenue
+--     from customer_summary
+-- )
+-- select
+--     total_customers,
+--     active_customers,
+--     new_customers,
+--     repeat_customers,
+--     dormant_customers,
+--     churned_customers,
+--     round(100.0 * active_customers / nullif(total_customers, 0), 2) as active_rate,
+--     round(100.0 * repeat_customers / nullif(total_customers, 0), 2) as repeat_rate,
+--     round(100.0 * churned_customers / nullif(total_customers, 0), 2) as churn_rate,
+--     round(total_orders / nullif(total_customers, 0), 2) as avg_orders_per_customer,
+--     round(total_revenue / nullif(total_customers, 0), 2) as avg_revenue_per_customer
+-- from customer_metrics;
+
+-- -- --------------------------------------------------------------Ques 44
+-- with order_values as(
+-- 	select
+-- 		o.order_id,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as order_value,
+--         o.order_date,
+--         date_format(o.order_date, "%Y-%m") as month
+-- 	from orders o
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by o.order_id, o.order_date
+-- ),
+-- ranked_orders as (
+--     select
+--         order_value,
+--         row_number() OVER(order by order_value) as row_num,
+--         COUNT(*) over() as total_rows
+--     from order_values
+-- ),
+-- median_value as (
+--     select
+--         ROUND(avg(order_value), 2) as median_order_value
+--     from ranked_orders
+--     where row_num in (
+--         FLOOR((total_rows + 1) / 2),
+--         CEIL((total_rows + 1) / 2)
+--     )
+-- ),
+-- aov_metrics as (
+--     select
+--         round(avg(order_value), 2) as avg_order_value,
+--         round(max(order_value), 2) as highest_order_value,
+--         round(min(order_value), 2) as lowest_order_value,
+--         round(stddev(order_value), 2) as stddev_order_value,
+--         COUNT(*) as total_orders,
+--         round(sum(order_value), 2) as total_revenue
+--     from order_values
+-- )
+-- select
+--     am.avg_order_value,
+--     mv.median_order_value,
+--     am.highest_order_value,
+--     am.lowest_order_value,
+--     am.stddev_order_value,
+--     am.total_orders,
+--     am.total_revenue,
+--     ROUND(am.total_revenue / am.total_orders, 2) as aov_calculation_check
+-- from aov_metrics am
+-- cross join median_value mv;
+
+-- -- -------------------------------------------------------Ques 45
+-- with historical_clv as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         date_format(min(o.order_date), '%Y-%m-%d') as first_purchase_date,
+--         date_format(max(o.order_date), '%Y-%m-%d') as last_purchase_date,
+--         datediff(curdate(), min(o.order_date)) / 365.0 as customer_lifetime_years,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct oi.item_id) as total_items,
+--         sum(oi.quantity) as total_units,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as total_cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price),2),0) as total_profit,
+-- 		round(count(distinct o.order_id) / nullif(datediff(curdate(), min(o.order_date)) / 30.0, 0), 2) as purchase_frequency_per_month,
+--         round(sum(oi.quantity) / nullif(count(distinct o.order_id), 0), 2) as avg_basket_size,
+--         round(sum(oi.quantity * oi.selling_price) / nullif(count(distinct o.order_id), 0), 2) as avg_order_value,
+--         round(datediff(max(o.order_date), min(o.order_date)) / nullif(count(distinct o.order_id) - 1, 0), 0) as avg_days_between_orders
+-- 	from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by c.cust_id, c.cust_name, c.city, c.state
+--     having total_orders > 0
+-- ),
+-- clv_category as (
+--     select
+--         *,
+--         round(total_revenue / nullif(customer_lifetime_years, 0), 2) as annual_clv,
+--         case
+--             when total_revenue >= 500000 then 'vip'
+--             when total_revenue >= 200000 then 'gold'
+--             when total_revenue >= 100000 then 'silver'
+--             else 'bronze'
+--         end as clv_category
+--     from historical_clv
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     total_revenue,
+--     total_profit,
+--     round(total_profit / nullif(total_revenue, 0) * 100, 2) as profit_margin,
+--     customer_lifetime_years,
+--     total_orders,
+--     purchase_frequency_per_month,
+--     avg_basket_size,
+--     avg_order_value,
+--     first_purchase_date,
+--     last_purchase_date,
+--     clv_category,
+--     case
+--         when clv_category = 'vip' then 'highest value'
+--         when clv_category = 'gold' then 'high value'
+--         when clv_category = 'silver' then 'medium value'
+--         else 'low value'
+--     end as priority
+-- from clv_category
+-- order by total_revenue desc;
+
+-- -- ---------------------------------------------------------------Ques 46
+-- with return_metrics as (
+-- 	select
+-- 		count(distinct o.order_id) as total_orders,
+--         count(distinct r.return_id) as total_returns,
+--         count(distinct r.prod_id) as products_returned,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(r.quantity * oi.selling_price), 2), 0) as revenue_lost,
+--         round(100.0 * count(distinct r.return_id) / nullif(count(distinct o.order_id), 0), 2) as return_rate
+--         
+--     from orders o
+--     left join returns r on o.order_id = r.order_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+-- ),
+-- category_returns as (
+-- 	select
+-- 		p.category,
+--         count(distinct r.return_id) as returns_count,
+--         count(distinct o.order_id) as orders_count,
+--         round(100* count(distinct r.return_id)/ nullif(count(distinct o.order_id),0),2)  as category_return_rate,
+--         round(sum(r.quantity * oi.selling_price), 2) as revenue_lost,
+--         rank() over(order by count(distinct r.retrun_id) desc) as return_rank
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--     left join returns r on oi.order_id = r.order_id and oi.prod_id = r.prod_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by p.category
+-- ),
+-- return_trend as(
+-- 	select
+-- 		date_format(r.return_date,"%Y-%m-01") as month,
+--         count(r.return_id) as monthly_retruns,
+--         round(100* count(distinct r.return_id) / nullif(count(distinct o.order_id),0),2) as return_rat
+--         from returns r
+--     group by date_format(r.return_date, '%Y-%m-01')
+-- )
+-- select
+-- 	'return rate' as metric,
+--     return_rate as value
+-- from return_metrics
+-- union all
+-- select
+--     'revenue lost',
+--     revenue_lost
+-- from return_metrics
+-- union all
+-- select
+--     'products returned',
+--     products_returned
+-- from return_metrics
+-- union all
+-- select
+--     'total orders',
+--     total_orders
+-- from return_metrics;
+
+-- -- ----------------------------------------------------------- Ques 47
+-- with cust_refund as (
+-- 	select
+-- 		count(distinct case when p.payment_status = "Refunded" then p.payment_id end) as refund_orders,
+--         round(sum(case when p.payment_status = "Refunded" then p.amount else 0 end),2) as revenue_lost,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(round(sum(p.amount), 2), 0) as total_revenue
+-- 	from payments p
+-- 	left join orders o on p.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped', 'returned')
+-- ),
+-- re_percent as(
+-- 	select
+-- 		refund_orders,
+--         revenue_lost,
+--         total_orders,
+--         total_revenue,
+--         round(100* revenue_lost/ nullif(total_revenue,0),2) as Refund_Percentage,
+--         round(100* refund_orders/ nullif(total_orders,0),2) as Refund_Rate
+-- 	from cust_refund
+-- ),
+-- re_category as(
+-- 	select
+-- 		p.category,
+--         count(distinct pm.payment_id) as refund_count,
+--         coalesce(round(sum(pm.amount), 2), 0) as refund_amount
+-- 	from products p
+--     join order_items oi on p.prod_id = oi.prod_id
+--     join orders o on oi.order_id = o.order_id
+--     join payments pm on o.order_id = pm.order_id
+--     where pm.payment_status = 'refunded'
+--     group by p.category
+--     order by refund_amount desc
+-- ),
+-- pay_refund as(
+-- 	select
+-- 		payment_method,
+--         count(distinct payment_id) as refund_count,
+--         coalesce(round(sum(amount), 2), 0) as refund_amount
+-- 	from payments
+--     where payment_status = 'refunded'
+--     group by payment_method
+--     order by refund_amount desc
+-- )
+-- select
+-- 	'refund amount' as metric,
+--     revenue_lost as value
+-- from cust_refund
+-- union all
+-- select
+-- 	'Refund Percentage',
+--     Refund_Percentage
+-- from re_percent
+-- union all
+-- select
+-- 	'Revenue lost',
+--     revenue_lost
+-- from cust_refund;
+
+-- select
+-- 	category,
+--     refund_count,
+--     refund_amount
+-- from re_category
+-- where refund_count> 0
+-- order by refund_amount desc;
+
+-- select
+-- 	payment_method,
+--     refund_count,
+--     refund_amount
+-- from pay_refund
+-- where refund_count > 0
+-- order by refund_amount desc;
+
+-- -- -----------------------------------------------------------Ques 48
+-- with review_metrics as (
+--     select
+-- 		count(distinct review_id) as total_reviews,
+--         round(avg(rating), 2) as avg_rating,
+--         round(100* sum(case when rating = 5 then 1 else 0 end)/ count(*),2) as five_star_percent,
+--         round(100* sum(case when rating >=4 then 1 else 0 end) / count(*),2) as positive_review_percent,
+--         round(100* sum(case when rating <= 2 then 1 else 0 end)/ count(*),2) as negative_review_percent,
+--         round(100* (sum(case when  rating >= 4 then 1 else 0 end) - sum(case when rating <= 2 then 1 else 0 end)) / count(*), 2) as net_satisfaction_score
+-- 	from reviews
+-- ),
+-- category_review as(
+-- 	select
+-- 		p.category,
+--         count(distinct r.review_id) as review_count,
+--         round(avg(r.rating), 2) as avg_rating,
+--         round(100* sum(case when rating >=4 then 1 else 0 end) / count(*),2) as positive_review,
+-- 		round(100.0 * sum(case when rating <= 2 then 1 else 0 end) / count(*), 2) as negative_review_percent
+-- 	from products p
+--     join reviews r on p.prod_id = r.prod_id
+--     group by p.category
+--     order by avg_rating desc
+-- ),
+-- product_review as(
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         count(distinct r.review_id) as review_count,
+--         round(avg(r.rating), 2) as avg_rating,
+--         round(100.0 * sum(case when r.rating >= 4 then 1 else 0 end) / count(*), 2) as positive_percent
+--     from products p
+--     join reviews r on p.prod_id = r.prod_id
+--     group by p.prod_id, p.prod_name, p.category
+--     having review_count >= 5
+--     order by avg_rating desc
+--     limit 10
+-- )
+-- select
+-- 	'total reviews' as metric,
+--      total_reviews as value
+-- from review_metrics
+-- union all
+-- select
+-- 	"average rating",
+--     avg_rating
+-- from review_metrics
+-- union all
+-- select
+-- 	"5 star percentage",
+--     five_star_percent
+-- from review_metrics
+-- union all
+-- select
+-- 	'positive reviews (%)',
+--     positive_review_percent
+-- from review_metrics
+-- union all
+-- select
+--     'negative reviews (%)',
+--     negative_review_percent
+-- from review_metrics
+-- union all
+-- select
+--     'net satisfaction score (nss)',
+--     net_satisfaction_score
+-- from review_metrics;
+
+-- select
+--     avg_rating,
+--     case
+--         when avg_rating >= 4.5 then 'excellent'
+--         when avg_rating >= 4.0 then 'good'
+--         when avg_rating >= 3.0 then 'average'
+--         else 'poor'
+--     end as satisfaction_category
+-- from review_metrics;
+
+-- -- ---------------------------------------------Ques 49
+-- with revenue_metrics as (
+--     select
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as gross_revenue,
+-- 		coalesce(round(sum(r.quantity * oi.selling_price), 2), 0) as returns_deduction,
+--         coalesce(round(sum(case when pm.payment_status = "refunded" then pm.amount else 0 end),2),0) as refunds_deduction,
+-- 		coalesce(round(sum(oi.quantity* (p.price- oi.selling_price)),2),0) as discounts_deduction,
+-- 		coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cogs,
+-- 		coalesce(round(
+--             sum(oi.quantity * oi.selling_price)
+--             - sum(r.quantity * oi.selling_price)
+--             - sum(case when pm.payment_status = 'refunded' then pm.amount else 0 end)
+--             - sum(oi.quantity * (p.price - oi.selling_price))
+--         , 2), 0) as net_revenue
+-- 	from order_items oi
+--     join orders o on oi.order_id = o.order_id
+--     join products p on oi.prod_id = p.prod_id
+--     left join returns r on oi.order_id = r.order_id and oi.prod_id = r.prod_id
+--     left join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('delivered', 'shipped')
+-- )
+-- select
+--     gross_revenue,
+--     returns_deduction,
+--     refunds_deduction,
+--     discounts_deduction,
+--     cogs,
+--     net_revenue,
+--     round(gross_revenue - cogs,2) as gross_profit,
+--     round(net_revenue - cogs, 2) as net_profit,
+--     round(100.0 * (gross_revenue - cogs) / nullif(gross_revenue, 0), 2) as gross_margin_percent,
+--     round(100.0 * (net_revenue - cogs) / nullif(net_revenue, 0), 2) as net_margin_percent
+-- from revenue_metrics;
+
+-- -- ----------------------------------------Ques 50
+-- with kpi_metrics as(
+-- 	select
+-- 		coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(r.quantity * oi.selling_price) - sum(case when pm.payment_status = "Refunded" then pm.amount else 0 end),2),0) as net_revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cogs,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct c.cust_id) as total_customers,
+--         round(count(distinct o.order_id)/ nullif(count(distinct c.cust_id),0),2) as avg_orders_per_customer,
+--         round(sum(oi.quantity * oi.selling_price) / nullif(count(distinct o.order_id),0),2) as avg_order_value,
+--         round(sum(oi.quantity * oi.selling_price) / nullif(count(distinct c.cust_id),0),2) as customer_lifetime_value,
+--         round(100.0 * count(distinct r.return_id) / nullif(count(distinct o.order_id), 0), 2) as return_rate,
+--         round(100.0 * count(distinct case when pm.payment_status = 'refunded' then pm.payment_id end) / nullif(count(distinct pm.payment_id), 0), 2) as refund_rate,
+--         round(avg(rv.rating), 2) as avg_rating,
+--         round(100.0 * (sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price)) / nullif(sum(oi.quantity * oi.selling_price), 0), 2) as profit_margin
+-- 	from customers c
+--     left join orders o on c.cust_id = o.cust_id and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     left join returns r on oi.order_id = r.order_id and oi.prod_id = r.prod_id
+--     left join payments pm on o.order_id = pm.order_id
+--     left join reviews rv on c.cust_id = rv.cust_id
+-- ),
+-- best_category as (
+--     select
+--         p.category,
+--         round(sum(oi.quantity * oi.selling_price), 2) as revenue
+--     from products p
+--     join order_items oi on p.prod_id = oi.prod_id
+--     join orders o on oi.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by p.category
+--     order by revenue desc
+--     limit 1
+-- ),
+-- worst_category as (
+--     select
+--         p.category,
+--         round(sum(oi.quantity * oi.selling_price), 2) as revenue
+--     from products p
+--     join order_items oi on p.prod_id = oi.prod_id
+--     join orders o on oi.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by p.category
+--     order by revenue asc
+--     limit 1
+-- ),
+-- top_campaign as (
+--     select
+--         mc.campaign_name,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status = 'purchased' then cc.cust_id end) as conversions
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_name
+--     order by conversions desc
+--     limit 1
+-- ),
+-- top_city as (
+--     select
+--         c.city,
+--         round(sum(oi.quantity * oi.selling_price), 2) as revenue
+--     from customers c
+--     join orders o on c.cust_id = o.cust_id
+--     join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by c.city
+--     order by revenue desc
+--     limit 1
+-- ),
+-- top_product as(
+-- 	select
+--         p.prod_name,
+--         round(sum(oi.quantity * oi.selling_price), 2) as revenue
+-- 	from products p
+--     join order_items oi on p.prod_id = oi.prod_id
+--     join orders o on oi.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by p.prod_name
+--     order by revenue desc
+--     limit 1
+-- ),
+-- revenue_trend as(
+-- 	select
+-- 		date_format(o.order_date, "%Y-%m") as month,
+--         round(sum(oi.quantity * oi.selling_price), 2) as revenue
+-- 	from orders o
+--     join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by date_format(o.order_date, '%Y-%m')
+--     order by month
+--     limit 6
+-- )
+-- select
+-- 	"total revenue" as metric,
+--     total_revenue as value,
+--     case
+--         when total_revenue > 1000000 then 'good'
+--         when total_revenue > 500000 then 'warning'
+--         else 'critical'
+--     end as status
+-- from kpi_metrics
+-- union all
+-- select
+-- 	'net revenue',
+--     net_revenue,
+--     case
+--         when net_revenue > 800000 then 'good'
+--         when net_revenue > 400000 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'total orders',
+--     total_orders,
+--     case
+--         when total_orders > 1000 then 'good'
+--         when total_orders > 500 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'total customers',
+--     total_customers,
+--     case
+--         when total_customers > 500 then 'good'
+--         when total_customers > 200 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'average order value',
+--     avg_order_value,
+--     case
+--         when avg_order_value > 2000 then 'good'
+--         when avg_order_value > 1000 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'customer lifetime value',
+--     customer_lifetime_value,
+--     case
+--         when customer_lifetime_value > 5000 then 'good'
+--         when customer_lifetime_value > 2000 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'return rate (%)',
+--     return_rate,
+--     case
+--         when return_rate < 10 then 'good'
+--         when return_rate < 20 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'refund rate (%)',
+--     refund_rate,
+--     case
+--         when refund_rate < 5 then 'good'
+--         when refund_rate < 10 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'avg customer rating',
+--     avg_rating,
+--     case
+--         when avg_rating >= 4.0 then 'good'
+--         when avg_rating >= 3.0 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+-- select
+--     'profit margin (%)',
+--     profit_margin,
+--     case
+--         when profit_margin >= 20 then 'good'
+--         when profit_margin >= 10 then 'warning'
+--         else 'critical'
+--     end
+-- from kpi_metrics
+-- union all
+
+-- select
+--     concat('best category: ', category),
+--     revenue,
+--     'good'
+-- from best_category
+-- union all
+
+-- select
+--     concat('worst category: ', category),
+--     revenue,
+--     'critical'
+-- from worst_category
+-- union all
+
+-- select
+--     concat('top campaign: ', campaign_name),
+--     conversions,
+--     'good'
+-- from top_campaign
+-- union all
+
+-- select
+--     concat('top city: ', city),
+--     revenue,
+--     'good'
+-- from top_city
+-- union all
+
+-- select
+--     concat('top product: ', prod_name),
+--     revenue,
+--     'good'
+-- from top_product
+-- union all
+
+-- select
+--     concat('revenue trend (', month, '):'),
+--     revenue,
+--     case
+--         when revenue > lag(revenue) over(order by month) then 'good'
+--         else 'warning'
+--     end
+-- from revenue_trend;
+
+-- -------------------------------------------------------- VIEWS
+-- create view vw_customer_summary as
+-- with customer_orders as (
+-- 	select
+-- 		c.cust_id,
+--         c.cust_name,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         max(o.order_date) as last_order_date
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by c.cust_id, c.cust_name
+-- )
+-- select
+-- 	cust_id,
+--     cust_name,
+--     total_orders,
+--     total_revenue,
+--     case
+--         when total_orders = 0 then 0
+--         else round(total_revenue / total_orders, 2)
+--     end as avg_order_value,
+--     last_order_date
+-- from customer_orders;
+
+-- -- ---------------------------------------------------2 
+-- create view vw_product_summary as 
+-- with product_metrics as (
+-- 	select
+-- 		p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         coalesce(round(sum(oi.quantity), 0), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from orders o
+-- 	join order_items oi on o.order_id = oi.order_id
+-- 	join products p on oi.prod_id = p.prod_id
+-- 		WHERE o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category
+-- )
+-- select
+--     prod_id,
+--     prod_name,
+--     category,
+--     units_sold,
+--     revenue,
+--     profit,
+--     case
+--         when revenue = 0 then 0
+--         else round(100.0 * profit / revenue, 2)
+--     end as margin_percent,
+--     case
+--         when revenue = 0 then 'no sales'
+--         when units_sold = 0 then 'no sales'
+--         when profit >= 10000 then 'high margin'
+--         when profit >= 5000 then 'medium margin'
+--         when profit >= 0 then 'low margin'
+--         else 'loss making'
+--     end as margin_category
+-- from product_metrics;
+
+-- -- --------------------------------------------------3
+-- create view vw_order_summary as
+-- select
+--     o.order_id,
+--     c.cust_name,
+--     o.order_date,
+--     o.order_status,
+--     pm.payment_method,
+--     pm.payment_status,
+--     count(distinct oi.item_id) as total_items,
+--     sum(oi.quantity) as total_units,
+--     coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue
+-- from orders o
+-- left join customers c on o.cust_id = c.cust_id
+-- left join order_items oi on o.order_id = oi.order_id
+-- left join payments pm on o.order_id = pm.order_id
+-- where o.order_status in ('delivered', 'shipped', 'pending', 'cancelled', 'returned')
+-- group by o.order_id, c.cust_name, o.order_date, o.order_status, pm.payment_method, pm.payment_status;
+
+-- -- -----------------------------------------------4
+-- create view vw_sales_summary as
+-- with monthly_metrics as (
+--     select
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct c.cust_id) as total_customers,
+--         coalesce(round(sum(oi.quantity), 0), 0) as total_units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y')
+-- )
+-- select
+--     month_date,
+--     month_name,
+--     total_orders,
+--     total_customers,
+--     total_units_sold,
+--     revenue,
+--     cost,
+--     profit,
+--     round(100.0 * profit / nullif(revenue, 0), 2) as profit_margin_percent,
+--     round(revenue / nullif(total_orders, 0), 2) as avg_order_value,
+--     round(revenue / nullif(total_customers, 0), 2) as revenue_per_customer,
+--     round(100.0 * (revenue - lag(revenue) over(order by month_date)) / nullif(lag(revenue) over(order by month_date), 0), 2) as revenue_growth_percent
+-- from monthly_metrics;
+
+-- -----------------------------------------------------------5
+-- create view vw_inventory_summary as
+-- with inventory_metrics as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.stock as current_stock,
+--         round(p.price * p.stock, 2) as inventory_value,
+--         coalesce(sum(oi.quantity), 0) as total_units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue
+--     from orders o
+-- 	join order_items oi on o.order_id = oi.order_id
+-- 	join products p on oi.prod_id = p.prod_id
+-- 		WHERE o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category, p.stock, p.price
+-- )
+-- select
+--     prod_id,
+--     prod_name,
+--     category,
+--     current_stock,
+--     inventory_value,
+--     total_units_sold,
+--     total_revenue,
+--     case
+--         when current_stock = 0 then 'out of stock'
+--         when current_stock <= 10 then 'critical'
+--         when current_stock <= 25 then 'low stock'
+--         when current_stock <= 50 then 'medium stock'
+--         else 'in stock'
+--     end as stock_status,
+--     case
+--         when current_stock = 0 and total_units_sold > 0 then 'reorder immediately'
+--         when current_stock <= 10 then 'reorder soon'
+--         when current_stock <= 25 and total_units_sold > 0 then 'monitor stock'
+--         when current_stock > 50 and total_units_sold = 0 then 'overstocked'
+--         else 'healthy'
+--     end as reorder_status
+-- from inventory_metrics;
+
+-- -------- -------------------------- 6
+-- create view vw_customer_clv as
+-- with customer_metrics as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         min(o.order_date) as first_purchase_date,
+--         max(o.order_date) as last_purchase_date,
+--         coalesce(datediff(max(o.order_date), min(o.order_date)), 0) as customer_lifetime_days,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity), 0) as total_units_purchased,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as total_cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as total_profit
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     group by c.cust_id, c.cust_name, c.city, c.state
+-- ),
+-- clv_metrics as (
+--     select
+--         *,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_revenue / total_orders, 2)
+--         end as avg_order_value,
+--         case
+--             when total_orders = 0 or customer_lifetime_days = 0 then 0
+--             else round(total_orders / nullif(customer_lifetime_days / 30.0, 0), 2)
+--         end as purchase_frequency,
+--         case
+--             when total_orders <= 1 then 0
+--             else round(customer_lifetime_days / (total_orders - 1), 0)
+--         end as avg_days_between_purchases,
+--         case
+--             when total_revenue = 0 then 0
+--             else round(100.0 * total_profit / total_revenue, 2)
+--         end as profit_margin_percent
+--     from customer_metrics
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     first_purchase_date,
+--     last_purchase_date,
+--     customer_lifetime_days,
+--     total_orders,
+--     total_units_purchased,
+--     total_revenue,
+--     total_cost,
+--     total_profit,
+--     avg_order_value,
+--     purchase_frequency,
+--     avg_days_between_purchases,
+--     round(
+--         avg_order_value * purchase_frequency * (customer_lifetime_days / 365.0),
+--     2) as customer_lifetime_value,
+--     profit_margin_percent,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when total_revenue >= 500000 then 'vip'
+--         when total_revenue >= 200000 then 'gold'
+--         when total_revenue >= 100000 then 'silver'
+--         else 'bronze'
+--     end as customer_segment
+-- from clv_metrics;
+
+-- -- --------------------------------------------------------7
+-- create view vw_campaign_performance as
+-- with campaign_metrics as (
+--     select
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.start_date,
+--         mc.end_date,
+--         mc.budget,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status = 'opened' then cc.cust_id end) as opened,
+--         count(distinct case when cc.campaign_status = 'clicked' then cc.cust_id end) as clicked,
+--         count(distinct case when cc.campaign_status = 'purchased' then cc.cust_id end) as purchased
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.start_date, mc.end_date, mc.budget
+-- ),
+-- campaign_revenue as (
+--     select
+--         cc.campaign_id,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         count(distinct case when o2.order_id is not null then c.cust_id end) as repeat_buyers
+--     from customer_campaigns cc
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join marketing_campaigns mc on cc.campaign_id = mc.campaign_id  
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--         and o.order_date between mc.start_date and mc.end_date       
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     left join orders o2 on c.cust_id = o2.cust_id
+--         and o2.order_status in ('delivered', 'shipped')
+--         and o2.order_date > o.order_date
+--     group by cc.campaign_id
+-- )
+-- select
+--     cm.campaign_id,
+--     cm.campaign_name,
+--     cm.campaign_type,
+--     cm.start_date,
+--     cm.end_date,
+--     cm.budget,
+--     cm.customers_reached,
+--     cm.opened,
+--     cm.clicked,
+--     cm.purchased,
+--     round(100.0 * cm.opened / nullif(cm.customers_reached, 0), 2) as response_rate,
+--     round(100.0 * cm.clicked / nullif(cm.opened, 0), 2) as ctr,
+--     round(100.0 * cm.purchased / nullif(cm.clicked, 0), 2) as conversion_rate,
+--     cr.revenue,
+--     cr.profit,
+--     round(100.0 * cr.profit / nullif(cm.budget, 0), 2) as roi_percent,
+--     round(cm.budget / nullif(cm.purchased, 0), 2) as cpa,
+--     cr.repeat_buyers,
+--     round(100.0 * cr.repeat_buyers / nullif(cm.purchased, 0), 2) as repeat_rate,
+--     round(
+--         (cr.profit / nullif(cm.budget, 0)) * 10 +
+--         (cm.purchased / nullif(cm.customers_reached, 0)) * 5,
+--     2) as campaign_score,
+--     case
+--         when cm.customers_reached = 0 then 'no data'
+--         when cr.profit / nullif(cm.budget, 0) >= 2 then 'excellent'
+--         when cr.profit / nullif(cm.budget, 0) >= 1 then 'good'
+--         when cr.profit / nullif(cm.budget, 0) >= 0.5 then 'average'
+--         when cr.profit / nullif(cm.budget, 0) >= 0 then 'poor'
+--         else 'loss making'
+--     end as performance_category
+-- from campaign_metrics cm
+-- left join campaign_revenue cr on cm.campaign_id = cr.campaign_id;
+
+-- -- ----------------------------------------------------------8
+-- create view vw_product_performance as
+-- with product_metrics as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.price as current_price,
+--         p.stock as current_stock,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category, p.price, p.stock
+-- )
+-- select
+--     prod_id,
+--     prod_name,
+--     category,
+--     current_price,
+--     current_stock,
+--     round(current_price * current_stock, 2) as inventory_value,
+--     units_sold,
+--     revenue,
+--     cost,
+--     profit,
+--     round(100.0 * profit / nullif(revenue, 0), 2) as profit_margin,
+--     case
+--         when units_sold = 0 then 'no sales'
+--         when profit >= 100000 then 'star product'
+--         when profit >= 50000 then 'good product'
+--         when profit >= 0 then 'average product'
+--         else 'loss making'
+--     end as product_rating,
+--     case
+--         when units_sold = 0 then 'no sales'
+--         when profit / nullif(revenue, 0) >= 0.30 then 'high performance'
+--         when profit / nullif(revenue, 0) >= 0.15 then 'medium performance'
+--         else 'low performance'
+--     end as performance_category
+-- from product_metrics
+-- order by profit desc;
+
+-- -- ------------------------------------------------------9
+-- create view vw_return_summary as
+-- with return_metrics as (
+--     select
+--         r.return_id,
+--         r.order_id as return_order_id,
+--         r.prod_id,
+--         r.quantity as quantity_returned,
+--         r.reason as return_reason,
+--         r.return_date,
+--         c.cust_id,
+--         c.cust_name as customer,
+--         p.prod_name as product,
+--         p.category,
+--         o.order_date,
+--         datediff(r.return_date, o.order_date) as days_after_purchase,
+--         oi.selling_price as price_at_purchase,
+--         round(r.quantity * oi.selling_price, 2) as revenue_lost,
+--         round(r.quantity * oi.selling_price, 2) as refund_amount
+--     from returns r
+--     left join orders o on r.order_id = o.order_id
+--     left join customers c on o.cust_id = c.cust_id
+--     left join products p on r.prod_id = p.prod_id
+--     left join order_items oi on o.order_id = oi.order_id and r.prod_id = oi.prod_id
+-- ),
+-- total_orders as (
+--     select
+--         oi.prod_id,
+--         count(distinct oi.order_id) as total_orders,
+--         sum(oi.quantity) as total_units_sold
+--     from order_items oi
+--     join orders o on oi.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--     group by oi.prod_id
+-- ),
+-- return_rate as (
+--     select
+--         r.prod_id,
+--         count(distinct r.return_id) as return_count,
+--         sum(r.quantity) as returned_units
+--     from returns r
+--     group by r.prod_id
+-- )
+-- select
+--     rm.return_id,
+--     rm.return_order_id as order_id,
+--     rm.product,
+--     rm.customer,
+--     rm.category,
+--     rm.return_date,
+--     rm.quantity_returned,
+--     rm.revenue_lost,
+--     rm.return_reason,
+--     rm.days_after_purchase,
+--     rm.refund_amount,
+--     coalesce(tr.total_orders, 0) as total_orders,
+--     coalesce(tr.total_units_sold, 0) as total_units_sold,
+--     coalesce(rr.return_count, 0) as total_returns,
+--     coalesce(rr.returned_units, 0) as total_returned_units,
+--     round(100.0 * coalesce(rr.returned_units, 0) / nullif(coalesce(tr.total_units_sold, 0), 0), 2) as returned_percent,
+--     case
+--         when coalesce(rr.returned_units, 0) = 0 then 'no returns'
+--         when coalesce(rr.returned_units, 0) * 1.0 / nullif(coalesce(tr.total_units_sold, 0), 0) >= 0.20 then 'high return'
+--         when coalesce(rr.returned_units, 0) * 1.0 / nullif(coalesce(tr.total_units_sold, 0), 0) >= 0.10 then 'medium return'
+--         else 'low return'
+--     end as return_category,
+--     case
+--         when rm.days_after_purchase <= 7 then 'immediate'
+--         when rm.days_after_purchase <= 30 then 'early'
+--         when rm.days_after_purchase <= 60 then 'standard'
+--         else 'late'
+--     end as return_timing
+-- from return_metrics rm
+-- left join total_orders tr on rm.prod_id = tr.prod_id
+-- left join return_rate rr on rm.prod_id = rr.prod_id
+-- order by rm.return_date desc;
+
+-- -- --------------------------------------------------------10
+-- create view vw_payment_summary as
+-- with payment_metrics as (
+--     select
+--         pm.payment_method,
+--         count(distinct pm.payment_id) as total_transactions,
+--         count(distinct case when pm.payment_status = 'success' then pm.payment_id end) as successful_payments,
+--         count(distinct case when pm.payment_status = 'failed' then pm.payment_id end) as failed_payments,
+--         count(distinct case when pm.payment_status = 'refunded' then pm.payment_id end) as refunded_payments,
+--         count(distinct case when pm.payment_status = 'pending' then pm.payment_id end) as pending_payments,
+--         coalesce(round(sum(case when pm.payment_status = 'success' then pm.amount else 0 end), 2), 0) as revenue,
+--         coalesce(round(sum(case when pm.payment_status = 'refunded' then pm.amount else 0 end), 2), 0) as refund_amount,
+--         round(avg(pm.amount), 2) as avg_transaction_value,
+--         round(min(pm.amount), 2) as lowest_transaction,
+--         round(max(pm.amount), 2) as highest_transaction
+--     from payments pm
+--     left join orders o on pm.order_id = o.order_id
+--     where o.order_status in ('delivered', 'shipped', 'pending', 'cancelled', 'returned') or o.order_status is null
+--     group by pm.payment_method
+-- ),
+-- payment_rate as (
+--     select
+--         payment_method,
+--         total_transactions,
+--         successful_payments,
+--         refunded_payments,
+--         round(100.0 * successful_payments / nullif(total_transactions, 0), 2) as success_rate,
+--         round(100.0 * refunded_payments / nullif(total_transactions, 0), 2) as refund_rate,
+--         round(100.0 * failed_payments / nullif(total_transactions, 0), 2) as failure_rate
+--     from payment_metrics
+-- )
+-- select
+--     pm.payment_method,
+--     pm.total_transactions,
+--     pm.successful_payments,
+--     pm.failed_payments,
+--     pm.refunded_payments,
+--     pm.pending_payments,
+--     pm.revenue,
+--     pm.refund_amount,
+--     pr.success_rate,
+--     pr.refund_rate,
+--     pr.failure_rate,
+--     pm.avg_transaction_value,
+--     pm.lowest_transaction,
+--     pm.highest_transaction,
+--     case
+--         when pm.total_transactions = 0 then 'no data'
+--         when pr.success_rate >= 95 then 'excellent'
+--         when pr.success_rate >= 85 then 'good'
+--         when pr.success_rate >= 70 then 'average'
+--         else 'poor'
+--     end as payment_performance
+-- from payment_metrics pm
+-- left join payment_rate pr on pm.payment_method = pr.payment_method
+-- order by pr.success_rate desc;
+
+-- -------------------------------------------------- 11
+-- create view vw_dashboard_sales as
+-- with monthly_metrics as (
+--     select
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct case when o.order_status = 'delivered' then o.order_id end) as delivered_orders,
+--         count(distinct case when o.order_status = 'cancelled' then o.order_id end) as cancelled_orders,
+--         count(distinct c.cust_id) as total_customers,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         coalesce(round(avg(oi.quantity * oi.selling_price), 2), 0) as avg_order_value
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     where o.order_status in ('delivered', 'shipped', 'pending', 'cancelled', 'returned')
+--     group by date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y')
+-- ),
+-- return_metrics as (
+--     select
+--         date_format(r.return_date, '%Y-%m-01') as return_month,
+--         count(distinct r.return_id) as total_returns
+--     from returns r
+--     group by date_format(r.return_date, '%Y-%m-01')
+-- )
+-- select
+--     mm.month_date,
+--     mm.month_name,
+--     mm.total_orders,
+--     mm.delivered_orders,
+--     mm.cancelled_orders,
+--     mm.total_customers,
+--     mm.units_sold,
+--     mm.revenue,
+--     mm.cost,
+--     mm.profit,
+--     round(100.0 * mm.profit / nullif(mm.revenue, 0), 2) as profit_margin_percent,
+--     mm.avg_order_value,
+--     round(100.0 * (mm.revenue - lag(mm.revenue) over(order by mm.month_date)) / nullif(lag(mm.revenue) over(order by mm.month_date), 0), 2) as revenue_growth_percent,
+--     round(100.0 * (mm.total_orders - lag(mm.total_orders) over(order by mm.month_date)) / nullif(lag(mm.total_orders) over(order by mm.month_date), 0), 2) as order_growth_percent,
+--     coalesce(rm.total_returns, 0) as total_returns,
+--     round(100.0 * coalesce(rm.total_returns, 0) / nullif(mm.delivered_orders, 0), 2) as return_percent
+-- from monthly_metrics mm
+-- left join return_metrics rm on mm.month_date = rm.return_month
+-- order by mm.month_date;
+
+-- --------------------------------------------------------12
+-- create view vw_dashboard_customers as
+-- with customer_metrics as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         c.signup_date,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity), 0) as total_units_purchased,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         min(o.order_date) as first_purchase_date,
+--         max(o.order_date) as last_purchase_date,
+--         datediff(curdate(), max(o.order_date)) as days_since_last_purchase
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     group by c.cust_id, c.cust_name, c.city, c.state, c.signup_date
+-- ),
+-- clv_metrics as (
+--     select
+--         *,
+--         case
+--             when total_orders = 0 then 0
+--             else round(revenue / total_orders, 2)
+--         end as avg_order_value,
+--         case
+--             when total_orders = 0 then 0
+--             else round(datediff(last_purchase_date, first_purchase_date) / 30.0, 2)
+--         end as customer_lifespan_months,
+--         case
+--             when total_orders <= 1 or total_orders = 0 then 0
+--             else round(datediff(last_purchase_date, first_purchase_date) / (total_orders - 1), 0)
+--         end as avg_days_between_purchases,
+--         round(
+--             (case when total_orders = 0 then 0 else round(revenue / total_orders, 2) end) *
+--             (case when total_orders = 0 then 0 else round(total_orders / nullif(datediff(last_purchase_date, first_purchase_date) / 30.0, 0), 2) end) *
+--             (case when total_orders = 0 then 0 else round(datediff(last_purchase_date, first_purchase_date) / 365.0, 2) end),
+--         2) as clv
+--     from customer_metrics
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     total_orders,
+--     revenue,
+--     profit,
+--     clv as customer_lifetime_value,
+--     avg_order_value,
+--     last_purchase_date,
+--     days_since_last_purchase,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when clv >= 1000000 then 'vip'
+--         when clv >= 500000 then 'gold'
+--         when clv >= 200000 then 'silver'
+--         when clv >= 50000 then 'bronze'
+--         else 'starter'
+--     end as customer_segment,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when total_orders >= 10 then 'high frequency'
+--         when total_orders >= 5 then 'medium frequency'
+--         when total_orders >= 2 then 'low frequency'
+--         else 'new'
+--     end as purchase_frequency,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when days_since_last_purchase <= 30 then 'active'
+--         when days_since_last_purchase <= 60 then 'engaged'
+--         when days_since_last_purchase <= 90 then 'at risk'
+--         else 'dormant'
+--     end as customer_health
+-- from clv_metrics
+-- order by clv desc;
+
+-- ---------------------------------------------------13
+-- create view vw_dashboard_products as
+-- with product_metrics as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.price,
+--         p.stock as current_stock,
+--         round(p.price * p.stock, 2) as inventory_value,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category, p.price, p.stock
+-- ),
+-- return_metrics as (
+--     select
+--         r.prod_id,
+--         count(distinct r.return_id) as total_returns,
+--         coalesce(sum(r.quantity), 0) as returned_units
+--     from returns r
+--     group by r.prod_id
+-- ),
+-- review_metrics as (
+--     select
+--         rv.prod_id,
+--         round(avg(rv.rating), 2) as avg_rating,
+--         count(distinct rv.review_id) as review_count
+--     from reviews rv
+--     group by rv.prod_id
+-- )
+-- select
+--     pm.prod_id,
+--     pm.prod_name,
+--     pm.category,
+--     pm.units_sold,
+--     pm.revenue,
+--     pm.profit,
+--     round(100.0 * pm.profit / nullif(pm.revenue, 0), 2) as margin_percent,
+--     pm.current_stock,
+--     pm.inventory_value,
+--     coalesce(rm.total_returns, 0) as total_returns,
+--     coalesce(rm.returned_units, 0) as returned_units,
+--     round(100.0 * coalesce(rm.returned_units, 0) / nullif(pm.units_sold, 0), 2) as return_percent,
+--     coalesce(rvm.avg_rating, 0) as avg_rating,
+--     coalesce(rvm.review_count, 0) as review_count,
+--     case
+--         when pm.units_sold = 0 then 'no sales'
+--         when pm.profit >= 100000 then 'star product'
+--         when pm.profit >= 50000 then 'good product'
+--         when pm.profit >= 0 then 'average product'
+--         else 'loss making'
+--     end as product_status,
+--     case
+--         when pm.units_sold = 0 then 'no sales'
+--         when pm.current_stock <= 10 and pm.units_sold > 0 then 'low stock'
+--         when pm.current_stock <= 25 and pm.units_sold > 0 then 'stock alert'
+--         when pm.current_stock > 50 and pm.units_sold = 0 then 'overstocked'
+--         else 'healthy'
+--     end as inventory_status,
+--     case
+--         when pm.units_sold = 0 then 'no sales'
+--         when coalesce(rm.returned_units, 0) * 1.0 / nullif(pm.units_sold, 0) >= 0.20 then 'high return'
+--         when coalesce(rm.returned_units, 0) * 1.0 / nullif(pm.units_sold, 0) >= 0.10 then 'medium return'
+--         else 'low return'
+--     end as return_category,
+--     case
+--         when coalesce(rvm.avg_rating, 0) >= 4.5 then 'top rated'
+--         when coalesce(rvm.avg_rating, 0) >= 4.0 then 'good'
+--         when coalesce(rvm.avg_rating, 0) >= 3.0 then 'average'
+--         when coalesce(rvm.avg_rating, 0) > 0 then 'poor'
+--         else 'no reviews'
+--     end as rating_status,
+--     rank() over(order by pm.revenue desc) as revenue_rank,
+--     rank() over(order by pm.profit desc) as profit_rank,
+--     rank() over(order by pm.units_sold desc) as sales_rank
+-- from product_metrics pm
+-- left join return_metrics rm on pm.prod_id = rm.prod_id
+-- left join review_metrics rvm on pm.prod_id = rvm.prod_id
+-- order by pm.revenue desc;
+
+-- ---------------------------------------------------14
+-- create view vw_dashboard_marketing as
+-- with campaign_metrics as (
+--     select
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         mc.start_date,
+--         mc.end_date,
+--         count(distinct cc.cust_id) as customers_reached,
+--         count(distinct case when cc.campaign_status = 'opened' then cc.cust_id end) as opened,
+--         count(distinct case when cc.campaign_status = 'clicked' then cc.cust_id end) as clicked,
+--         count(distinct case when cc.campaign_status = 'purchased' then cc.cust_id end) as purchased
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     group by mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget, mc.start_date, mc.end_date
+-- ),
+-- campaign_revenue as (
+--     select
+--         cc.campaign_id,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         count(distinct case when o2.order_id is not null then c.cust_id end) as repeat_buyers
+--     from customer_campaigns cc
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join marketing_campaigns mc on cc.campaign_id = mc.campaign_id
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--         and o.order_date between mc.start_date and mc.end_date
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     left join orders o2 on c.cust_id = o2.cust_id
+--         and o2.order_status in ('delivered', 'shipped')
+--         and o2.order_date > o.order_date
+--     group by cc.campaign_id
+-- )
+-- select
+--     cm.campaign_id,
+--     cm.campaign_name,
+--     cm.campaign_type,
+--     cm.budget,
+--     cm.start_date,
+--     cm.end_date,
+--     cm.customers_reached,
+--     cm.opened,
+--     cm.clicked,
+--     cm.purchased as conversions,
+--     round(100.0 * cm.opened / nullif(cm.customers_reached, 0), 2) as response_rate,
+--     round(100.0 * cm.clicked / nullif(cm.opened, 0), 2) as ctr,
+--     round(100.0 * cm.purchased / nullif(cm.clicked, 0), 2) as conversion_rate,
+--     cr.revenue,
+--     cr.profit,
+--     round(100.0 * cr.profit / nullif(cm.budget, 0), 2) as roi,
+--     round(cm.budget / nullif(cm.purchased, 0), 2) as cpa,
+--     cr.repeat_buyers,
+--     round(100.0 * cr.repeat_buyers / nullif(cm.purchased, 0), 2) as repeat_rate,
+--     round(
+--         (cr.profit / nullif(cm.budget, 0)) * 5 +
+--         (cm.purchased / nullif(cm.customers_reached, 0)) * 3 +
+--         (cr.repeat_buyers / nullif(cm.purchased, 0)) * 2,
+--     2) as campaign_score,
+--     case
+--         when cm.customers_reached = 0 then 'no data'
+--         when cr.profit / nullif(cm.budget, 0) >= 2 then 'star campaign'
+--         when cr.profit / nullif(cm.budget, 0) >= 1 then 'good campaign'
+--         when cr.profit / nullif(cm.budget, 0) >= 0.5 then 'average campaign'
+--         when cr.profit / nullif(cm.budget, 0) >= 0 then 'poor campaign'
+--         else 'loss making'
+--     end as campaign_rating
+-- from campaign_metrics cm
+-- left join campaign_revenue cr on cm.campaign_id = cr.campaign_id
+-- order by cr.profit desc;
+
+-- ----------------------------------------------------15
+-- create view vw_dashboard_executive as
+-- with revenue_metrics as (
+--     select
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as total_cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as gross_profit,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct c.cust_id) as total_customers
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     where o.order_status in ('delivered', 'shipped')
+-- ),
+-- return_metrics as (
+--     select
+--         count(distinct r.return_id) as total_returns,
+--         coalesce(round(sum(r.quantity * oi.selling_price), 2), 0) as return_revenue
+--     from returns r
+--     left join order_items oi on r.order_id = oi.order_id and r.prod_id = oi.prod_id
+-- ),
+-- refund_metrics as (
+--     select
+--         count(distinct pm.payment_id) as total_refunds,
+--         coalesce(round(sum(pm.amount), 2), 0) as refund_amount
+--     from payments pm
+--     where pm.payment_status = 'refunded'
+-- ),
+-- review_metrics as (
+--     select
+--         round(avg(rating), 2) as avg_rating
+--     from reviews
+-- ),
+-- top_product as (
+--     select
+--         p.prod_name
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_name
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_category as (
+--     select
+--         p.category
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.category
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_city as (
+--     select
+--         c.city
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by c.city
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_campaign as (
+--     select
+--         mc.campaign_name
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_name
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_payment as (
+--     select
+--         pm.payment_method
+--     from payments pm
+--     left join orders o on pm.order_id = o.order_id
+--     where pm.payment_status = 'success'
+--     group by pm.payment_method
+--     order by sum(pm.amount) desc
+--     limit 1
+-- ),
+-- clv_metrics as (
+--     select
+--         round(sum(oi.quantity * oi.selling_price) / count(distinct c.cust_id), 2) as avg_clv
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+-- )
+-- select
+--     rm.total_revenue,
+--     round(rm.total_revenue - coalesce(rt.return_revenue, 0) - coalesce(rf.refund_amount, 0), 2) as net_revenue,
+--     rm.gross_profit,
+--     round(rm.gross_profit - coalesce(rt.return_revenue, 0) - coalesce(rf.refund_amount, 0), 2) as net_profit,
+--     rm.total_orders,
+--     rm.total_customers,
+--     round(rm.total_revenue / nullif(rm.total_orders, 0), 2) as avg_order_value,
+--     clv.avg_clv as customer_lifetime_value,
+--     round(100.0 * rt.total_returns / nullif(rm.total_orders, 0), 2) as return_rate,
+--     round(100.0 * rf.total_refunds / nullif(rm.total_orders, 0), 2) as refund_rate,
+--     rv.avg_rating as avg_rating,
+--     round(100.0 * rm.gross_profit / nullif(rm.total_revenue, 0), 2) as profit_margin,
+--     tp.prod_name as top_product,
+--     tc.category as top_category,
+--     tcity.city as top_city,
+--     tcam.campaign_name as top_campaign,
+--     tpay.payment_method as best_payment_method
+-- from revenue_metrics rm
+-- cross join return_metrics rt
+-- cross join refund_metrics rf
+-- cross join review_metrics rv
+-- cross join clv_metrics clv
+-- cross join top_product tp
+-- cross join top_category tc
+-- cross join top_city tcity
+-- cross join top_campaign tcam
+-- cross join top_payment tpay;
+
+-- ------------------------------------------------- 16
+-- create view vw_monthly_customer_revenue as
+-- with monthly_customer as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         count(distinct o.order_id) as orders,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     group by c.cust_id, c.cust_name, date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y')
+-- )
+-- select
+--     month_date,
+--     month_name,
+--     cust_id,
+--     cust_name,
+--     orders,
+--     units_sold,
+--     revenue,
+--     cost,
+--     profit,
+--     case
+--         when orders = 0 then 0
+--         else round(revenue / orders, 2)
+--     end as avg_order_value,
+--     round(100.0 * profit / nullif(revenue, 0), 2) as profit_margin,
+--     round(100.0 * (revenue - lag(revenue) over(partition by cust_id order by month_date)) / 
+--           nullif(lag(revenue) over(partition by cust_id order by month_date), 0), 2) as revenue_growth,
+--     row_number() over(partition by month_date order by revenue desc) as month_rank
+-- from monthly_customer
+-- order by month_date, revenue desc;
+
+-- ----------------------------------------------17
+-- create view vw_monthly_product_revenue as
+-- with monthly_product as (
+--     select
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y'), p.prod_id, p.prod_name, p.category
+-- )
+-- select
+--     month_date,
+--     month_name,
+--     prod_id,
+--     prod_name,
+--     category,
+--     units_sold,
+--     revenue,
+--     cost,
+--     profit,
+--     case
+--         when units_sold = 0 then 0
+--         else round(revenue / units_sold, 2)
+--     end as avg_price,
+--     case
+--         when revenue = 0 then 0
+--         else round(100.0 * profit / revenue, 2)
+--     end as profit_margin,
+--     round(100.0 * (revenue - lag(revenue) over(partition by prod_id order by month_date)) / 
+--           nullif(lag(revenue) over(partition by prod_id order by month_date), 0), 2) as revenue_growth,
+--     row_number() over(partition by month_date order by revenue desc) as month_rank,
+--     rank() over(partition by category, month_date order by revenue desc) as category_rank
+-- from monthly_product
+-- where prod_id is not null
+-- order by month_date, revenue desc;
+
+-- ---------------------------------------------------18
+-- create view vw_customer_purchase_frequency as
+-- with customer_metrics as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity), 0) as total_units_purchased,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as total_profit,
+--         min(o.order_date) as first_purchase_date,
+--         max(o.order_date) as last_purchase_date,
+--         datediff(curdate(), max(o.order_date)) as days_since_last_purchase
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     group by c.cust_id, c.cust_name, c.city, c.state
+-- ),
+-- frequency_metrics as (
+--     select
+--         *,
+--         case
+--             when total_orders <= 1 then 0
+--             else round(datediff(last_purchase_date, first_purchase_date) / (total_orders - 1), 0)
+--         end as days_between_orders,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_orders / nullif(datediff(last_purchase_date, first_purchase_date) / 30.0, 0), 2)
+--         end as orders_per_month,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_units_purchased / total_orders, 2)
+--         end as avg_basket_size,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_revenue / total_orders, 2)
+--         end as avg_order_value,
+--         case
+--             when total_revenue = 0 or total_orders = 0 then 0
+--             else round(total_revenue / total_orders * (total_orders / nullif(datediff(last_purchase_date, first_purchase_date) / 30.0, 0)) * (datediff(last_purchase_date, first_purchase_date) / 365.0), 2)
+--         end as customer_lifetime_value
+--     from customer_metrics
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     total_orders,
+--     days_between_orders,
+--     orders_per_month,
+--     avg_basket_size,
+--     avg_order_value,
+--     total_revenue,
+--     total_profit,
+--     customer_lifetime_value,
+--     last_purchase_date,
+--     days_since_last_purchase,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when days_between_orders <= 15 then 'very frequent'
+--         when days_between_orders <= 30 then 'frequent'
+--         when days_between_orders <= 60 then 'occasional'
+--         when days_between_orders > 0 then 'rare'
+--         else 'inactive'
+--     end as frequency_category,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when total_orders >= 10 then 'high volume'
+--         when total_orders >= 5 then 'medium volume'
+--         when total_orders >= 2 then 'low volume'
+--         else 'new'
+--     end as volume_category
+-- from frequency_metrics
+-- order by total_orders desc;
+
+-- --------------------------------------------19
+-- create view vw_top_product_by_month as
+-- with monthly_product as (
+--     select
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         round(100.0 * (sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price)) / 
+--               nullif(sum(oi.quantity * oi.selling_price), 0), 2) as profit_margin
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y'), p.prod_id, p.prod_name, p.category
+-- ),
+-- ranked_products as (
+--     select
+--         month_date,
+--         month_name,
+--         prod_id,
+--         prod_name,
+--         category,
+--         units_sold,
+--         revenue,
+--         profit,
+--         profit_margin,
+--         rank() over(partition by month_date order by revenue desc) as revenue_rank,
+--         rank() over(partition by month_date order by units_sold desc) as sales_rank,
+--         dense_rank() over(partition by month_date order by revenue desc) as dense_revenue_rank
+--     from monthly_product
+--     where revenue > 0
+-- )
+-- select
+--     month_date,
+--     month_name,
+--     prod_id,
+--     prod_name,
+--     category,
+--     units_sold,
+--     revenue,
+--     profit,
+--     profit_margin,
+--     revenue_rank,
+--     sales_rank,
+--     dense_revenue_rank,
+--     case
+--         when revenue_rank = 1 then 'top product'
+--         when revenue_rank <= 3 then 'top 3'
+--         when revenue_rank <= 5 then 'top 5'
+--         else 'others'
+--     end as product_tier
+-- from ranked_products
+-- where revenue_rank = 1
+-- order by month_date desc;
+
+-- ---------------------------------------------20
+-- create view vw_campaign_revenue_by_month as
+-- with campaign_monthly as (
+--     select
+--         date_format(o.order_date, '%Y-%m-01') as month_date,
+--         date_format(o.order_date, '%M %Y') as month_name,
+--         mc.campaign_id,
+--         mc.campaign_name,
+--         mc.campaign_type,
+--         mc.budget,
+--         count(distinct o.order_id) as orders,
+--         count(distinct c.cust_id) as customers,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         count(distinct case when o2.order_id is not null then c.cust_id end) as repeat_buyers
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--         and o.order_date between mc.start_date and mc.end_date
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     left join orders o2 on c.cust_id = o2.cust_id
+--         and o2.order_status in ('delivered', 'shipped')
+--         and o2.order_date > o.order_date
+--     group by date_format(o.order_date, '%Y-%m-01'), date_format(o.order_date, '%M %Y'), mc.campaign_id, mc.campaign_name, mc.campaign_type, mc.budget
+-- ),
+-- monthly_roi as (
+--     select
+--         *,
+--         round(100.0 * profit / nullif(budget, 0), 2) as roi_percent,
+--         round(budget / nullif(customers, 0), 2) as cpa,
+--         round(100.0 * repeat_buyers / nullif(customers, 0), 2) as repeat_rate,
+--         row_number() over(partition by month_date order by revenue desc) as campaign_rank
+--     from campaign_monthly
+-- )
+-- select
+--     month_date,
+--     month_name,
+--     campaign_id,
+--     campaign_name,
+--     campaign_type,
+--     budget,
+--     orders,
+--     customers,
+--     units_sold,
+--     revenue,
+--     cost,
+--     profit,
+--     roi_percent,
+--     cpa,
+--     repeat_buyers,
+--     repeat_rate,
+--     campaign_rank,
+--     case
+--         when revenue = 0 then 'no revenue'
+--         when roi_percent >= 200 then 'star campaign'
+--         when roi_percent >= 100 then 'high performing'
+--         when roi_percent >= 50 then 'good campaign'
+--         when roi_percent >= 0 then 'low performing'
+--         else 'loss making'
+--     end as campaign_status
+-- from monthly_roi
+-- where revenue > 0
+-- order by month_date desc, revenue desc;
+
+-- -----------------------------------------------------------21
+-- create view vw_customer_segmentation as
+-- with customer_metrics as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         c.signup_date,
+--         count(distinct o.order_id) as total_orders,
+--         coalesce(sum(oi.quantity), 0) as total_units,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as total_profit,
+--         min(o.order_date) as first_purchase,
+--         max(o.order_date) as last_purchase,
+--         datediff(curdate(), max(o.order_date)) as days_since_last_purchase,
+--         datediff(curdate(), c.signup_date) as customer_age_days
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     group by c.cust_id, c.cust_name, c.city, c.state, c.signup_date
+-- ),
+-- frequency_metrics as (
+--     select
+--         *,
+--         case
+--             when total_orders <= 1 then 0
+--             else round(datediff(last_purchase, first_purchase) / (total_orders - 1), 0)
+--         end as days_between_orders,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_revenue / total_orders, 2)
+--         end as avg_order_value,
+--         case
+--             when total_orders = 0 then 0
+--             else round(total_revenue / nullif(datediff(last_purchase, first_purchase) / 30.0, 0), 2)
+--         end as orders_per_month
+--     from customer_metrics
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     total_orders,
+--     total_revenue,
+--     total_profit,
+--     avg_order_value,
+--     days_between_orders,
+--     orders_per_month,
+--     last_purchase,
+--     days_since_last_purchase,
+--     customer_age_days,
+--     case
+--         when total_orders = 0 then 'inactive'
+--         when total_orders >= 10 and total_revenue >= 500000 then 'vip'
+--         when total_orders >= 5 and total_revenue >= 200000 then 'loyal'
+--         when total_orders >= 3 and total_revenue >= 100000 then 'high value'
+--         when total_orders >= 2 and total_revenue >= 50000 then 'potential loyalist'
+--         when total_orders = 1 and total_revenue >= 10000 then 'new customer'
+--         when total_orders = 1 then 'one-time buyer'
+--         when days_since_last_purchase >= 180 and total_orders >= 2 then 'lost'
+--         when days_since_last_purchase >= 90 and total_orders >= 2 then 'at risk'
+--         else 'regular'
+--     end as customer_segment,
+--     case
+--         when total_orders = 0 then 'no activity'
+--         when days_since_last_purchase <= 30 then 'active'
+--         when days_since_last_purchase <= 60 then 'engaged'
+--         when days_since_last_purchase <= 90 then 'warming'
+--         when days_since_last_purchase <= 180 then 'cooling'
+--         else 'cold'
+--     end as engagement_status,
+--     case
+--         when total_orders = 0 then 'no orders'
+--         when total_orders >= 10 then 'frequent'
+--         when total_orders >= 5 then 'regular'
+--         when total_orders >= 2 then 'occasional'
+--         else 'new'
+--     end as frequency_status,
+--     row_number() over(order by total_revenue desc) as revenue_rank,
+--     row_number() over(order by total_orders desc) as frequency_rank
+-- from frequency_metrics
+-- order by total_revenue desc;
+
+-- -----------------------------------------------22
+-- create view vw_rfm_analysis as
+-- with customer_rfm_data as (
+--     select
+--         c.cust_id,
+--         c.cust_name,
+--         c.city,
+--         c.state,
+--         datediff(curdate(), coalesce(max(o.order_date), curdate())) as recency,
+--         count(distinct o.order_id) as frequency,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as monetary
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id
+--         and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by c.cust_id, c.cust_name, c.city, c.state
+-- ),
+-- rfm_scores as (
+--     select
+--         cust_id,
+--         cust_name,
+--         city,
+--         state,
+--         recency,
+--         frequency,
+--         monetary,
+--         ntile(5) over(order by recency asc) as r_score,
+--         ntile(5) over(order by frequency desc) as f_score,
+--         ntile(5) over(order by monetary desc) as m_score,
+--         concat(
+--             ntile(5) over(order by recency asc),
+--             ntile(5) over(order by frequency desc),
+--             ntile(5) over(order by monetary desc)
+--         ) as rfm_score,
+--         ntile(5) over(order by recency asc) +
+--         ntile(5) over(order by frequency desc) +
+--         ntile(5) over(order by monetary desc) as rfm_total
+--     from customer_rfm_data
+-- ),
+-- rfm_segments as (
+--     select
+--         *,
+--         case
+--             when r_score = 5 and f_score >= 4 and m_score >= 4 then 'champions'
+--             when r_score >= 4 and f_score >= 3 and m_score >= 3 then 'loyal customers'
+--             when r_score >= 3 and f_score >= 3 and m_score >= 3 then 'potential loyalists'
+--             when r_score >= 3 and f_score >= 2 and m_score >= 2 then 'need attention'
+--             when r_score <= 2 and (f_score >= 3 or m_score >= 3) then 'at risk'
+--             when r_score <= 2 and f_score <= 2 and m_score <= 2 then 'lost customers'
+--             when r_score >= 4 and f_score <= 2 then 'new customers'
+--             else 'other'
+--         end as rfm_segment,
+--         case
+--             when r_score = 5 and f_score = 5 and m_score = 5 then 'vip'
+--             when r_score >= 4 and f_score >= 4 then 'high value'
+--             when r_score >= 3 and f_score >= 3 then 'medium value'
+--             else 'low value'
+--         end as value_tier
+--     from rfm_scores
+-- )
+-- select
+--     cust_id,
+--     cust_name,
+--     city,
+--     state,
+--     recency as days_since_last_order,
+--     frequency as total_orders,
+--     monetary as total_revenue,
+--     r_score,
+--     f_score,
+--     m_score,
+--     rfm_score,
+--     rfm_total,
+--     rfm_segment,
+--     value_tier,
+--     case
+--         when r_score >= 4 then ' recent'
+--         when r_score >= 3 then ' moderate'
+--         else ' old'
+--     end as recency_label,
+--     case
+--         when f_score >= 4 then ' frequent'
+--         when f_score >= 3 then ' moderate'
+--         else ' rare'
+--     end as frequency_label,
+--     case
+--         when m_score >= 4 then ' high spender'
+--         when m_score >= 3 then ' moderate'
+--         else ' low spender'
+--     end as monetary_label
+-- from rfm_segments
+-- order by rfm_total desc, monetary desc;
+
+-- --------------------------------------------------------23
+-- create view vw_abc_product_classification as
+-- with product_metrics as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         coalesce(sum(oi.quantity), 0) as units_sold
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category
+-- ),
+-- ranked_products as (
+--     select
+--         prod_id,
+--         prod_name,
+--         category,
+--         revenue,
+--         profit,
+--         units_sold,
+--         round(100.0 * profit / nullif(revenue, 0), 2) as margin_percent,
+--         sum(revenue) over() as total_revenue,
+--         sum(revenue) over(order by revenue desc) as running_revenue,
+--         round(100.0 * sum(revenue) over(order by revenue desc) / sum(revenue) over(), 2) as running_percent,
+--         round(100.0 * revenue / sum(revenue) over(), 2) as revenue_contribution,
+--         round(100.0 * profit / sum(profit) over(), 2) as profit_contribution,
+--         row_number() over(order by revenue desc) as product_rank
+--     from product_metrics
+--     where revenue > 0
+-- )
+-- select
+--     product_rank,
+--     prod_id,
+--     prod_name,
+--     category,
+--     revenue,
+--     profit,
+--     margin_percent,
+--     units_sold,
+--     revenue_contribution,
+--     running_percent,
+--     case
+--         when running_percent <= 80 then 'a'
+--         when running_percent <= 95 then 'b'
+--         else 'c'
+--     end as abc_category,
+--     case
+--         when running_percent <= 80 then 'a - top revenue (80%)'
+--         when running_percent <= 95 then 'b - medium revenue (15%)'
+--         else 'c - low revenue (5%)'
+--     end as abc_description,
+--     case
+--         when revenue_contribution >= 10 then 'high impact'
+--         when revenue_contribution >= 5 then 'medium impact'
+--         else 'low impact'
+--     end as impact_level,
+--     dense_rank() over(partition by 
+--         case
+--             when running_percent <= 80 then 'a'
+--             when running_percent <= 95 then 'b'
+--             else 'c'
+--         end
+--         order by revenue desc
+--     ) as category_rank
+-- from ranked_products
+-- order by running_percent;
+
+-- --------------------------------------------------24
+-- create view vw_inventory_health as
+-- with product_metrics as (
+--     select
+--         p.prod_id,
+--         p.prod_name,
+--         p.category,
+--         p.price,
+--         p.stock as current_stock,
+--         round(p.price * p.stock, 2) as inventory_value,
+--         coalesce(sum(oi.quantity), 0) as units_sold,
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as profit,
+--         max(o.order_date) as last_sale_date,
+--         datediff(curdate(), max(o.order_date)) as days_since_last_sale
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id
+--         and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_id, p.prod_name, p.category, p.price, p.stock
+-- ),
+-- return_metrics as (
+--     select
+--         r.prod_id,
+--         coalesce(sum(r.quantity), 0) as returned_units,
+--         coalesce(round(sum(r.quantity * oi.selling_price), 2), 0) as return_revenue
+--     from returns r
+--     left join order_items oi on r.order_id = oi.order_id and r.prod_id = oi.prod_id
+--     group by r.prod_id
+-- ),
+-- inventory_turnover as (
+--     select
+--         prod_id,
+--         case
+--             when current_stock = 0 and units_sold > 0 then units_sold
+--             when current_stock = 0 and units_sold = 0 then 0
+--             else round(units_sold / current_stock, 2)
+--         end as turnover_ratio,
+--         case
+--             when units_sold = 0 then 0
+--             else round(current_stock / (units_sold / 30.0), 0)
+--         end as days_of_inventory
+--     from product_metrics
+-- ),
+-- health_calc as (
+--     select
+--         pm.prod_id,
+--         pm.prod_name,
+--         pm.category,
+--         pm.price,
+--         pm.current_stock,
+--         pm.inventory_value,
+--         pm.units_sold,
+--         pm.revenue,
+--         pm.profit,
+--         pm.days_since_last_sale,
+--         coalesce(rm.returned_units, 0) as returned_units,
+--         coalesce(it.turnover_ratio, 0) as turnover_ratio,
+--         coalesce(it.days_of_inventory, 0) as days_of_inventory,
+--         case
+--             when pm.current_stock = 0 then 0
+--             else round(pm.units_sold / pm.current_stock, 2)
+--         end as turnover,
+--         case
+--             when pm.days_since_last_sale = 0 then 100
+--             else round(100 - (pm.days_since_last_sale / 3.0), 2)
+--         end as recency_score,
+--         case
+--             when coalesce(rm.returned_units, 0) = 0 then 50
+--             else round(50 - (coalesce(rm.returned_units, 0) * 2.0), 2)
+--         end as return_score,
+--         round(
+--             (case when pm.current_stock = 0 then 0 else pm.units_sold / pm.current_stock end) * 2 +
+--             (case when pm.days_since_last_sale = 0 then 100 else 100 - (pm.days_since_last_sale / 3.0) end) +
+--             (case when coalesce(rm.returned_units, 0) = 0 then 50 else 50 - (coalesce(rm.returned_units, 0) * 2.0) end),
+--         2) as health_score
+--     from product_metrics pm
+--     left join return_metrics rm on pm.prod_id = rm.prod_id
+--     left join inventory_turnover it on pm.prod_id = it.prod_id
+-- )
+-- select
+--     prod_id,
+--     prod_name,
+--     category,
+--     price,
+--     current_stock,
+--     inventory_value,
+--     units_sold,
+--     revenue,
+--     profit,
+--     days_since_last_sale,
+--     returned_units,
+--     round(100.0 * coalesce(returned_units, 0) / nullif(units_sold, 0), 2) as return_percent,
+--     turnover_ratio,
+--     days_of_inventory,
+--     case
+--         when current_stock = 0 and units_sold = 0 then 'no stock'
+--         when current_stock = 0 and units_sold > 0 then 'critical - reorder'
+--         when days_since_last_sale >= 180 then 'dead stock'
+--         when days_since_last_sale >= 90 then 'slow moving'
+--         when days_since_last_sale >= 30 then 'normal'
+--         else 'healthy'
+--     end as stock_health,
+--     case
+--         when current_stock > 100 and units_sold = 0 then 'overstocked'
+--         when current_stock > 100 and days_since_last_sale > 60 then 'overstocked'
+--         when current_stock = 0 and units_sold > 0 then 'reorder'
+--         when current_stock <= 10 and units_sold > 0 then 'critical reorder'
+--         when current_stock <= 25 and units_sold > 0 then 'low stock'
+--         when current_stock > 100 and units_sold > 0 then 'healthy stock'
+--         else 'normal'
+--     end as stock_status,
+--     case
+--         when current_stock = 0 then 0
+--         else round(100.0 * units_sold / (units_sold + current_stock), 2)
+--     end as sell_through_rate,
+--     health_score,
+--     case
+--         when (case when current_stock = 0 then 0 else units_sold / current_stock end) * 2 >= 6
+--             and days_since_last_sale < 30 then 'excellent health'
+--         when health_score >= 70 then 'good health'
+--         when health_score >= 50 then 'average health'
+--         when health_score >= 30 then 'poor health'
+--         else 'critical health'
+--     end as health_status
+-- from health_calc
+-- order by health_score desc;
+
+-- -------------------------------------------------------------25
+-- create view vw_executive_scorecard as
+-- with revenue_metrics as (
+--     select
+--         coalesce(round(sum(oi.quantity * oi.selling_price), 2), 0) as total_revenue,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - 
+--                   coalesce(sum(r.quantity * oi.selling_price), 0) - 
+--                   coalesce(sum(case when pm.payment_status = 'refunded' then pm.amount else 0 end), 0), 2), 0) as net_revenue,
+--         coalesce(round(sum(oi.quantity * p.cost_price), 2), 0) as total_cost,
+--         coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0) as gross_profit,
+--         count(distinct o.order_id) as total_orders,
+--         count(distinct c.cust_id) as total_customers
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     left join products p on oi.prod_id = p.prod_id
+--     left join returns r on oi.order_id = r.order_id and oi.prod_id = r.prod_id
+--     left join payments pm on o.order_id = pm.order_id
+--     where o.order_status in ('delivered', 'shipped')
+-- ),
+-- return_metrics as (
+--     select
+--         count(distinct r.return_id) as total_returns,
+--         coalesce(round(sum(r.quantity * oi.selling_price), 2), 0) as return_revenue
+--     from returns r
+--     left join order_items oi on r.order_id = oi.order_id and r.prod_id = oi.prod_id
+-- ),
+-- refund_metrics as (
+--     select
+--         count(distinct pm.payment_id) as total_refunds,
+--         coalesce(round(sum(pm.amount), 2), 0) as refund_amount
+--     from payments pm
+--     where pm.payment_status = 'refunded'
+-- ),
+-- review_metrics as (
+--     select
+--         round(avg(rating), 2) as avg_rating
+--     from reviews
+-- ),
+-- top_product as (
+--     select p.prod_name
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id and o.order_status in ('delivered', 'shipped')
+--     group by p.prod_name
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_category as (
+--     select p.category
+--     from products p
+--     left join order_items oi on p.prod_id = oi.prod_id
+--     left join orders o on oi.order_id = o.order_id and o.order_status in ('delivered', 'shipped')
+--     group by p.category
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_city as (
+--     select c.city
+--     from customers c
+--     left join orders o on c.cust_id = o.cust_id and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by c.city
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- top_campaign as (
+--     select mc.campaign_name
+--     from marketing_campaigns mc
+--     left join customer_campaigns cc on mc.campaign_id = cc.campaign_id
+--     left join customers c on cc.cust_id = c.cust_id
+--     left join orders o on c.cust_id = o.cust_id and o.order_status in ('delivered', 'shipped')
+--     left join order_items oi on o.order_id = oi.order_id
+--     group by mc.campaign_name
+--     order by sum(oi.quantity * oi.selling_price) desc
+--     limit 1
+-- ),
+-- clv_metrics as (
+--     select
+--         round(sum(oi.quantity * oi.selling_price) / nullif(count(distinct c.cust_id), 0), 2) as avg_clv,
+--         round(sum(oi.quantity * oi.selling_price) / nullif(count(distinct o.order_id), 0), 2) as avg_order_value
+--     from orders o
+--     left join customers c on o.cust_id = c.cust_id
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+-- ),
+-- monthly_growth as (
+--     select
+--         round(100.0 * (sum(case when month(order_date) = month(curdate()) then oi.quantity * oi.selling_price else 0 end) -
+--                       sum(case when month(order_date) = month(date_sub(curdate(), interval 1 month)) then oi.quantity * oi.selling_price else 0 end)) /
+--               nullif(sum(case when month(order_date) = month(date_sub(curdate(), interval 1 month)) then oi.quantity * oi.selling_price else 0 end), 0), 2) as monthly_growth
+--     from orders o
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--       and order_date >= date_sub(curdate(), interval 2 month)
+-- ),
+-- quarterly_growth as (
+--     select
+--         round(100.0 * (sum(case when quarter(order_date) = quarter(curdate()) then oi.quantity * oi.selling_price else 0 end) -
+--                       sum(case when quarter(order_date) = quarter(date_sub(curdate(), interval 1 quarter)) then oi.quantity * oi.selling_price else 0 end)) /
+--               nullif(sum(case when quarter(order_date) = quarter(date_sub(curdate(), interval 1 quarter)) then oi.quantity * oi.selling_price else 0 end), 0), 2) as quarterly_growth
+--     from orders o
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--       and order_date >= date_sub(curdate(), interval 2 quarter)
+-- ),
+-- ytd_revenue as (
+--     select
+--         round(sum(oi.quantity * oi.selling_price), 2) as ytd_revenue
+--     from orders o
+--     left join order_items oi on o.order_id = oi.order_id
+--     where o.order_status in ('delivered', 'shipped')
+--       and year(order_date) = year(curdate())
+-- ),
+-- revenue_target as (
+--     select round(100.0 * (select ytd_revenue from ytd_revenue) / 10000000, 2) as revenue_target_percent
+-- ),
+-- health_score as (
+--     select
+--         round(
+--             (case when (select total_revenue from revenue_metrics) > 10000000 then 25 else (select total_revenue from revenue_metrics) / 10000000 * 25 end) +
+--             (case when (select total_customers from revenue_metrics) > 2000 then 20 else (select total_customers from revenue_metrics) / 2000 * 20 end) +
+--             (case when (select gross_profit from revenue_metrics) / nullif((select total_revenue from revenue_metrics), 0) > 0.30 then 20 else 10 end) +
+--             (case when (select avg_rating from review_metrics) >= 4.0 then 20 else 10 end) +
+--             (case when (select total_returns from return_metrics) / nullif((select total_orders from revenue_metrics), 0) < 0.05 then 15 else 5 end),
+--         2) as health_score
+-- )
+-- select
+--     rm.total_revenue,
+--     rm.net_revenue,
+--     rm.total_orders,
+--     rm.total_customers,
+--     rm.gross_profit,
+--     round(100.0 * rm.gross_profit / nullif(rm.total_revenue, 0), 2) as profit_margin,
+--     clv.avg_order_value,
+--     clv.avg_clv as customer_lifetime_value,
+--     round(100.0 * rt.total_returns / nullif(rm.total_orders, 0), 2) as return_rate,
+--     round(100.0 * rf.total_refunds / nullif(rm.total_orders, 0), 2) as refund_rate,
+--     rv.avg_rating,
+--     tp.prod_name as top_product,
+--     tc.category as top_category,
+--     tcity.city as top_city,
+--     tcam.campaign_name as best_campaign,
+--     mg.monthly_growth,
+--     qg.quarterly_growth,
+--     ytd.ytd_revenue,
+--     rtg.revenue_target_percent,
+--     hs.health_score,
+--     case
+--         when hs.health_score >= 90 then 'excellent'
+--         when hs.health_score >= 75 then 'good'
+--         when hs.health_score >= 60 then 'average'
+--         when hs.health_score >= 40 then 'below average'
+--         else 'critical'
+--     end as business_status
+-- from revenue_metrics rm
+-- cross join return_metrics rt
+-- cross join refund_metrics rf
+-- cross join review_metrics rv
+-- cross join clv_metrics clv
+-- cross join top_product tp
+-- cross join top_category tc
+-- cross join top_city tcity
+-- cross join top_campaign tcam
+-- cross join monthly_growth mg
+-- cross join quarterly_growth qg
+-- cross join ytd_revenue ytd
+-- cross join revenue_target rtg
+-- cross join health_score hs;
+
+-- --------------------------------------------- funtions
+-- delimiter //
+
+-- create function fn_profit(p_order_id int)
+-- returns decimal(10,2)
+-- deterministic
+-- begin
+--     declare v_profit decimal(10,2);
+--     
+--     select coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price), 2), 0)
+--     into v_profit
+--     from order_items oi
+--     join products p on oi.prod_id = p.prod_id
+--     where oi.order_id = p_order_id;
+--     
+--     return v_profit;
+-- end //
+
+-- delimiter ;
+
+-- ---------------------------------------------------2
+-- delimiter //
+
+-- create function fn_order_value(o_order_id int)
+-- returns decimal(10,5)
+-- deterministic
+-- begin
+-- 	declare v_value decimal(10,2);
+--     
+--     select coalesce(round(sum(oi.quantity * oi.selling_price),2),0)
+--     into v_value
+--     from order_items oi
+--     where oi.order_id = o_order_id;
+--     return v_value;
+-- end //
+-- delimiter ;
+
+-- -------------------------------------------------3
+-- delimiter //
+-- create function fn_customer_revenue(c_cust_id int)
+-- returns decimal(10,2)
+-- deterministic
+-- begin
+-- 	declare c_revenue decimal(10,2);
+--     
+--     select coalesce(round(sum(oi.quantity * oi.selling_price),2),0)
+-- 	into c_revenue
+--     from order_items oi
+--     where oi.order_id = c_cust_id;
+--     return c_revenue ;
+-- end //
+-- delimiter ;
+
+-- -------------------------------------------------4
+-- delimiter //
+-- create function fn_customer_profit(p_cust_id int)
+-- returns decimal(10,2)
+-- deterministic
+-- begin
+-- 	declare p_profit decimal(10,2);
+--     select coalesce(round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price),2),0)
+--     into p_profit
+--     from order_items oi
+--     inner join products p on p.prod_id = oi.prod_id
+--     where oi.order_id = p_cust_id;
+--     return p_profit;
+-- end //
+-- delimiter ;
+
+-- ----------------------------------------------------5
+-- delimiter //
+-- create function fn_profit_margin(o_order_id int)
+-- returns decimal(10,2)
+-- deterministic
+-- begin
+-- 	declare o_margin decimal(10,2);
+--     with cust_revenue as(
+-- 		select
+-- 			round(sum(oi.quantity * oi.selling_price),2) as revenue,
+--             round(sum(oi.quantity * oi.selling_price) - sum(oi.quantity * p.cost_price),2) as profit
+-- 		from order_items oi
+--         join products p on oi.prod_id = p.prod_id
+-- 		)
+--         select
+-- 			case
+-- 				when revenue = 0 then 0
+-- 				else round((profit/ revenue)*100 ,2)
+-- 			end
+-- 		from cust_revenue
+--         into o_margin;
+--         return o_margin;
+-- end //
+-- delimiter ;
+
+--         

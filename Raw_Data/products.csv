@@ -1,0 +1,501 @@
+﻿prod_id,prod_name,category,brand,price,cost_price,stock
+1,Roadster Jacket,Fashion,Roadster,42758.8,32531.93,65
+2,Skybags Laptop Sleeve,Accessories,Skybags,41548.11,32778.75,38
+3,Dove Perfume,Beauty,Dove,33285.93,22702.27,106
+4,Aashirvaad Dry Fruits,Grocery,Aashirvaad,50637.37,41420.56,279
+5,Saffola Coffee,Grocery,Saffola,4166.69,3599.69,261
+6,Oswaal Novel,Books,Oswaal,526.96,350.09,459
+7,HP Bluetooth Speaker,Electronics,HP,67601.54,46815.5,392
+8,Dove Lipstick,Beauty,Dove,69154,47137.08,304
+9,Mamaearth Lipstick,Beauty,Mamaearth,44719.93,31430.62,28
+10,American Tourister Backpack,Accessories,American Tourister,18044.88,14596.09,386
+11,Skybags Sunglasses,Accessories,Skybags,28206.99,19378.56,183
+12,HarperCollins Dictionary,Books,HarperCollins,47161.97,33632.49,1
+13,LG Iron,Home Appliances,LG,37653.25,23982.91,364
+14,Arihant Self Help Book,Books,Arihant,9287.64,5819.62,383
+15,SG Yoga Mat,Sports,SG,25454.61,18440.64,468
+16,Allen Solly Shirt,Fashion,Allen Solly,48911.61,37610.66,298
+17,Nike T-Shirt,Fashion,Nike,30050.87,19583.33,193
+18,Allen Solly Jeans,Fashion,Allen Solly,34481.8,23255.4,63
+19,Mamaearth Shampoo,Beauty,Mamaearth,57651.49,38458.93,276
+20,Urban Ladder Study Table,Furniture,Urban Ladder,43018.96,30341.58,36
+21,American Tourister Travel Bag,Accessories,American Tourister,20212.72,15610.01,59
+22,Dell Smartphone,Electronics,Dell,28050.37,23555.74,185
+23,Penguin Biography,Books,Penguin,44488.7,34027.31,377
+24,HP Smartwatch,Electronics,HP,47790.78,40472.5,171
+25,Apple Bluetooth Speaker,Electronics,Apple,36594.95,31744.82,369
+26,Adidas Shirt,Fashion,Adidas,22361.74,15654.54,378
+27,Dove Shampoo,Beauty,Dove,8139.84,5596.88,276
+28,Nike Hoodie,Fashion,Nike,47773.24,30779.6,27
+29,Urban Ladder Bookshelf,Furniture,Urban Ladder,25963.94,18309.96,64
+30,Yonex Cricket Bat,Sports,Yonex,64714.87,47554.07,1
+31,Nestle Cooking Oil,Grocery,Nestle,6110.51,4460.61,75
+32,Oswaal Dictionary,Books,Oswaal,21946.03,17611.91,358
+33,Allen Solly Dress,Fashion,Allen Solly,67618.66,49735.78,423
+34,Urban Ladder Office Chair,Furniture,Urban Ladder,58971.46,48659.48,70
+35,Prestige Ceiling Fan,Home Appliances,Prestige,28025.01,21628.22,478
+36,Nilkamal Study Table,Furniture,Nilkamal,34197.44,26746.61,163
+37,HarperCollins Novel,Books,HarperCollins,4365.39,3363.79,36
+38,Funskool Action Figure,Toys,Funskool,41096.67,31621.32,428
+39,Fortune Green Tea,Grocery,Fortune,25429.29,21322.64,359
+40,Sony Mouse,Electronics,Sony,53884.61,35621.53,48
+41,Havells Vacuum Cleaner,Home Appliances,Havells,8539.08,6930.31,116
+42,Funskool Action Figure,Toys,Funskool,59425.46,43754.84,316
+43,Havells Ceiling Fan,Home Appliances,Havells,13098.7,8488.32,398
+44,Wildcraft Backpack,Accessories,Wildcraft,4692.16,3138.99,373
+45,Skybags Travel Bag,Accessories,Skybags,10927.11,8032.13,143
+46,Roadster Hoodie,Fashion,Roadster,57395.44,47879.09,315
+47,Nike Hoodie,Fashion,Nike,27458.24,20034.15,493
+48,Saffola Coffee,Grocery,Saffola,51640.86,35241.69,172
+49,Havells Iron,Home Appliances,Havells,31032.09,25421.75,140
+50,Fortune Honey,Grocery,Fortune,14986.08,10989.77,33
+51,Lego Remote Car,Toys,Lego,31085.91,23952.51,460
+52,HarperCollins Novel,Books,HarperCollins,38404.28,25194,7
+53,Nivia Cricket Bat,Sports,Nivia,9537.34,6970.33,90
+54,Oswaal Dictionary,Books,Oswaal,49052.23,31421.64,142
+55,Funskool Building Blocks,Toys,Funskool,38805.12,32612.54,278
+56,American Tourister Wallet,Accessories,American Tourister,39437.82,25990.5,467
+57,Urban Ladder Sofa,Furniture,Urban Ladder,24123.7,18804.28,68
+58,Dove Face Wash,Beauty,Dove,24981.83,20257.75,384
+59,Urban Ladder Bedside Table,Furniture,Urban Ladder,5356.36,3431.26,141
+60,Godrej Study Table,Furniture,Godrej,47712.24,32260.03,336
+61,L'Oreal Conditioner,Beauty,L'Oreal,40317.15,30152.53,125
+62,Realme Tablet,Electronics,Realme,3396.48,2816.35,123
+63,Oswaal Biography,Books,Oswaal,13717.87,8637.92,438
+64,Godrej Study Table,Furniture,Godrej,32570.49,25399.37,415
+65,Saffola Coffee,Grocery,Saffola,18830.4,12700.41,185
+66,Dell Laptop,Electronics,Dell,60697.1,47928.81,1
+67,Philips Ceiling Fan,Home Appliances,Philips,69764.41,49442.83,405
+68,Realme Bluetooth Speaker,Electronics,Realme,29016.33,19216.64,189
+69,Bajaj Mixer Grinder,Home Appliances,Bajaj,55892.75,47761.22,247
+70,Nivia Cricket Bat,Sports,Nivia,76096.8,48497.05,375
+71,boAt Mouse,Electronics,boAt,77395.44,49333.29,438
+72,Arihant Self Help Book,Books,Arihant,30661.34,21016.74,354
+73,Bajaj Mixer Grinder,Home Appliances,Bajaj,24160.75,19689.75,210
+74,Hasbro Puzzle,Toys,Hasbro,47030.07,33481.15,437
+75,IKEA Study Table,Furniture,IKEA,38376.39,32005.91,27
+76,Funskool Remote Car,Toys,Funskool,58345.14,42251.34,353
+77,Nestle Pasta,Grocery,Nestle,3303.49,2375.69,26
+78,Cosco Dumbbells,Sports,Cosco,16552.37,11971.63,417
+79,Saffola Pasta,Grocery,Saffola,26724.26,22684.83,159
+80,Mamaearth Face Wash,Beauty,Mamaearth,27964.86,17717.33,296
+81,Nestle Dry Fruits,Grocery,Nestle,40586.88,27945.25,342
+82,Hasbro Remote Car,Toys,Hasbro,31315.95,19601.23,183
+83,Sony Mouse,Electronics,Sony,46803.85,34302.36,143
+84,Nestle Honey,Grocery,Nestle,8899.09,6968.72,52
+85,Sony Power Bank,Electronics,Sony,24026.95,17486.53,346
+86,Puma Jeans,Fashion,Puma,58251.22,41998.5,356
+87,Levis T-Shirt,Fashion,Levis,72507.81,46866.58,420
+88,Godrej Bookshelf,Furniture,Godrej,58177.09,42077.69,130
+89,Fastrack Backpack,Accessories,Fastrack,55323.06,45941.02,264
+90,Oswaal Notebook,Books,Oswaal,44643.81,37332.58,220
+91,Lego Building Blocks,Toys,Lego,65013.8,48133.16,91
+92,Hasbro Building Blocks,Toys,Hasbro,51730.92,32803.43,89
+93,Allen Solly Sneakers,Fashion,Allen Solly,29766.35,18715.63,426
+94,Saffola Dry Fruits,Grocery,Saffola,30151.25,22098.77,392
+95,Roadster Shirt,Fashion,Roadster,57200.96,37926.81,345
+96,Puma Sneakers,Fashion,Puma,9958.76,6502.68,481
+97,Adidas Hoodie,Fashion,Adidas,4233.71,3053.52,204
+98,Godrej Office Chair,Furniture,Godrej,18218.14,11799.59,148
+99,Prestige Microwave Oven,Home Appliances,Prestige,33665.95,26832,470
+100,Nivia Cycling Helmet,Sports,Nivia,3345.56,2407.1,256
+101,Penguin Dictionary,Books,Penguin,54376.46,39916.5,467
+102,LG Air Fryer,Home Appliances,LG,31726.48,27406.78,260
+103,Nestle Green Tea,Grocery,Nestle,66048.06,43294.77,495
+104,Tata Honey,Grocery,Tata,26471.68,22636.52,336
+105,Nivea Lipstick,Beauty,Nivea,17482.68,12756.21,20
+106,Skybags Travel Bag,Accessories,Skybags,62995.72,46268.22,21
+107,Saffola Dry Fruits,Grocery,Saffola,69499.79,45261.49,447
+108,Nestle Green Tea,Grocery,Nestle,52814.26,42422.79,335
+109,Sony Mouse,Electronics,Sony,62833.21,40452.96,375
+110,LG Electric Kettle,Home Appliances,LG,33243.33,28018.56,330
+111,Funskool Puzzle,Toys,Funskool,2565.9,1626.22,39
+112,Nivia Football,Sports,Nivia,72168.3,47693.43,493
+113,Funskool Puzzle,Toys,Funskool,5679.4,3622.76,471
+114,Lego Puzzle,Toys,Lego,8639.81,5405.86,428
+115,L'Oreal Face Wash,Beauty,L'Oreal,8015.45,5026.13,76
+116,Wildcraft Travel Bag,Accessories,Wildcraft,52472.45,39294.53,56
+117,Penguin Dictionary,Books,Penguin,23852.8,15488.41,485
+118,Samsung Keyboard,Electronics,Samsung,10121.64,6708.11,222
+119,Funskool Remote Car,Toys,Funskool,36907.67,23740.87,41
+120,Dove Conditioner,Beauty,Dove,27988.64,20937.8,384
+121,Tata Cooking Oil,Grocery,Tata,34797.27,24095.92,222
+122,Xiaomi Monitor,Electronics,Xiaomi,17961.13,14770.46,15
+123,Lego Board Game,Toys,Lego,40131.82,33620.28,462
+124,Samsung Wireless Earbuds,Electronics,Samsung,59507.93,48316.84,78
+125,L'Oreal Perfume,Beauty,L'Oreal,20552.68,15742.18,46
+126,boAt Bluetooth Speaker,Electronics,boAt,41477.97,33275.64,73
+127,Godrej Bookshelf,Furniture,Godrej,12940.89,9920.21,14
+128,Xiaomi Power Bank,Electronics,Xiaomi,50985.56,40227.27,226
+129,Levis Dress,Fashion,Levis,69200.06,44861.15,427
+130,Nike Jacket,Fashion,Nike,74547.97,47944.13,135
+131,Arihant Notebook,Books,Arihant,2212.9,1836,146
+132,Wildcraft Laptop Sleeve,Accessories,Wildcraft,9117.53,6743.7,488
+133,Cosco Cycling Helmet,Sports,Cosco,37294.48,28965.67,419
+134,Roadster Kurta,Fashion,Roadster,40935.96,34140.36,317
+135,Nivea Conditioner,Beauty,Nivea,1724.33,1309.12,129
+136,Arihant Novel,Books,Arihant,42678.9,27264.57,377
+137,Hasbro Building Blocks,Toys,Hasbro,53280.99,40074.24,94
+138,Wildcraft Wallet,Accessories,Wildcraft,10311.4,6933.46,298
+139,Funskool Building Blocks,Toys,Funskool,47795.94,37245.55,48
+140,SG Cycling Helmet,Sports,SG,49947.55,38205.05,421
+141,Adidas Shirt,Fashion,Adidas,21524.53,15742.2,11
+142,Skybags Laptop Sleeve,Accessories,Skybags,57060.9,36798.73,1
+143,Nike Shirt,Fashion,Nike,46406.97,39342.36,329
+144,SG Badminton Racket,Sports,SG,52723.42,36289.67,119
+145,SG Cricket Bat,Sports,SG,65180.28,41698.25,416
+146,Godrej Bedside Table,Furniture,Godrej,1876.22,1193.46,356
+147,Adidas Shirt,Fashion,Adidas,62582.17,48054.41,438
+148,IKEA Sofa,Furniture,IKEA,40274.5,30501.79,366
+149,Yonex Dumbbells,Sports,Yonex,41444.12,30952.66,461
+150,Nike Dress,Fashion,Nike,17813.22,13869.69,13
+151,Nivea Body Lotion,Beauty,Nivea,40806.78,34230.5,57
+152,American Tourister Backpack,Accessories,American Tourister,48489.62,35119.13,243
+153,Yonex Cricket Bat,Sports,Yonex,12950.01,10650.28,53
+154,Godrej Bedside Table,Furniture,Godrej,59591.01,46812.2,88
+155,Cosco Cycling Helmet,Sports,Cosco,21577.02,15738.03,454
+156,Tata Honey,Grocery,Tata,4766.87,4108.24,90
+157,Funskool Action Figure,Toys,Funskool,24157.55,15515.13,206
+158,Yonex Yoga Mat,Sports,Yonex,37027.15,26598.65,238
+159,Realme Smartphone,Electronics,Realme,28504.19,20538.13,486
+160,Urban Ladder Sofa,Furniture,Urban Ladder,6171.13,5330.19,112
+161,HarperCollins Self Help Book,Books,HarperCollins,41851.53,32495.93,21
+162,Realme Smartwatch,Electronics,Realme,39491.66,25816.5,386
+163,L'Oreal Shampoo,Beauty,L'Oreal,26962.09,22961.96,179
+164,Fastrack Wallet,Accessories,Fastrack,34615.01,25129.44,405
+165,HP Bluetooth Speaker,Electronics,HP,23783.29,16882.77,485
+166,Nilkamal Office Chair,Furniture,Nilkamal,63628.18,47904.82,305
+167,Cosco Cycling Helmet,Sports,Cosco,41414.84,31902.04,233
+168,Nilkamal Study Table,Furniture,Nilkamal,10552.36,6908.01,340
+169,Saffola Cooking Oil,Grocery,Saffola,5848.57,3658.51,421
+170,Nivia Cricket Bat,Sports,Nivia,47417.8,34892.69,433
+171,Bajaj Iron,Home Appliances,Bajaj,1671.68,1066.58,443
+172,Lenovo Monitor,Electronics,Lenovo,50223.02,35265.15,297
+173,Hasbro Action Figure,Toys,Hasbro,27439.22,18350.16,434
+174,Penguin Biography,Books,Penguin,60844.33,43417.42,113
+175,SG Cricket Bat,Sports,SG,33355.68,27324.89,26
+176,IKEA Bookshelf,Furniture,IKEA,56444.43,45928.99,493
+177,Levis Jacket,Fashion,Levis,61770.96,43273.47,327
+178,Urban Ladder Sofa,Furniture,Urban Ladder,28153.91,23555.58,312
+179,L'Oreal Perfume,Beauty,L'Oreal,67117.06,46308.32,101
+180,Wildcraft Travel Bag,Accessories,Wildcraft,1634.39,1328.24,449
+181,Penguin Exam Guide,Books,Penguin,10314.38,7641.31,309
+182,LG Ceiling Fan,Home Appliances,LG,23488.34,19130.32,201
+183,SG Dumbbells,Sports,SG,38143.83,28806.39,50
+184,Prestige Iron,Home Appliances,Prestige,72561.99,48363.77,34
+185,Wildcraft Backpack,Accessories,Wildcraft,62141.13,45323.4,231
+186,Nilkamal Sofa,Furniture,Nilkamal,27804.31,22215.4,255
+187,L'Oreal Sunscreen,Beauty,L'Oreal,28094.97,21569.39,488
+188,Nivea Sunscreen,Beauty,Nivea,35044.22,29347.3,282
+189,Havells Water Purifier,Home Appliances,Havells,15901.83,11880.57,301
+190,LG Vacuum Cleaner,Home Appliances,LG,62100.75,40499.62,475
+191,Aashirvaad Coffee,Grocery,Aashirvaad,20592.98,13090.74,443
+192,Urban Ladder Bookshelf,Furniture,Urban Ladder,2354.9,1781.38,77
+193,Sony Laptop,Electronics,Sony,32634.32,20925.36,304
+194,IKEA Bookshelf,Furniture,IKEA,58872.72,42695.23,478
+195,Tata Green Tea,Grocery,Tata,52500.92,36754.17,113
+196,Wildcraft Backpack,Accessories,Wildcraft,15325.69,11263.56,347
+197,Nestle Dry Fruits,Grocery,Nestle,40254.1,33967.46,6
+198,Tata Pasta,Grocery,Tata,53506.05,41740.04,328
+199,Lego Building Blocks,Toys,Lego,29070.14,19747.87,148
+200,Godrej Bookshelf,Furniture,Godrej,61823.27,40678.95,111
+201,Arihant Dictionary,Books,Arihant,10690.02,8528.63,205
+202,Sony Monitor,Electronics,Sony,52033.21,44443.43,403
+203,Puma Dress,Fashion,Puma,14177.71,10930.93,206
+204,Dove Sunscreen,Beauty,Dove,54813.27,39005.05,446
+205,Yonex Dumbbells,Sports,Yonex,29592.62,24839.26,340
+206,Penguin Biography,Books,Penguin,34370.76,28291.65,9
+207,Allen Solly Shirt,Fashion,Allen Solly,2874.47,2469.18,465
+208,boAt Bluetooth Speaker,Electronics,boAt,38496.5,24839.17,249
+209,boAt Wireless Earbuds,Electronics,boAt,29204.12,24576.17,376
+210,Urban Ladder Bookshelf,Furniture,Urban Ladder,6230.67,5040.03,261
+211,Skybags Sunglasses,Accessories,Skybags,26094.5,21949.36,190
+212,HarperCollins Exam Guide,Books,HarperCollins,54891.5,34951.21,197
+213,Havells Water Purifier,Home Appliances,Havells,3847.88,3018.57,237
+214,Adidas Hoodie,Fashion,Adidas,54913.89,41784.57,45
+215,Philips Iron,Home Appliances,Philips,40910.04,28834.24,28
+216,Philips Air Fryer,Home Appliances,Philips,18573.96,13454.33,52
+217,Samsung Tablet,Electronics,Samsung,12428.57,9432.02,95
+218,Funskool Building Blocks,Toys,Funskool,40828.5,27604.28,433
+219,Wildcraft Sunglasses,Accessories,Wildcraft,5812.38,4818.79,50
+220,Lakme Perfume,Beauty,Lakme,9743.81,7515.74,35
+221,HP Power Bank,Electronics,HP,10179.54,8306.69,53
+222,Puma Hoodie,Fashion,Puma,49355.29,32151.6,162
+223,Skybags Sunglasses,Accessories,Skybags,7502.51,5527.53,174
+224,Lenovo Laptop,Electronics,Lenovo,15653.45,11757.25,1
+225,Nike T-Shirt,Fashion,Nike,8238.74,6536.25,55
+226,Saffola Honey,Grocery,Saffola,14175.42,11896.09,434
+227,Sony Laptop,Electronics,Sony,46396.39,29454.95,198
+228,Tata Green Tea,Grocery,Tata,19499.12,15218.05,442
+229,Yonex Badminton Racket,Sports,Yonex,33217.72,25897.15,329
+230,Mamaearth Face Wash,Beauty,Mamaearth,6634.6,4531.74,241
+231,Godrej Study Table,Furniture,Godrej,37713.86,27532.63,293
+232,Levis Jacket,Fashion,Levis,24723.96,17614.23,326
+233,Lego Puzzle,Toys,Lego,38545.32,26102.28,217
+234,Cosco Yoga Mat,Sports,Cosco,2281.94,1686.52,27
+235,Urban Ladder Bookshelf,Furniture,Urban Ladder,698.73,512.15,392
+236,Realme Keyboard,Electronics,Realme,18166.18,15460.33,397
+237,LG Electric Kettle,Home Appliances,LG,74567.78,48803.7,322
+238,Penguin Dictionary,Books,Penguin,10699.35,7805.67,323
+239,American Tourister Wallet,Accessories,American Tourister,77167.19,49101.46,2
+240,Wildcraft Travel Bag,Accessories,Wildcraft,76207.35,47712.96,26
+241,HarperCollins Self Help Book,Books,HarperCollins,59668.56,41984.54,286
+242,Skybags Wallet,Accessories,Skybags,51613.89,35266.83,214
+243,Urban Ladder Sofa,Furniture,Urban Ladder,4231.33,2929.74,61
+244,Nike Jacket,Fashion,Nike,43473.07,27407.89,36
+245,Levis T-Shirt,Fashion,Levis,4850.04,3922.72,475
+246,Penguin Dictionary,Books,Penguin,74306.83,48522,127
+247,Havells Electric Kettle,Home Appliances,Havells,56980.16,46664.41,282
+248,Cosco Football,Sports,Cosco,14870.27,10888.66,84
+249,Allen Solly Hoodie,Fashion,Allen Solly,50586.84,41797.66,493
+250,Levis Sneakers,Fashion,Levis,1901.07,1206.31,383
+251,Arihant Notebook,Books,Arihant,19543.87,14888.03,416
+252,Roadster Sneakers,Fashion,Roadster,9421.4,5982.41,430
+253,Penguin Novel,Books,Penguin,67744.29,45276.39,95
+254,Funskool Board Game,Toys,Funskool,66520.8,46201.75,168
+255,Bajaj Ceiling Fan,Home Appliances,Bajaj,1383.68,1086.96,500
+256,Realme Laptop,Electronics,Realme,38552.05,27749.77,452
+257,Skybags Backpack,Accessories,Skybags,49306.34,36490.8,232
+258,American Tourister Sunglasses,Accessories,American Tourister,16570.66,12549.05,272
+259,Xiaomi Bluetooth Speaker,Electronics,Xiaomi,12731.83,10881.88,130
+260,Urban Ladder Bedside Table,Furniture,Urban Ladder,43944.04,28894.31,408
+261,Oswaal Exam Guide,Books,Oswaal,7840.79,5549,329
+262,Godrej Office Chair,Furniture,Godrej,7139.92,6184.52,97
+263,Skybags Laptop Sleeve,Accessories,Skybags,18334.74,15632.93,174
+264,Bajaj Electric Kettle,Home Appliances,Bajaj,12352.76,8481.48,474
+265,Saffola Cooking Oil,Grocery,Saffola,53936.23,37874.16,350
+266,Xiaomi Keyboard,Electronics,Xiaomi,62576.45,43033.37,158
+267,Mamaearth Sunscreen,Beauty,Mamaearth,59237.88,39115.52,212
+268,Hasbro Puzzle,Toys,Hasbro,12807.56,8056,330
+269,Nilkamal Office Chair,Furniture,Nilkamal,15372.13,9845.84,374
+270,Nike Sneakers,Fashion,Nike,47472.75,34470.85,166
+271,Tata Green Tea,Grocery,Tata,66343.56,42933.8,138
+272,Wildcraft Sunglasses,Accessories,Wildcraft,22301.63,17256.68,219
+273,Nike Dress,Fashion,Nike,31704.84,26505.72,177
+274,Penguin Novel,Books,Penguin,17780.74,15305.82,395
+275,Arihant Exam Guide,Books,Arihant,21271.73,13522.29,150
+276,Godrej Bedside Table,Furniture,Godrej,42529.86,30023.92,247
+277,SG Cycling Helmet,Sports,SG,49242.93,37836.48,426
+278,Cosco Badminton Racket,Sports,Cosco,8839.18,5839.43,200
+279,Penguin Biography,Books,Penguin,29131.62,23959.14,8
+280,Yonex Cycling Helmet,Sports,Yonex,29257.1,20431.18,187
+281,Havells Microwave Oven,Home Appliances,Havells,24604.47,16248.83,293
+282,Oswaal Dictionary,Books,Oswaal,33047.08,26981.33,351
+283,Nilkamal Sofa,Furniture,Nilkamal,1290.02,938.48,5
+284,HP Monitor,Electronics,HP,29655.5,20084.07,440
+285,Nivea Lipstick,Beauty,Nivea,53502.48,41140.02,334
+286,Hasbro Building Blocks,Toys,Hasbro,66129.5,45042.85,319
+287,Lego Remote Car,Toys,Lego,57875.46,38967.42,72
+288,Tata Cooking Oil,Grocery,Tata,9995.87,7283.61,439
+289,Nilkamal Bookshelf,Furniture,Nilkamal,27824.37,17574.46,162
+290,Arihant Exam Guide,Books,Arihant,11330.76,8280.56,37
+291,Nilkamal Bookshelf,Furniture,Nilkamal,71396.05,46830.93,353
+292,Cosco Yoga Mat,Sports,Cosco,54067.46,39174.37,185
+293,Lego Puzzle,Toys,Lego,41297.9,34850.17,55
+294,Skybags Laptop Sleeve,Accessories,Skybags,55567.53,38198.11,413
+295,Skybags Wallet,Accessories,Skybags,2560.34,2203.42,67
+296,Lakme Shampoo,Beauty,Lakme,59129.48,46956.47,458
+297,Levis T-Shirt,Fashion,Levis,21685.81,17274.79,291
+298,Nike Jacket,Fashion,Nike,6047.29,3818.54,461
+299,Mamaearth Shampoo,Beauty,Mamaearth,9283.29,7856.32,217
+300,Cosco Cricket Bat,Sports,Cosco,23601.26,15096.64,369
+301,Allen Solly Shirt,Fashion,Allen Solly,48325.48,41414.57,261
+302,Hasbro Building Blocks,Toys,Hasbro,54244.6,37622.66,98
+303,Dove Shampoo,Beauty,Dove,30060.71,23134.83,214
+304,American Tourister Travel Bag,Accessories,American Tourister,57291.06,45356.74,364
+305,Fastrack Laptop Sleeve,Accessories,Fastrack,8605.87,5461.75,219
+306,HP Keyboard,Electronics,HP,6646.85,4969.23,119
+307,Fastrack Wallet,Accessories,Fastrack,14441.24,9096.29,296
+308,American Tourister Wallet,Accessories,American Tourister,4766.41,3802.11,154
+309,Sony Monitor,Electronics,Sony,711.49,499.93,30
+310,Lego Action Figure,Toys,Lego,11222.83,8052.17,487
+311,Lakme Shampoo,Beauty,Lakme,41315.88,28886.27,295
+312,Cosco Dumbbells,Sports,Cosco,49089.79,32084.67,174
+313,Prestige Ceiling Fan,Home Appliances,Prestige,57325.17,47283.09,134
+314,Roadster Hoodie,Fashion,Roadster,31441.99,23973.76,172
+315,Godrej Office Chair,Furniture,Godrej,76022.7,49672.75,275
+316,Fastrack Laptop Sleeve,Accessories,Fastrack,11029.31,8714.7,263
+317,Funskool Building Blocks,Toys,Funskool,35588,25089.79,59
+318,Nivea Shampoo,Beauty,Nivea,15856.33,11746.19,308
+319,Oswaal Biography,Books,Oswaal,21105.74,17998.43,310
+320,Lenovo Bluetooth Speaker,Electronics,Lenovo,14196.77,10289.56,158
+321,Levis T-Shirt,Fashion,Levis,42275.59,34716.45,451
+322,LG Ceiling Fan,Home Appliances,LG,40345.95,30841.97,464
+323,Arihant Notebook,Books,Arihant,23111.92,16619.57,492
+324,Tata Cooking Oil,Grocery,Tata,21725.61,16770.07,61
+325,Oswaal Notebook,Books,Oswaal,56110.9,39330.16,147
+326,Urban Ladder Office Chair,Furniture,Urban Ladder,57074.48,39955.05,229
+327,Roadster Shirt,Fashion,Roadster,39731.29,33755.19,357
+328,Urban Ladder Study Table,Furniture,Urban Ladder,2186.11,1695.89,382
+329,Cosco Yoga Mat,Sports,Cosco,30135.5,25635.63,189
+330,Skybags Sunglasses,Accessories,Skybags,23884.71,15774.11,106
+331,IKEA Study Table,Furniture,IKEA,18168.71,11415.92,148
+332,Nilkamal Office Chair,Furniture,Nilkamal,59999.52,39599.97,447
+333,Skybags Sunglasses,Accessories,Skybags,59176.54,40521.77,175
+334,Havells Electric Kettle,Home Appliances,Havells,34547.97,27841.23,232
+335,Aashirvaad Honey,Grocery,Aashirvaad,51411.5,40179.76,418
+336,HarperCollins Exam Guide,Books,HarperCollins,56798.43,41297.74,279
+337,Nestle Honey,Grocery,Nestle,29985.21,18937,191
+338,Puma Sneakers,Fashion,Puma,9139.81,7513.83,58
+339,Oswaal Self Help Book,Books,Oswaal,54280.88,35326.94,217
+340,Cosco Football,Sports,Cosco,59430.11,41174.28,348
+341,Puma Dress,Fashion,Puma,41751.44,35598.51,235
+342,Skybags Travel Bag,Accessories,Skybags,62846.9,40534.31,434
+343,Urban Ladder Sofa,Furniture,Urban Ladder,50711.1,40297.09,42
+344,Aashirvaad Pasta,Grocery,Aashirvaad,24910.59,15581.49,432
+345,Wildcraft Laptop Sleeve,Accessories,Wildcraft,25620.38,21111.94,238
+346,Nilkamal Study Table,Furniture,Nilkamal,7453,4663.8,189
+347,Lakme Sunscreen,Beauty,Lakme,8664.87,6140.32,260
+348,Godrej Office Chair,Furniture,Godrej,72489.23,46253.75,195
+349,HP Monitor,Electronics,HP,11650.32,8427.56,423
+350,Cosco Football,Sports,Cosco,25414.55,18344.69,106
+351,Arihant Novel,Books,Arihant,12259.39,10587.75,167
+352,Godrej Office Chair,Furniture,Godrej,20738.88,13521.67,477
+353,Tata Basmati Rice,Grocery,Tata,29651.86,24287.26,57
+354,Prestige Vacuum Cleaner,Home Appliances,Prestige,9651.33,7581.74,125
+355,Mamaearth Lipstick,Beauty,Mamaearth,19143.3,14122.75,86
+356,Prestige Ceiling Fan,Home Appliances,Prestige,4862.03,3758.42,291
+357,Bajaj Mixer Grinder,Home Appliances,Bajaj,27527.32,17808.34,359
+358,Urban Ladder Sofa,Furniture,Urban Ladder,59428.16,42022.73,106
+359,Nilkamal Office Chair,Furniture,Nilkamal,22291.23,19047.06,424
+360,Sony Tablet,Electronics,Sony,16787.61,12484.69,211
+361,Allen Solly Hoodie,Fashion,Allen Solly,2429.34,1931.71,176
+362,Yonex Dumbbells,Sports,Yonex,50588.28,37956.76,148
+363,Realme Power Bank,Electronics,Realme,11336.65,8024.6,215
+364,HP Smartphone,Electronics,HP,40085.46,33927.45,464
+365,Cosco Badminton Racket,Sports,Cosco,13279.87,10444.04,187
+366,Lakme Lipstick,Beauty,Lakme,36760.58,31120.7,131
+367,Fortune Dry Fruits,Grocery,Fortune,75899.14,47682.68,124
+368,Penguin Exam Guide,Books,Penguin,8151.47,6573.37,198
+369,American Tourister Backpack,Accessories,American Tourister,71464.71,46351.03,312
+370,Godrej Study Table,Furniture,Godrej,40760.41,27993.83,57
+371,Nike Shirt,Fashion,Nike,32031.86,26618.81,126
+372,Nilkamal Study Table,Furniture,Nilkamal,24735.9,18310.76,212
+373,Realme Laptop,Electronics,Realme,41931.82,34466.22,231
+374,Philips Microwave Oven,Home Appliances,Philips,40830.05,31403.84,96
+375,Cosco Dumbbells,Sports,Cosco,26796.97,19680.38,90
+376,Lego Building Blocks,Toys,Lego,29256.43,20199.78,31
+377,Nivea Conditioner,Beauty,Nivea,49871.24,36815.99,217
+378,Hasbro Action Figure,Toys,Hasbro,11756.05,7636.57,457
+379,LG Microwave Oven,Home Appliances,LG,34383.05,28773.83,46
+380,LG Iron,Home Appliances,LG,34068.44,25064.39,349
+381,Nivia Dumbbells,Sports,Nivia,55581.16,39696.44,295
+382,Penguin Dictionary,Books,Penguin,5568.73,4487.13,15
+383,Realme Power Bank,Electronics,Realme,25976.18,18981.91,487
+384,Fortune Basmati Rice,Grocery,Fortune,2522.77,1933.43,416
+385,American Tourister Backpack,Accessories,American Tourister,47093.24,31437.13,330
+386,American Tourister Wallet,Accessories,American Tourister,5623.81,3622.32,135
+387,Mamaearth Conditioner,Beauty,Mamaearth,8830.83,5643.38,446
+388,Philips Vacuum Cleaner,Home Appliances,Philips,58901.69,47900.84,325
+389,SG Dumbbells,Sports,SG,22543.7,18979.42,71
+390,SG Cricket Bat,Sports,SG,18323.66,11741.19,183
+391,SG Cricket Bat,Sports,SG,56478.62,41164.82,253
+392,Philips Ceiling Fan,Home Appliances,Philips,3356.91,2273.93,74
+393,Nivea Sunscreen,Beauty,Nivea,54561.01,38838.34,193
+394,Lakme Sunscreen,Beauty,Lakme,27107.76,18833.97,18
+395,Hasbro Building Blocks,Toys,Hasbro,48146.23,36165.1,260
+396,Havells Water Purifier,Home Appliances,Havells,38925.91,32687.18,335
+397,Fastrack Wallet,Accessories,Fastrack,50252.26,40532.57,194
+398,Nilkamal Sofa,Furniture,Nilkamal,9883.17,6388.78,343
+399,Havells Air Fryer,Home Appliances,Havells,47151.11,34035.38,487
+400,Nilkamal Bookshelf,Furniture,Nilkamal,50163.94,33209.11,10
+401,Urban Ladder Office Chair,Furniture,Urban Ladder,9419.51,7196.16,486
+402,Urban Ladder Office Chair,Furniture,Urban Ladder,43159.86,36948.58,437
+403,Hasbro Action Figure,Toys,Hasbro,20528.63,17580.37,129
+404,Xiaomi Wireless Earbuds,Electronics,Xiaomi,68175.14,48861.8,425
+405,Fastrack Wallet,Accessories,Fastrack,73726.87,46926.23,308
+406,Adidas T-Shirt,Fashion,Adidas,2285.85,1430.85,425
+407,Urban Ladder Bookshelf,Furniture,Urban Ladder,23882.55,18416.62,444
+408,Philips Electric Kettle,Home Appliances,Philips,62975.59,46605.88,497
+409,IKEA Office Chair,Furniture,IKEA,37432.06,28025.66,1
+410,SG Badminton Racket,Sports,SG,15377.49,12698.02,256
+411,HP Smartwatch,Electronics,HP,4376.28,3356.02,325
+412,Oswaal Notebook,Books,Oswaal,46681.15,39490.57,199
+413,L'Oreal Conditioner,Beauty,L'Oreal,33486.72,24162.17,328
+414,Wildcraft Sunglasses,Accessories,Wildcraft,49192.18,40245.87,449
+415,Nivia Yoga Mat,Sports,Nivia,17984.56,15529.3,175
+416,SG Football,Sports,SG,31455.56,21054.42,183
+417,Bajaj Water Purifier,Home Appliances,Bajaj,70198.16,44550.32,361
+418,Penguin Notebook,Books,Penguin,36305.27,24306.59,465
+419,Nestle Green Tea,Grocery,Nestle,16918.26,11595.15,124
+420,Oswaal Novel,Books,Oswaal,10336.43,8415.24,85
+421,Lakme Lipstick,Beauty,Lakme,17247.44,12080.37,246
+422,L'Oreal Face Wash,Beauty,L'Oreal,23790.59,17845.11,266
+423,Funskool Building Blocks,Toys,Funskool,49888.16,33744.81,267
+424,Nilkamal Bedside Table,Furniture,Nilkamal,2847.77,2470.45,416
+425,Nivea Sunscreen,Beauty,Nivea,31536.25,19762.24,139
+426,Skybags Travel Bag,Accessories,Skybags,19482,13847.07,43
+427,Nivea Shampoo,Beauty,Nivea,11097.3,8005.76,444
+428,Xiaomi Wireless Earbuds,Electronics,Xiaomi,39372.07,29002.87,253
+429,Philips Vacuum Cleaner,Home Appliances,Philips,2513.71,1789.8,31
+430,Allen Solly Kurta,Fashion,Allen Solly,49246.14,39197.02,445
+431,Arihant Novel,Books,Arihant,24223.02,17505.53,9
+432,Cosco Dumbbells,Sports,Cosco,49185.32,36486.71,264
+433,Godrej Study Table,Furniture,Godrej,59493.06,39239.08,221
+434,SG Football,Sports,SG,53598.08,43391.3,473
+435,Lenovo Laptop,Electronics,Lenovo,50706.36,43906.62,275
+436,Skybags Sunglasses,Accessories,Skybags,26017.98,22337.33,222
+437,Dell Smartwatch,Electronics,Dell,30973.26,25056.17,176
+438,Hasbro Building Blocks,Toys,Hasbro,17058.93,12578.54,404
+439,Apple Wireless Earbuds,Electronics,Apple,11644.05,7355.51,227
+440,Arihant Self Help Book,Books,Arihant,30840.95,21572.68,91
+441,Sony Smartphone,Electronics,Sony,29014.7,24015.07,179
+442,Nivea Perfume,Beauty,Nivea,70793.96,47348.35,152
+443,Tata Green Tea,Grocery,Tata,6870.22,5313.46,229
+444,Cosco Badminton Racket,Sports,Cosco,21852.43,18186.01,135
+445,Fortune Dry Fruits,Grocery,Fortune,40553.34,25751.91,354
+446,Bajaj Water Purifier,Home Appliances,Bajaj,59904.01,49466.12,288
+447,American Tourister Wallet,Accessories,American Tourister,46110.82,39943.57,221
+448,Apple Power Bank,Electronics,Apple,27503.61,18950.82,110
+449,Nike Kurta,Fashion,Nike,40021.94,29424.47,263
+450,Fastrack Sunglasses,Accessories,Fastrack,30940.75,21091.65,1
+451,LG Microwave Oven,Home Appliances,LG,61804.06,46526.78,194
+452,Nestle Dry Fruits,Grocery,Nestle,27387.05,21317.51,60
+453,Nivia Cricket Bat,Sports,Nivia,13086.06,10533.34,208
+454,LG Vacuum Cleaner,Home Appliances,LG,30241.65,22583.24,430
+455,Oswaal Exam Guide,Books,Oswaal,56959.96,38463.71,131
+456,Nestle Coffee,Grocery,Nestle,22732.32,16820.98,450
+457,Tata Coffee,Grocery,Tata,9689.91,7252.95,431
+458,Havells Air Fryer,Home Appliances,Havells,8708.94,6857.88,372
+459,Nivia Football,Sports,Nivia,20357.76,14157.05,431
+460,Oswaal Notebook,Books,Oswaal,16452.96,11246.6,334
+461,Realme Monitor,Electronics,Realme,49153.67,36476.44,237
+462,Lego Remote Car,Toys,Lego,43052.96,28934.97,2
+463,Mamaearth Body Lotion,Beauty,Mamaearth,50837.58,37547.9,408
+464,Levis Jacket,Fashion,Levis,42634.77,31778.39,176
+465,Arihant Novel,Books,Arihant,25974.58,16962.02,104
+466,Havells Iron,Home Appliances,Havells,15057.24,12876.18,443
+467,Roadster Dress,Fashion,Roadster,60770.55,39399.99,296
+468,Havells Ceiling Fan,Home Appliances,Havells,61324.39,40534.88,226
+469,Wildcraft Sunglasses,Accessories,Wildcraft,33262.96,25967.24,423
+470,Roadster Sneakers,Fashion,Roadster,10742.29,8952.45,285
+471,Oswaal Exam Guide,Books,Oswaal,306.41,207.03,32
+472,Hasbro Puzzle,Toys,Hasbro,53873.73,46467.71,109
+473,Hasbro Remote Car,Toys,Hasbro,31518.19,24476.9,266
+474,Havells Vacuum Cleaner,Home Appliances,Havells,73425.62,47820.91,312
+475,Nivea Perfume,Beauty,Nivea,56783.08,45512.91,452
+476,Bajaj Water Purifier,Home Appliances,Bajaj,28411.46,20184.02,111
+477,IKEA Bookshelf,Furniture,IKEA,29664.55,23791.51,409
+478,SG Cricket Bat,Sports,SG,42579.71,35958.6,79
+479,Godrej Bookshelf,Furniture,Godrej,51971.01,42229.57,72
+480,Penguin Dictionary,Books,Penguin,1609.1,1151.79,230
+481,Prestige Electric Kettle,Home Appliances,Prestige,723.66,549.24,291
+482,Nilkamal Study Table,Furniture,Nilkamal,8691.01,6633.65,428
+483,Arihant Biography,Books,Arihant,50300.48,38154.55,205
+484,Funskool Puzzle,Toys,Funskool,24509.64,15651.85,291
+485,Xiaomi Monitor,Electronics,Xiaomi,31578.46,21668.39,72
+486,Xiaomi Laptop,Electronics,Xiaomi,6634.73,4382.53,77
+487,Godrej Bookshelf,Furniture,Godrej,42614.84,28583.69,299
+488,Skybags Travel Bag,Accessories,Skybags,5610.78,4117.88,23
+489,Nivia Badminton Racket,Sports,Nivia,56572.01,47294.28,265
+490,Puma T-Shirt,Fashion,Puma,49409.5,38239.66,342
+491,Nivia Football,Sports,Nivia,38963.93,33456.36,124
+492,Urban Ladder Study Table,Furniture,Urban Ladder,15524.76,9767.45,71
+493,Oswaal Biography,Books,Oswaal,25199.4,16432.9,169
+494,Godrej Office Chair,Furniture,Godrej,1441.88,1206.61,386
+495,HarperCollins Biography,Books,HarperCollins,41358.66,28457.44,162
+496,Urban Ladder Bedside Table,Furniture,Urban Ladder,48858.61,38384.25,171
+497,Saffola Basmati Rice,Grocery,Saffola,12928.17,11083.5,39
+498,Yonex Football,Sports,Yonex,53376.66,34094.34,455
+499,Nivia Cricket Bat,Sports,Nivia,893.98,594.68,114
+500,SG Dumbbells,Sports,SG,18748.82,15702.82,371

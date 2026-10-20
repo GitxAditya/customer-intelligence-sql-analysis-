@@ -1,0 +1,1001 @@
+﻿return_id,order_id,prod_id,quantity,reason,return_date
+1,1496,13,2,Packaging Damaged,2022-04-11
+2,8161,317,2,Quality Not as Expected,2024-07-24
+3,4040,143,1,Defective Product,2025-04-30
+4,5705,11,2,Late Delivery,2023-01-15
+5,118,39,3,Damaged Product,2023-10-17
+6,5373,77,1,Size Issue,2024-10-17
+7,4081,313,2,Defective Product,2024-12-24
+8,9821,258,1,Damaged Product,2024-03-30
+9,7375,16,3,Changed Mind,2022-10-17
+10,8742,116,2,Damaged Product,2023-01-15
+11,9278,473,1,Damaged Product,2024-10-01
+12,8607,231,1,Damaged Product,2024-02-24
+13,277,392,3,Defective Product,2023-11-21
+14,7886,271,2,Damaged Product,2023-12-22
+15,8420,307,2,Changed Mind,2024-08-16
+16,5579,33,3,Defective Product,2024-04-08
+17,4126,6,3,Wrong Item Delivered,2024-07-04
+18,2018,219,2,Size Issue,2024-02-22
+19,786,483,1,Damaged Product,2025-08-24
+20,9898,124,1,Size Issue,2022-01-13
+21,279,431,2,Wrong Item Delivered,2024-11-08
+22,9166,434,3,Changed Mind,2025-08-16
+23,5543,439,3,Damaged Product,2024-06-04
+24,6321,308,2,Defective Product,2025-06-29
+25,960,451,2,Damaged Product,2025-04-27
+26,6035,82,1,Damaged Product,2024-04-14
+27,4540,289,2,Size Issue,2025-09-04
+28,1647,15,2,Missing Parts,2023-09-30
+29,4046,496,3,Defective Product,2025-02-10
+30,8556,179,2,Duplicate Order,2022-12-15
+31,9536,27,2,Defective Product,2022-12-28
+32,9475,433,1,Size Issue,2025-11-22
+33,340,72,3,Size Issue,2022-07-05
+34,7324,82,1,Damaged Product,2025-05-05
+35,2330,473,2,Wrong Item Delivered,2022-04-19
+36,1949,456,1,Late Delivery,2022-01-09
+37,7837,164,3,Quality Not as Expected,2023-07-08
+38,8533,461,1,Size Issue,2025-05-07
+39,3936,112,3,Damaged Product,2024-07-19
+40,7780,40,1,Duplicate Order,2024-10-02
+41,4591,89,3,Changed Mind,2023-02-14
+42,5786,386,1,Wrong Item Delivered,2022-01-21
+43,9079,74,2,Wrong Item Delivered,2024-03-19
+44,4376,357,2,Missing Parts,2025-12-13
+45,7892,101,1,Size Issue,2023-07-08
+46,723,121,1,Quality Not as Expected,2025-08-20
+47,5938,230,1,Defective Product,2025-05-30
+48,4869,192,3,Defective Product,2023-08-26
+49,4073,449,2,Defective Product,2023-03-05
+50,7479,142,1,Damaged Product,2023-09-21
+51,6141,382,3,Damaged Product,2023-02-12
+52,9386,249,2,Defective Product,2025-03-28
+53,6304,289,2,Quality Not as Expected,2024-04-26
+54,9059,406,2,Size Issue,2023-01-12
+55,9913,334,2,Changed Mind,2024-09-23
+56,7009,10,1,Quality Not as Expected,2024-11-27
+57,8044,270,3,Defective Product,2025-03-21
+58,4651,128,1,Missing Parts,2024-07-16
+59,2766,361,1,Damaged Product,2022-02-16
+60,3453,408,2,Damaged Product,2023-07-18
+61,1599,427,3,Packaging Damaged,2023-10-20
+62,7411,2,1,Late Delivery,2024-03-07
+63,9011,220,3,Defective Product,2023-10-16
+64,6518,293,2,Damaged Product,2024-04-08
+65,2928,420,1,Damaged Product,2024-02-26
+66,6148,437,3,Late Delivery,2024-07-05
+67,845,381,3,Changed Mind,2025-01-12
+68,9724,223,2,Late Delivery,2022-03-12
+69,8779,441,3,Missing Parts,2025-01-29
+70,7838,380,3,Quality Not as Expected,2024-06-16
+71,5859,9,2,Defective Product,2022-10-23
+72,5784,383,3,Changed Mind,2025-08-22
+73,848,113,2,Defective Product,2022-01-06
+74,680,391,1,Defective Product,2025-04-25
+75,9697,165,2,Packaging Damaged,2023-01-24
+76,4905,262,2,Changed Mind,2025-12-08
+77,1929,29,2,Defective Product,2024-11-12
+78,1364,316,1,Defective Product,2025-08-07
+79,6636,358,3,Missing Parts,2022-05-07
+80,8049,33,2,Duplicate Order,2025-06-29
+81,1758,315,2,Damaged Product,2025-11-16
+82,2482,54,3,Wrong Item Delivered,2025-10-28
+83,3347,330,3,Late Delivery,2022-06-21
+84,3958,57,2,Size Issue,2025-04-19
+85,9001,330,2,Defective Product,2025-09-25
+86,6011,263,1,Missing Parts,2022-02-02
+87,6980,195,1,Defective Product,2024-09-27
+88,7495,226,2,Quality Not as Expected,2025-09-17
+89,5694,347,3,Defective Product,2024-01-30
+90,86,481,1,Defective Product,2025-01-15
+91,6115,449,1,Wrong Item Delivered,2025-08-12
+92,6618,136,2,Late Delivery,2023-06-14
+93,3477,38,3,Defective Product,2023-04-01
+94,5740,305,1,Size Issue,2025-10-18
+95,9742,273,1,Packaging Damaged,2024-12-11
+96,1130,454,2,Wrong Item Delivered,2025-11-29
+97,6441,160,1,Defective Product,2023-11-02
+98,2423,335,3,Duplicate Order,2022-05-29
+99,9129,403,1,Damaged Product,2024-08-07
+100,2900,446,1,Missing Parts,2025-03-12
+101,900,146,3,Late Delivery,2024-08-23
+102,1491,258,2,Late Delivery,2025-08-26
+103,5932,8,1,Defective Product,2025-06-24
+104,2691,218,2,Wrong Item Delivered,2022-09-06
+105,219,472,2,Changed Mind,2025-06-01
+106,907,70,3,Wrong Item Delivered,2024-02-04
+107,4223,187,3,Size Issue,2025-11-13
+108,7808,120,3,Missing Parts,2022-10-05
+109,6418,473,3,Defective Product,2025-04-05
+110,4069,231,1,Damaged Product,2024-04-04
+111,6972,348,2,Packaging Damaged,2024-02-09
+112,4483,125,2,Damaged Product,2023-09-29
+113,6384,441,3,Size Issue,2024-06-29
+114,8413,108,3,Damaged Product,2022-03-23
+115,3615,153,2,Wrong Item Delivered,2022-10-17
+116,6907,154,1,Quality Not as Expected,2024-05-18
+117,5794,287,3,Changed Mind,2022-08-05
+118,8347,297,1,Damaged Product,2025-11-04
+119,798,354,1,Size Issue,2024-06-01
+120,100,394,2,Damaged Product,2025-02-16
+121,87,39,3,Damaged Product,2023-11-06
+122,6436,236,2,Changed Mind,2023-07-15
+123,703,29,2,Defective Product,2025-09-16
+124,6031,36,2,Damaged Product,2022-08-28
+125,521,386,1,Defective Product,2022-02-21
+126,7939,472,2,Late Delivery,2023-03-31
+127,8695,143,1,Damaged Product,2024-03-10
+128,8930,176,1,Packaging Damaged,2024-06-11
+129,2425,479,1,Damaged Product,2023-10-18
+130,3595,82,2,Late Delivery,2023-04-10
+131,7116,159,1,Quality Not as Expected,2024-12-06
+132,940,365,1,Packaging Damaged,2024-08-21
+133,4751,165,1,Quality Not as Expected,2022-10-22
+134,737,360,3,Defective Product,2022-02-14
+135,4653,398,2,Duplicate Order,2023-01-21
+136,7875,41,2,Changed Mind,2025-04-15
+137,3050,21,3,Damaged Product,2023-03-17
+138,2117,11,2,Wrong Item Delivered,2024-11-25
+139,6412,327,3,Defective Product,2024-07-09
+140,6595,471,3,Defective Product,2023-05-05
+141,669,6,3,Damaged Product,2025-07-06
+142,5255,18,2,Wrong Item Delivered,2025-07-02
+143,4040,288,3,Defective Product,2025-09-30
+144,2830,394,2,Packaging Damaged,2024-10-01
+145,1162,94,3,Damaged Product,2022-03-13
+146,9187,344,3,Wrong Item Delivered,2025-07-09
+147,1134,158,2,Late Delivery,2022-07-10
+148,4703,468,2,Damaged Product,2025-08-27
+149,6138,486,3,Damaged Product,2025-11-15
+150,3008,367,2,Wrong Item Delivered,2023-05-09
+151,6342,421,3,Missing Parts,2022-12-10
+152,5188,52,3,Wrong Item Delivered,2022-01-18
+153,8007,177,3,Wrong Item Delivered,2024-11-25
+154,5542,139,1,Late Delivery,2023-12-10
+155,4929,416,3,Changed Mind,2022-12-21
+156,6448,85,3,Defective Product,2025-10-06
+157,8854,402,1,Damaged Product,2025-11-10
+158,1091,409,2,Damaged Product,2025-05-04
+159,4169,382,3,Quality Not as Expected,2024-08-17
+160,3244,454,3,Damaged Product,2025-03-23
+161,6303,93,2,Damaged Product,2023-11-06
+162,6281,350,2,Damaged Product,2022-05-30
+163,256,498,2,Changed Mind,2022-01-19
+164,8838,122,3,Late Delivery,2025-05-22
+165,7774,442,3,Damaged Product,2022-04-10
+166,7651,183,2,Quality Not as Expected,2025-11-08
+167,9145,289,2,Defective Product,2025-06-26
+168,1684,431,1,Damaged Product,2025-06-18
+169,2629,2,1,Defective Product,2025-10-10
+170,9118,375,3,Defective Product,2023-06-11
+171,2472,156,2,Damaged Product,2025-01-07
+172,5760,185,1,Wrong Item Delivered,2023-05-16
+173,5420,173,1,Damaged Product,2022-08-08
+174,8377,461,2,Defective Product,2022-12-08
+175,7180,230,3,Wrong Item Delivered,2025-03-03
+176,1581,94,2,Damaged Product,2022-01-02
+177,7914,147,3,Defective Product,2024-10-01
+178,1928,23,3,Size Issue,2022-01-22
+179,1880,152,2,Size Issue,2023-05-03
+180,1418,161,3,Quality Not as Expected,2022-04-16
+181,1842,187,2,Damaged Product,2024-02-24
+182,3440,58,1,Defective Product,2023-10-27
+183,9488,411,2,Wrong Item Delivered,2024-08-15
+184,9560,131,3,Duplicate Order,2023-06-11
+185,9377,372,3,Wrong Item Delivered,2024-09-23
+186,5423,7,2,Quality Not as Expected,2022-12-18
+187,5244,43,3,Damaged Product,2025-06-27
+188,6845,207,1,Defective Product,2023-05-04
+189,3351,438,2,Damaged Product,2024-07-09
+190,6046,353,3,Size Issue,2022-03-12
+191,4932,419,1,Quality Not as Expected,2022-08-29
+192,5002,173,3,Quality Not as Expected,2022-11-27
+193,120,461,2,Defective Product,2024-03-27
+194,3439,290,1,Damaged Product,2025-11-15
+195,4794,24,2,Size Issue,2024-10-15
+196,6661,420,3,Damaged Product,2022-11-15
+197,2945,281,1,Wrong Item Delivered,2022-03-30
+198,5586,207,3,Damaged Product,2025-07-28
+199,4576,334,1,Damaged Product,2024-07-21
+200,4996,441,3,Duplicate Order,2024-04-23
+201,3427,420,3,Defective Product,2022-06-26
+202,9100,377,1,Missing Parts,2025-12-05
+203,9385,103,3,Defective Product,2024-03-29
+204,5756,56,2,Damaged Product,2023-02-19
+205,7589,399,3,Duplicate Order,2023-01-01
+206,5722,82,2,Damaged Product,2023-08-10
+207,657,381,1,Damaged Product,2025-09-10
+208,7257,256,3,Wrong Item Delivered,2025-07-20
+209,349,191,3,Quality Not as Expected,2024-09-10
+210,6734,57,1,Size Issue,2022-05-15
+211,6227,121,3,Damaged Product,2024-01-11
+212,3219,163,3,Late Delivery,2022-04-21
+213,6056,247,2,Wrong Item Delivered,2022-03-06
+214,6495,36,2,Damaged Product,2023-09-01
+215,7929,186,3,Late Delivery,2025-02-16
+216,1235,322,1,Damaged Product,2022-03-06
+217,1661,171,1,Wrong Item Delivered,2024-10-06
+218,2379,343,3,Wrong Item Delivered,2024-07-09
+219,3749,216,3,Late Delivery,2023-01-22
+220,5320,325,1,Size Issue,2025-09-22
+221,9740,31,3,Changed Mind,2024-02-02
+222,2091,283,1,Defective Product,2023-02-12
+223,9992,313,1,Damaged Product,2023-07-12
+224,7552,70,1,Damaged Product,2022-05-27
+225,3391,115,3,Size Issue,2024-05-20
+226,888,435,2,Late Delivery,2022-06-13
+227,2695,219,2,Changed Mind,2024-08-13
+228,9068,119,3,Changed Mind,2023-10-09
+229,9340,177,2,Changed Mind,2025-10-30
+230,8659,445,3,Quality Not as Expected,2024-03-07
+231,9843,429,1,Quality Not as Expected,2024-09-21
+232,6194,46,1,Damaged Product,2025-09-16
+233,6808,54,2,Quality Not as Expected,2022-01-24
+234,1394,454,3,Defective Product,2022-03-24
+235,2856,233,3,Wrong Item Delivered,2022-05-07
+236,8599,124,3,Wrong Item Delivered,2024-12-09
+237,3310,107,2,Size Issue,2022-04-18
+238,7653,208,1,Damaged Product,2025-10-28
+239,1924,346,2,Changed Mind,2023-06-22
+240,4371,407,1,Size Issue,2025-10-07
+241,6388,227,2,Size Issue,2022-04-22
+242,9606,103,3,Quality Not as Expected,2023-04-03
+243,6676,187,1,Quality Not as Expected,2024-09-11
+244,7296,385,3,Damaged Product,2024-01-05
+245,158,219,2,Wrong Item Delivered,2024-07-24
+246,5198,395,1,Wrong Item Delivered,2022-11-01
+247,4496,336,2,Changed Mind,2024-08-23
+248,4738,263,3,Damaged Product,2025-08-29
+249,940,291,1,Defective Product,2023-05-07
+250,2399,220,3,Missing Parts,2023-08-22
+251,2514,290,1,Packaging Damaged,2024-12-09
+252,9324,413,3,Damaged Product,2022-10-07
+253,1054,336,3,Late Delivery,2025-05-13
+254,596,233,2,Defective Product,2023-12-28
+255,9641,382,1,Wrong Item Delivered,2025-09-04
+256,5035,472,1,Changed Mind,2025-05-03
+257,1409,54,3,Damaged Product,2022-04-24
+258,1709,233,1,Packaging Damaged,2025-09-13
+259,4101,81,1,Duplicate Order,2025-04-13
+260,3757,101,2,Wrong Item Delivered,2025-11-14
+261,6927,46,3,Quality Not as Expected,2024-01-12
+262,1798,237,2,Defective Product,2023-02-15
+263,363,36,2,Late Delivery,2024-08-21
+264,9471,428,2,Wrong Item Delivered,2024-01-29
+265,2938,68,2,Changed Mind,2022-12-12
+266,6480,213,2,Defective Product,2025-12-20
+267,526,338,1,Defective Product,2023-07-23
+268,9108,484,1,Late Delivery,2024-03-06
+269,397,9,2,Damaged Product,2023-05-01
+270,1189,489,3,Wrong Item Delivered,2025-09-06
+271,8128,129,3,Quality Not as Expected,2022-04-10
+272,3194,113,1,Defective Product,2023-12-26
+273,2974,339,2,Quality Not as Expected,2022-12-20
+274,2905,151,1,Defective Product,2022-12-07
+275,7144,298,1,Missing Parts,2024-03-19
+276,1366,442,2,Size Issue,2024-05-20
+277,7511,384,1,Damaged Product,2024-02-11
+278,9517,489,1,Quality Not as Expected,2023-02-07
+279,1671,193,3,Quality Not as Expected,2024-09-19
+280,7569,447,1,Late Delivery,2025-04-16
+281,2644,245,2,Changed Mind,2023-10-13
+282,6211,258,1,Damaged Product,2025-02-02
+283,5334,387,2,Wrong Item Delivered,2025-02-27
+284,8940,441,2,Changed Mind,2023-07-30
+285,4344,328,1,Damaged Product,2022-04-15
+286,8303,456,3,Defective Product,2023-03-26
+287,6817,182,2,Duplicate Order,2023-06-06
+288,7717,207,1,Late Delivery,2023-09-19
+289,4106,186,2,Damaged Product,2025-03-13
+290,782,399,1,Defective Product,2022-10-13
+291,5272,170,2,Defective Product,2025-01-19
+292,5595,132,3,Quality Not as Expected,2023-11-30
+293,961,460,3,Damaged Product,2022-03-31
+294,8755,28,2,Quality Not as Expected,2022-05-18
+295,7742,64,3,Damaged Product,2024-07-26
+296,5559,134,2,Packaging Damaged,2023-09-18
+297,1823,494,1,Defective Product,2023-02-21
+298,3120,263,1,Size Issue,2024-02-24
+299,4823,331,1,Damaged Product,2022-06-24
+300,7457,147,2,Changed Mind,2023-06-15
+301,8190,436,2,Late Delivery,2024-08-06
+302,4835,199,2,Damaged Product,2023-08-08
+303,8413,18,1,Damaged Product,2023-10-03
+304,5355,463,2,Wrong Item Delivered,2023-05-26
+305,3271,250,3,Changed Mind,2025-04-12
+306,3013,430,1,Damaged Product,2024-02-18
+307,3206,482,1,Damaged Product,2023-05-20
+308,3400,374,2,Missing Parts,2022-06-28
+309,5673,101,1,Quality Not as Expected,2022-04-26
+310,2404,257,3,Defective Product,2025-08-09
+311,9676,263,3,Size Issue,2024-04-23
+312,7789,332,2,Defective Product,2025-01-30
+313,6007,3,3,Changed Mind,2022-02-20
+314,7404,479,3,Late Delivery,2025-05-07
+315,2043,128,3,Damaged Product,2023-11-23
+316,2045,64,2,Damaged Product,2025-10-17
+317,4638,266,3,Defective Product,2023-05-15
+318,3976,265,3,Size Issue,2023-11-29
+319,4239,277,3,Duplicate Order,2025-08-14
+320,1804,420,2,Wrong Item Delivered,2022-02-27
+321,9041,173,2,Missing Parts,2025-06-11
+322,9526,192,3,Changed Mind,2024-07-15
+323,6392,459,2,Damaged Product,2023-10-01
+324,1078,240,3,Wrong Item Delivered,2025-11-08
+325,8604,265,2,Missing Parts,2023-09-21
+326,3329,214,3,Wrong Item Delivered,2023-11-16
+327,8002,172,3,Size Issue,2025-07-29
+328,9610,80,3,Damaged Product,2023-11-19
+329,4418,216,1,Packaging Damaged,2024-05-22
+330,6684,449,2,Late Delivery,2024-10-17
+331,2027,102,2,Size Issue,2025-04-24
+332,5369,288,3,Wrong Item Delivered,2023-03-19
+333,2417,406,1,Damaged Product,2024-04-20
+334,1344,216,3,Defective Product,2023-04-20
+335,8506,379,1,Wrong Item Delivered,2022-10-31
+336,8113,436,2,Defective Product,2022-07-13
+337,6066,401,2,Damaged Product,2025-03-16
+338,2376,205,1,Changed Mind,2025-02-01
+339,7822,411,2,Wrong Item Delivered,2024-06-19
+340,3068,153,2,Packaging Damaged,2022-03-27
+341,5351,480,2,Defective Product,2023-05-08
+342,6505,467,2,Damaged Product,2024-05-04
+343,162,496,2,Size Issue,2025-08-30
+344,9592,413,1,Late Delivery,2022-02-20
+345,6700,463,2,Changed Mind,2023-03-22
+346,3863,60,2,Size Issue,2024-11-07
+347,5027,213,1,Duplicate Order,2024-04-16
+348,2272,39,3,Damaged Product,2022-06-24
+349,3970,173,3,Defective Product,2024-02-27
+350,2291,113,1,Changed Mind,2023-01-17
+351,9271,216,3,Defective Product,2023-09-27
+352,3803,73,1,Duplicate Order,2024-01-15
+353,8242,243,1,Duplicate Order,2024-06-08
+354,5093,435,2,Changed Mind,2023-08-26
+355,3872,107,3,Size Issue,2023-04-03
+356,17,190,2,Damaged Product,2025-09-10
+357,155,496,3,Duplicate Order,2022-01-16
+358,2793,422,2,Wrong Item Delivered,2022-01-22
+359,6341,432,3,Duplicate Order,2023-07-16
+360,8660,270,1,Defective Product,2025-11-05
+361,1253,66,2,Size Issue,2024-05-01
+362,3422,347,2,Defective Product,2025-08-04
+363,729,467,3,Damaged Product,2025-07-24
+364,3581,197,3,Quality Not as Expected,2024-04-04
+365,5687,112,1,Quality Not as Expected,2022-04-27
+366,7561,93,1,Size Issue,2025-11-14
+367,8205,64,3,Wrong Item Delivered,2022-07-03
+368,496,484,3,Damaged Product,2025-08-30
+369,1901,114,1,Changed Mind,2024-06-11
+370,9950,315,1,Defective Product,2025-09-05
+371,6737,480,2,Damaged Product,2025-10-17
+372,7400,106,3,Damaged Product,2023-02-23
+373,9544,158,2,Damaged Product,2025-11-08
+374,8544,364,1,Late Delivery,2025-04-27
+375,4535,248,1,Defective Product,2022-10-31
+376,9367,111,1,Damaged Product,2025-05-07
+377,6137,284,1,Missing Parts,2024-04-01
+378,720,97,3,Wrong Item Delivered,2024-03-14
+379,7494,332,2,Damaged Product,2023-07-03
+380,4581,425,1,Size Issue,2023-11-14
+381,6475,482,2,Wrong Item Delivered,2023-02-22
+382,3283,429,3,Wrong Item Delivered,2022-04-06
+383,9780,459,2,Quality Not as Expected,2025-09-12
+384,3441,152,2,Defective Product,2022-06-01
+385,4746,216,3,Duplicate Order,2024-10-31
+386,3423,123,1,Damaged Product,2022-01-02
+387,9734,188,1,Missing Parts,2024-10-31
+388,8348,85,3,Late Delivery,2024-02-20
+389,440,431,1,Damaged Product,2025-08-06
+390,2295,494,3,Size Issue,2024-08-15
+391,5316,3,2,Changed Mind,2024-11-05
+392,5869,298,2,Damaged Product,2025-03-04
+393,5407,437,3,Damaged Product,2023-07-20
+394,1842,431,2,Damaged Product,2024-04-18
+395,5076,343,2,Damaged Product,2024-01-08
+396,6303,461,2,Damaged Product,2022-08-15
+397,3868,324,1,Packaging Damaged,2025-06-12
+398,5822,3,2,Wrong Item Delivered,2022-08-24
+399,7024,10,2,Damaged Product,2022-10-16
+400,5015,161,1,Changed Mind,2025-07-14
+401,138,207,3,Changed Mind,2025-08-26
+402,1106,374,3,Damaged Product,2024-06-08
+403,9996,153,2,Damaged Product,2023-11-14
+404,8225,45,2,Damaged Product,2022-10-15
+405,1688,43,2,Wrong Item Delivered,2024-11-02
+406,5568,165,3,Damaged Product,2025-08-29
+407,1247,474,3,Damaged Product,2023-05-13
+408,7262,67,2,Damaged Product,2022-11-05
+409,8394,275,1,Defective Product,2023-01-23
+410,8370,291,3,Wrong Item Delivered,2023-03-22
+411,1871,335,1,Duplicate Order,2023-08-15
+412,6844,475,1,Late Delivery,2025-10-28
+413,2649,433,1,Damaged Product,2022-10-02
+414,8671,99,2,Size Issue,2025-12-31
+415,9088,151,3,Quality Not as Expected,2025-08-20
+416,5980,265,2,Packaging Damaged,2025-09-25
+417,9314,388,1,Wrong Item Delivered,2025-08-13
+418,7156,445,3,Defective Product,2024-05-31
+419,9190,459,3,Defective Product,2024-11-21
+420,2558,393,3,Quality Not as Expected,2023-01-29
+421,784,74,1,Missing Parts,2023-02-19
+422,8234,32,3,Damaged Product,2023-10-27
+423,5477,271,2,Wrong Item Delivered,2023-07-07
+424,330,83,3,Damaged Product,2022-08-05
+425,7238,35,2,Quality Not as Expected,2022-12-11
+426,5767,319,2,Wrong Item Delivered,2022-06-16
+427,3458,336,2,Changed Mind,2025-09-27
+428,6862,383,2,Changed Mind,2023-12-06
+429,7693,313,1,Damaged Product,2023-09-06
+430,1448,193,1,Defective Product,2024-03-28
+431,9271,10,3,Damaged Product,2023-10-12
+432,2050,50,3,Quality Not as Expected,2024-05-17
+433,2740,485,2,Late Delivery,2023-11-08
+434,4886,87,2,Defective Product,2022-12-24
+435,1050,162,1,Wrong Item Delivered,2022-07-09
+436,8571,216,2,Wrong Item Delivered,2024-03-12
+437,6169,318,3,Missing Parts,2025-07-03
+438,8639,141,1,Wrong Item Delivered,2025-06-28
+439,3839,144,1,Missing Parts,2025-05-13
+440,1328,201,2,Packaging Damaged,2023-05-06
+441,4818,242,1,Changed Mind,2025-05-04
+442,1890,119,3,Damaged Product,2025-05-26
+443,7270,128,2,Wrong Item Delivered,2023-01-14
+444,232,356,3,Wrong Item Delivered,2025-12-30
+445,2960,80,1,Quality Not as Expected,2022-12-18
+446,3215,178,3,Size Issue,2022-10-05
+447,9549,248,2,Damaged Product,2023-04-30
+448,2506,114,3,Changed Mind,2023-10-25
+449,9834,461,2,Defective Product,2023-01-13
+450,21,259,2,Missing Parts,2022-07-23
+451,8630,283,3,Late Delivery,2025-04-26
+452,6051,8,1,Wrong Item Delivered,2025-11-05
+453,3932,433,3,Duplicate Order,2023-12-11
+454,3522,162,3,Damaged Product,2023-01-22
+455,7036,50,3,Defective Product,2024-04-24
+456,3826,461,3,Changed Mind,2023-09-13
+457,7680,166,3,Defective Product,2025-06-25
+458,791,498,3,Duplicate Order,2025-10-25
+459,3459,296,2,Defective Product,2022-09-29
+460,6579,39,3,Defective Product,2023-12-21
+461,8399,303,3,Size Issue,2023-06-16
+462,1222,248,2,Defective Product,2023-07-18
+463,5585,156,3,Quality Not as Expected,2024-03-29
+464,5060,204,3,Wrong Item Delivered,2022-04-04
+465,6827,170,2,Damaged Product,2023-07-26
+466,982,110,2,Late Delivery,2023-09-27
+467,6176,365,3,Wrong Item Delivered,2022-09-30
+468,1464,243,1,Wrong Item Delivered,2023-02-08
+469,8770,142,2,Quality Not as Expected,2024-06-03
+470,7337,18,2,Wrong Item Delivered,2025-04-15
+471,2955,451,3,Missing Parts,2024-09-24
+472,2481,311,1,Defective Product,2022-11-07
+473,9580,10,1,Damaged Product,2023-06-12
+474,320,88,3,Wrong Item Delivered,2023-06-10
+475,7151,208,2,Missing Parts,2025-08-09
+476,847,275,3,Packaging Damaged,2023-09-21
+477,8069,30,2,Late Delivery,2023-11-04
+478,4926,48,2,Wrong Item Delivered,2022-04-04
+479,6871,135,3,Quality Not as Expected,2025-08-27
+480,3166,498,3,Size Issue,2023-05-21
+481,6875,112,2,Late Delivery,2025-07-10
+482,1582,277,2,Changed Mind,2022-11-12
+483,8375,390,3,Late Delivery,2022-02-12
+484,4882,397,1,Quality Not as Expected,2023-06-28
+485,583,452,2,Duplicate Order,2024-09-17
+486,4224,358,3,Size Issue,2024-03-11
+487,8121,70,3,Quality Not as Expected,2022-04-14
+488,127,75,1,Quality Not as Expected,2025-12-03
+489,7876,418,1,Defective Product,2022-03-17
+490,6107,222,1,Size Issue,2024-07-08
+491,970,126,1,Defective Product,2024-08-19
+492,9581,78,3,Defective Product,2023-06-01
+493,3081,141,3,Missing Parts,2022-01-17
+494,2121,208,3,Damaged Product,2022-05-18
+495,5987,100,2,Size Issue,2022-02-25
+496,236,126,1,Late Delivery,2024-01-30
+497,3778,424,1,Size Issue,2022-07-03
+498,351,334,3,Wrong Item Delivered,2024-12-17
+499,5525,414,3,Changed Mind,2023-12-20
+500,5947,428,2,Damaged Product,2023-05-30
+501,3201,380,2,Size Issue,2023-10-28
+502,7843,416,1,Changed Mind,2024-04-22
+503,5917,103,1,Damaged Product,2024-06-25
+504,9883,239,2,Defective Product,2022-01-16
+505,4717,271,3,Damaged Product,2022-02-14
+506,180,372,2,Defective Product,2022-05-19
+507,8636,84,2,Damaged Product,2023-01-10
+508,4731,192,2,Damaged Product,2025-06-03
+509,9410,172,2,Damaged Product,2024-12-03
+510,4090,90,1,Duplicate Order,2023-12-14
+511,222,140,3,Wrong Item Delivered,2024-06-07
+512,9754,487,3,Damaged Product,2023-04-14
+513,3362,357,1,Quality Not as Expected,2022-11-05
+514,385,72,2,Duplicate Order,2024-12-30
+515,9666,75,1,Quality Not as Expected,2024-08-17
+516,9581,288,1,Quality Not as Expected,2024-05-23
+517,5983,105,1,Duplicate Order,2025-01-18
+518,3340,490,2,Quality Not as Expected,2022-03-28
+519,6515,164,1,Late Delivery,2025-06-03
+520,6642,494,2,Missing Parts,2022-11-11
+521,9514,486,2,Late Delivery,2022-10-01
+522,4076,39,1,Quality Not as Expected,2025-02-14
+523,1100,329,2,Missing Parts,2023-01-11
+524,9257,301,3,Defective Product,2022-07-07
+525,1712,186,1,Damaged Product,2024-03-21
+526,8069,120,1,Quality Not as Expected,2024-07-14
+527,7857,75,1,Defective Product,2022-02-02
+528,5436,312,1,Damaged Product,2024-11-30
+529,7381,99,1,Size Issue,2025-02-25
+530,1935,342,1,Size Issue,2024-04-23
+531,7309,66,1,Quality Not as Expected,2023-02-10
+532,6878,29,1,Wrong Item Delivered,2022-05-26
+533,4668,29,1,Damaged Product,2025-06-12
+534,6309,26,3,Damaged Product,2022-04-05
+535,6300,3,2,Size Issue,2023-11-13
+536,3700,170,2,Damaged Product,2025-04-23
+537,5139,130,3,Damaged Product,2022-07-19
+538,1831,109,3,Changed Mind,2025-02-03
+539,8104,306,1,Changed Mind,2022-11-23
+540,8380,328,1,Quality Not as Expected,2023-05-27
+541,972,34,3,Damaged Product,2025-12-06
+542,3080,353,2,Wrong Item Delivered,2025-08-14
+543,5463,21,2,Damaged Product,2024-03-25
+544,5973,85,1,Damaged Product,2025-01-14
+545,9030,152,3,Damaged Product,2025-12-08
+546,8032,165,3,Quality Not as Expected,2023-04-16
+547,8508,222,1,Wrong Item Delivered,2023-01-18
+548,6236,318,1,Late Delivery,2024-06-25
+549,2223,205,2,Wrong Item Delivered,2024-01-17
+550,6986,283,3,Wrong Item Delivered,2025-08-23
+551,5497,263,3,Quality Not as Expected,2025-10-10
+552,8913,319,3,Wrong Item Delivered,2023-02-21
+553,9351,4,3,Duplicate Order,2022-01-03
+554,9191,356,3,Wrong Item Delivered,2022-11-08
+555,4587,288,2,Size Issue,2022-04-19
+556,8375,451,2,Damaged Product,2023-08-30
+557,7179,112,3,Packaging Damaged,2023-03-08
+558,3895,256,1,Defective Product,2023-11-10
+559,3738,465,1,Damaged Product,2023-04-10
+560,8768,261,1,Defective Product,2022-05-06
+561,7898,406,2,Damaged Product,2023-07-10
+562,6529,405,3,Damaged Product,2022-02-18
+563,5813,210,2,Damaged Product,2024-03-05
+564,4089,42,2,Duplicate Order,2025-12-14
+565,834,360,1,Late Delivery,2022-04-16
+566,4633,130,1,Quality Not as Expected,2022-01-20
+567,4497,492,1,Defective Product,2022-09-01
+568,6191,198,3,Late Delivery,2024-07-21
+569,1443,246,2,Defective Product,2022-08-30
+570,5242,300,1,Damaged Product,2024-01-17
+571,6069,137,3,Missing Parts,2024-04-30
+572,8912,378,1,Wrong Item Delivered,2023-11-12
+573,2612,24,2,Changed Mind,2024-07-19
+574,2642,68,1,Defective Product,2022-09-14
+575,4086,159,2,Changed Mind,2024-05-07
+576,1563,425,1,Wrong Item Delivered,2024-05-04
+577,8964,4,1,Defective Product,2025-04-27
+578,8044,351,1,Damaged Product,2025-08-12
+579,919,347,1,Damaged Product,2022-08-07
+580,6584,190,3,Wrong Item Delivered,2024-02-07
+581,5181,86,3,Damaged Product,2023-01-17
+582,1636,104,2,Packaging Damaged,2023-05-28
+583,4295,251,2,Packaging Damaged,2025-09-08
+584,3619,69,1,Wrong Item Delivered,2022-04-06
+585,1386,437,3,Defective Product,2024-05-21
+586,5260,409,3,Duplicate Order,2022-01-26
+587,9851,21,2,Damaged Product,2025-02-24
+588,5601,39,3,Missing Parts,2024-10-23
+589,6941,389,2,Quality Not as Expected,2022-02-08
+590,5043,296,1,Wrong Item Delivered,2023-05-30
+591,4663,464,3,Changed Mind,2023-06-01
+592,8271,61,1,Duplicate Order,2024-12-06
+593,6781,494,3,Damaged Product,2024-08-31
+594,1694,442,3,Quality Not as Expected,2024-07-22
+595,1265,428,1,Changed Mind,2025-06-09
+596,7231,412,1,Quality Not as Expected,2022-03-06
+597,1845,13,1,Defective Product,2022-02-05
+598,3801,324,1,Missing Parts,2022-01-23
+599,3342,233,3,Defective Product,2024-01-09
+600,3999,394,1,Missing Parts,2022-09-03
+601,1643,81,1,Damaged Product,2025-04-13
+602,2312,489,3,Defective Product,2022-11-09
+603,7914,464,1,Size Issue,2022-07-01
+604,9485,224,3,Defective Product,2024-07-09
+605,8673,379,1,Defective Product,2022-12-06
+606,7853,419,2,Changed Mind,2024-01-05
+607,967,62,3,Changed Mind,2025-07-24
+608,9290,218,1,Damaged Product,2023-04-28
+609,7800,407,2,Size Issue,2022-10-21
+610,7859,235,2,Damaged Product,2025-09-13
+611,8572,160,2,Defective Product,2024-04-11
+612,9473,320,2,Wrong Item Delivered,2024-12-08
+613,5704,141,3,Defective Product,2023-08-05
+614,4996,441,3,Defective Product,2024-08-10
+615,3890,472,2,Quality Not as Expected,2025-09-13
+616,1161,487,2,Changed Mind,2023-03-10
+617,8276,304,2,Duplicate Order,2023-10-29
+618,8368,220,1,Damaged Product,2023-02-21
+619,2221,203,3,Quality Not as Expected,2022-12-10
+620,7478,75,3,Quality Not as Expected,2024-07-01
+621,8926,392,2,Defective Product,2025-08-02
+622,1003,477,3,Damaged Product,2024-03-25
+623,1577,200,1,Defective Product,2024-03-09
+624,6028,10,2,Late Delivery,2024-05-07
+625,6526,30,1,Quality Not as Expected,2022-04-21
+626,2353,9,3,Defective Product,2024-11-28
+627,8785,485,3,Size Issue,2024-03-09
+628,2794,458,1,Size Issue,2025-07-16
+629,3963,447,1,Damaged Product,2024-01-25
+630,6731,265,3,Damaged Product,2022-08-05
+631,8735,253,3,Missing Parts,2023-04-29
+632,4355,350,1,Damaged Product,2025-07-26
+633,6661,220,3,Wrong Item Delivered,2022-01-08
+634,3898,31,3,Changed Mind,2025-02-07
+635,5877,323,1,Late Delivery,2022-08-02
+636,3007,479,3,Quality Not as Expected,2025-05-28
+637,4310,313,1,Wrong Item Delivered,2022-02-13
+638,7499,139,1,Duplicate Order,2023-09-07
+639,8450,143,1,Damaged Product,2023-07-27
+640,1452,413,1,Missing Parts,2023-04-19
+641,9293,315,3,Defective Product,2025-10-13
+642,5957,466,2,Duplicate Order,2024-03-12
+643,4895,162,1,Changed Mind,2023-09-23
+644,9349,350,1,Defective Product,2024-06-24
+645,2545,441,3,Wrong Item Delivered,2022-11-06
+646,4482,164,2,Defective Product,2023-07-14
+647,1381,255,1,Quality Not as Expected,2024-07-05
+648,2850,281,1,Wrong Item Delivered,2022-01-01
+649,7296,202,3,Quality Not as Expected,2022-12-05
+650,3194,169,2,Changed Mind,2023-10-24
+651,6514,291,1,Duplicate Order,2024-08-16
+652,6339,308,3,Late Delivery,2024-05-27
+653,5674,289,1,Defective Product,2024-03-17
+654,4439,409,2,Changed Mind,2022-03-21
+655,213,239,3,Damaged Product,2023-01-07
+656,1797,170,2,Defective Product,2022-01-07
+657,6351,143,1,Defective Product,2025-09-25
+658,4880,378,2,Damaged Product,2024-10-15
+659,8310,105,1,Defective Product,2023-11-02
+660,9509,217,3,Defective Product,2023-08-23
+661,6739,445,3,Changed Mind,2025-12-23
+662,6710,278,2,Damaged Product,2022-04-01
+663,8454,83,1,Size Issue,2024-07-27
+664,4407,106,2,Late Delivery,2022-04-17
+665,8368,63,1,Damaged Product,2025-04-17
+666,8440,50,1,Defective Product,2024-07-15
+667,9941,170,2,Size Issue,2022-09-29
+668,3417,9,1,Quality Not as Expected,2023-07-19
+669,3208,421,2,Quality Not as Expected,2025-01-29
+670,628,377,2,Changed Mind,2025-05-24
+671,7259,170,2,Wrong Item Delivered,2024-11-02
+672,5859,42,2,Damaged Product,2022-01-16
+673,997,382,1,Quality Not as Expected,2022-10-13
+674,635,356,2,Defective Product,2025-01-01
+675,9039,380,1,Defective Product,2024-12-21
+676,5916,253,3,Changed Mind,2023-11-03
+677,3464,474,2,Damaged Product,2025-06-21
+678,9397,326,3,Quality Not as Expected,2025-07-19
+679,3535,122,3,Changed Mind,2024-02-20
+680,699,498,1,Defective Product,2022-01-25
+681,8715,39,3,Changed Mind,2023-06-23
+682,4483,322,2,Duplicate Order,2022-06-22
+683,3165,243,1,Damaged Product,2023-10-19
+684,3422,300,1,Size Issue,2023-03-12
+685,94,288,2,Quality Not as Expected,2024-11-27
+686,173,338,1,Defective Product,2024-06-01
+687,1555,420,3,Damaged Product,2023-10-08
+688,3568,288,2,Damaged Product,2022-05-11
+689,8626,161,1,Size Issue,2025-03-30
+690,2696,44,1,Size Issue,2024-10-16
+691,2677,54,2,Size Issue,2023-05-08
+692,9743,314,1,Duplicate Order,2022-12-26
+693,2596,97,1,Defective Product,2023-06-01
+694,372,499,3,Damaged Product,2023-08-20
+695,4816,302,2,Wrong Item Delivered,2022-04-17
+696,2827,108,2,Wrong Item Delivered,2023-01-23
+697,4541,54,3,Changed Mind,2023-12-03
+698,7328,496,1,Duplicate Order,2025-07-12
+699,98,298,1,Late Delivery,2024-07-02
+700,5749,314,3,Defective Product,2024-01-17
+701,5808,492,3,Defective Product,2025-07-17
+702,5563,60,2,Defective Product,2024-07-23
+703,3021,171,2,Changed Mind,2025-02-25
+704,6227,95,1,Damaged Product,2023-01-19
+705,6535,8,3,Quality Not as Expected,2022-03-30
+706,30,483,1,Wrong Item Delivered,2025-02-26
+707,9934,131,2,Duplicate Order,2024-01-23
+708,687,462,3,Damaged Product,2022-02-22
+709,1334,428,3,Missing Parts,2025-12-31
+710,216,454,2,Packaging Damaged,2024-10-09
+711,2298,398,2,Damaged Product,2024-12-21
+712,2008,434,3,Defective Product,2022-09-17
+713,2903,247,1,Late Delivery,2022-10-15
+714,7650,192,1,Damaged Product,2022-07-30
+715,6050,488,3,Duplicate Order,2023-06-12
+716,5180,400,3,Defective Product,2022-04-04
+717,3544,109,3,Defective Product,2023-08-28
+718,5214,149,3,Defective Product,2024-05-19
+719,1681,43,2,Damaged Product,2022-02-02
+720,2771,15,1,Defective Product,2022-05-28
+721,9698,472,1,Packaging Damaged,2022-04-14
+722,6816,194,3,Wrong Item Delivered,2024-06-12
+723,3303,352,3,Defective Product,2025-09-12
+724,2938,79,3,Damaged Product,2024-05-26
+725,4005,404,2,Damaged Product,2024-02-28
+726,1433,353,1,Damaged Product,2024-01-25
+727,862,196,3,Missing Parts,2022-12-19
+728,9129,253,1,Defective Product,2024-07-02
+729,693,226,3,Missing Parts,2025-12-02
+730,8941,34,1,Damaged Product,2025-02-20
+731,1369,332,3,Packaging Damaged,2025-07-12
+732,6616,118,3,Size Issue,2022-12-10
+733,9899,10,1,Damaged Product,2023-06-17
+734,8703,133,1,Late Delivery,2025-04-30
+735,128,343,2,Wrong Item Delivered,2022-05-12
+736,8211,222,2,Damaged Product,2024-07-29
+737,2018,156,2,Defective Product,2023-08-07
+738,1095,19,1,Quality Not as Expected,2024-03-06
+739,508,126,3,Missing Parts,2024-12-15
+740,9524,159,2,Late Delivery,2022-09-08
+741,2660,265,1,Defective Product,2023-07-15
+742,9425,147,3,Defective Product,2023-01-13
+743,2723,7,2,Defective Product,2025-08-01
+744,681,137,3,Damaged Product,2022-11-12
+745,4396,3,2,Quality Not as Expected,2025-01-17
+746,6731,156,1,Late Delivery,2023-02-05
+747,3409,207,1,Changed Mind,2022-03-27
+748,3998,99,2,Quality Not as Expected,2025-05-21
+749,6647,192,1,Damaged Product,2023-05-22
+750,740,158,1,Quality Not as Expected,2023-06-17
+751,8587,231,3,Duplicate Order,2024-12-06
+752,5715,173,3,Duplicate Order,2023-02-09
+753,955,360,1,Changed Mind,2022-11-21
+754,8075,204,1,Damaged Product,2025-12-08
+755,7718,456,3,Damaged Product,2024-09-16
+756,1354,325,3,Missing Parts,2023-01-02
+757,7989,244,2,Damaged Product,2022-12-21
+758,6636,245,2,Damaged Product,2025-05-15
+759,7921,307,1,Defective Product,2023-11-13
+760,3570,117,2,Size Issue,2022-08-03
+761,8700,241,3,Wrong Item Delivered,2024-06-06
+762,5331,452,1,Late Delivery,2024-02-23
+763,8020,47,2,Damaged Product,2025-03-13
+764,1703,156,1,Quality Not as Expected,2024-08-05
+765,6611,60,1,Size Issue,2023-04-14
+766,9417,103,1,Changed Mind,2022-08-16
+767,5684,195,3,Defective Product,2022-08-27
+768,771,267,2,Changed Mind,2023-05-01
+769,7396,24,2,Quality Not as Expected,2022-07-18
+770,8539,319,1,Changed Mind,2023-11-26
+771,68,151,3,Changed Mind,2023-07-22
+772,907,213,3,Wrong Item Delivered,2022-04-13
+773,5821,291,3,Defective Product,2023-10-16
+774,5703,483,3,Changed Mind,2022-11-08
+775,6317,197,2,Quality Not as Expected,2022-02-23
+776,5680,1,2,Defective Product,2024-03-01
+777,5780,8,2,Defective Product,2022-02-07
+778,5092,99,3,Wrong Item Delivered,2025-10-08
+779,956,242,1,Damaged Product,2022-03-13
+780,8209,53,2,Damaged Product,2022-07-02
+781,2621,78,2,Defective Product,2025-03-27
+782,2938,6,1,Size Issue,2022-11-09
+783,3275,62,3,Missing Parts,2022-12-04
+784,8100,183,3,Late Delivery,2022-05-27
+785,1138,367,2,Packaging Damaged,2022-04-24
+786,7799,117,1,Damaged Product,2022-07-26
+787,9897,432,3,Missing Parts,2022-01-19
+788,2850,422,3,Wrong Item Delivered,2024-11-27
+789,3900,141,2,Size Issue,2025-05-18
+790,6875,34,2,Defective Product,2022-03-02
+791,5984,29,2,Packaging Damaged,2022-01-04
+792,833,441,3,Defective Product,2022-05-12
+793,3712,122,2,Changed Mind,2022-10-27
+794,3306,123,2,Changed Mind,2024-05-22
+795,3958,144,3,Missing Parts,2022-11-29
+796,8139,66,2,Changed Mind,2023-03-06
+797,5827,415,2,Size Issue,2024-06-30
+798,545,203,1,Defective Product,2022-02-04
+799,128,434,1,Defective Product,2025-07-07
+800,4353,384,1,Packaging Damaged,2024-10-03
+801,9708,109,2,Defective Product,2022-11-27
+802,3858,9,3,Size Issue,2022-12-06
+803,9210,426,3,Wrong Item Delivered,2025-05-18
+804,262,475,1,Size Issue,2024-08-16
+805,9256,248,2,Wrong Item Delivered,2025-09-09
+806,4017,108,1,Missing Parts,2025-05-30
+807,2922,190,2,Wrong Item Delivered,2023-04-09
+808,310,276,2,Damaged Product,2024-11-12
+809,6358,82,1,Late Delivery,2023-02-07
+810,4221,13,2,Size Issue,2022-05-10
+811,7328,204,2,Size Issue,2024-12-27
+812,2012,422,3,Defective Product,2025-10-31
+813,4206,187,3,Damaged Product,2023-03-12
+814,8842,387,1,Damaged Product,2023-12-07
+815,6053,134,2,Defective Product,2024-10-08
+816,4569,67,2,Changed Mind,2025-07-08
+817,5635,277,1,Changed Mind,2022-02-23
+818,2765,134,1,Damaged Product,2023-09-03
+819,8055,302,2,Wrong Item Delivered,2022-05-03
+820,2461,457,1,Duplicate Order,2025-05-16
+821,2110,350,1,Defective Product,2024-06-30
+822,9008,230,1,Damaged Product,2025-04-26
+823,8383,291,1,Size Issue,2025-12-14
+824,1858,485,1,Damaged Product,2022-09-02
+825,6641,293,1,Defective Product,2023-07-14
+826,4867,440,1,Changed Mind,2024-12-28
+827,256,325,1,Quality Not as Expected,2023-01-24
+828,5380,468,1,Missing Parts,2023-01-13
+829,7963,464,1,Damaged Product,2025-01-31
+830,2384,400,3,Damaged Product,2022-12-25
+831,4435,71,3,Damaged Product,2022-08-30
+832,3973,346,2,Changed Mind,2024-11-15
+833,886,392,2,Wrong Item Delivered,2022-06-04
+834,7839,190,2,Wrong Item Delivered,2022-12-09
+835,8339,435,1,Missing Parts,2024-01-17
+836,5284,179,2,Defective Product,2025-09-08
+837,6191,206,2,Defective Product,2024-06-15
+838,2579,308,3,Defective Product,2023-01-06
+839,9846,325,2,Changed Mind,2023-04-18
+840,3475,327,3,Changed Mind,2023-10-30
+841,6229,433,2,Size Issue,2024-11-26
+842,1573,334,2,Duplicate Order,2022-07-02
+843,8606,197,2,Size Issue,2024-03-12
+844,643,235,3,Wrong Item Delivered,2022-05-21
+845,2901,498,1,Damaged Product,2025-06-10
+846,6031,389,2,Quality Not as Expected,2025-10-26
+847,3628,347,3,Damaged Product,2022-02-08
+848,80,382,2,Defective Product,2023-07-10
+849,2121,419,2,Missing Parts,2024-06-25
+850,5019,99,2,Quality Not as Expected,2022-07-08
+851,1104,280,1,Defective Product,2025-03-14
+852,8106,397,1,Damaged Product,2023-06-09
+853,7510,135,2,Defective Product,2025-12-30
+854,5648,379,2,Damaged Product,2022-07-18
+855,5523,320,1,Defective Product,2023-05-01
+856,4122,116,1,Missing Parts,2025-10-27
+857,324,36,2,Late Delivery,2024-06-29
+858,3462,308,1,Damaged Product,2025-07-14
+859,3182,71,3,Wrong Item Delivered,2023-06-25
+860,1790,7,3,Changed Mind,2025-02-15
+861,603,446,2,Defective Product,2022-10-04
+862,9397,65,3,Wrong Item Delivered,2022-07-24
+863,9044,50,1,Size Issue,2024-02-21
+864,2496,130,1,Size Issue,2023-01-25
+865,3212,112,2,Damaged Product,2023-03-30
+866,1006,451,2,Changed Mind,2022-03-23
+867,7761,316,1,Changed Mind,2022-11-05
+868,7949,404,3,Defective Product,2024-04-17
+869,8198,301,1,Size Issue,2024-11-05
+870,270,453,2,Damaged Product,2024-10-25
+871,6885,147,2,Late Delivery,2023-05-21
+872,7203,388,2,Changed Mind,2024-11-19
+873,9207,406,2,Damaged Product,2022-03-08
+874,9496,341,3,Damaged Product,2024-10-04
+875,4304,477,1,Damaged Product,2024-03-07
+876,1205,432,2,Duplicate Order,2024-12-14
+877,2071,320,3,Packaging Damaged,2025-03-21
+878,1567,102,3,Damaged Product,2025-07-13
+879,804,79,3,Duplicate Order,2022-07-11
+880,8858,282,3,Damaged Product,2025-12-07
+881,9004,71,3,Changed Mind,2022-04-29
+882,8448,1,2,Size Issue,2023-02-01
+883,9557,91,2,Duplicate Order,2023-07-12
+884,6746,442,1,Quality Not as Expected,2025-03-05
+885,6139,205,3,Changed Mind,2024-11-22
+886,8899,367,3,Wrong Item Delivered,2025-05-26
+887,5671,209,2,Size Issue,2023-05-25
+888,6939,407,1,Defective Product,2023-04-07
+889,4987,101,1,Wrong Item Delivered,2024-04-08
+890,4409,332,1,Quality Not as Expected,2025-03-11
+891,9706,38,2,Size Issue,2023-04-08
+892,2520,327,2,Size Issue,2022-07-10
+893,6347,210,2,Damaged Product,2023-01-29
+894,3109,449,1,Size Issue,2025-08-28
+895,5585,55,3,Defective Product,2023-10-22
+896,9493,84,3,Damaged Product,2022-06-11
+897,8859,176,1,Defective Product,2024-10-16
+898,6607,362,1,Late Delivery,2025-05-09
+899,1838,486,2,Defective Product,2025-05-18
+900,6714,33,2,Late Delivery,2025-10-14
+901,6637,373,1,Size Issue,2022-07-14
+902,9218,317,2,Duplicate Order,2023-10-07
+903,2497,293,2,Missing Parts,2024-08-14
+904,5086,450,3,Wrong Item Delivered,2024-05-05
+905,5193,398,3,Damaged Product,2023-03-08
+906,7934,315,3,Duplicate Order,2024-08-14
+907,8890,379,2,Quality Not as Expected,2022-01-13
+908,4006,83,3,Damaged Product,2022-04-16
+909,5132,5,1,Duplicate Order,2024-02-08
+910,5633,457,3,Size Issue,2022-03-22
+911,6624,7,3,Quality Not as Expected,2025-12-31
+912,2610,316,3,Defective Product,2022-11-05
+913,2250,500,3,Late Delivery,2022-09-14
+914,3259,118,1,Damaged Product,2024-06-20
+915,8632,435,1,Missing Parts,2022-07-24
+916,142,290,3,Damaged Product,2023-12-06
+917,8521,39,2,Missing Parts,2022-12-02
+918,5356,176,3,Defective Product,2023-03-28
+919,918,44,2,Defective Product,2023-04-26
+920,3711,463,3,Wrong Item Delivered,2024-03-30
+921,7445,211,3,Late Delivery,2022-11-28
+922,9932,256,3,Wrong Item Delivered,2025-04-20
+923,4930,465,1,Size Issue,2024-03-29
+924,8877,180,3,Duplicate Order,2025-03-29
+925,273,166,3,Wrong Item Delivered,2023-12-14
+926,599,156,3,Size Issue,2023-01-04
+927,6544,494,3,Changed Mind,2023-12-27
+928,4115,206,3,Size Issue,2023-02-10
+929,6014,430,2,Defective Product,2022-03-25
+930,4923,48,2,Packaging Damaged,2024-06-07
+931,4854,458,3,Damaged Product,2025-04-09
+932,1921,53,3,Quality Not as Expected,2023-04-06
+933,5422,402,3,Quality Not as Expected,2023-08-31
+934,1898,129,3,Wrong Item Delivered,2025-04-08
+935,5508,8,3,Changed Mind,2024-12-10
+936,6368,72,2,Missing Parts,2022-12-29
+937,8428,297,3,Missing Parts,2022-08-11
+938,9681,39,3,Missing Parts,2025-12-22
+939,2479,330,2,Size Issue,2025-04-30
+940,2804,383,2,Changed Mind,2025-12-23
+941,5264,481,1,Quality Not as Expected,2022-01-22
+942,9999,28,1,Quality Not as Expected,2022-01-26
+943,591,341,3,Defective Product,2024-12-09
+944,716,357,1,Missing Parts,2024-08-13
+945,382,421,2,Quality Not as Expected,2023-10-04
+946,6251,351,3,Damaged Product,2022-10-20
+947,5497,243,1,Wrong Item Delivered,2022-09-19
+948,7419,108,1,Damaged Product,2023-12-29
+949,9794,353,1,Changed Mind,2025-08-22
+950,8923,294,1,Wrong Item Delivered,2025-08-17
+951,9077,20,2,Defective Product,2022-04-26
+952,486,37,3,Quality Not as Expected,2022-11-21
+953,7195,140,3,Defective Product,2023-03-04
+954,9116,34,1,Defective Product,2023-05-23
+955,7655,307,3,Defective Product,2025-03-09
+956,6120,204,1,Size Issue,2024-09-27
+957,4277,379,3,Wrong Item Delivered,2024-11-14
+958,957,197,3,Quality Not as Expected,2025-11-03
+959,9264,298,3,Quality Not as Expected,2023-04-09
+960,792,46,3,Changed Mind,2025-03-26
+961,4602,263,3,Late Delivery,2022-05-24
+962,3411,462,1,Missing Parts,2023-05-19
+963,8239,159,2,Damaged Product,2022-05-08
+964,7705,138,3,Damaged Product,2024-11-12
+965,899,48,2,Size Issue,2025-01-01
+966,7449,418,3,Damaged Product,2022-07-01
+967,8797,65,2,Size Issue,2022-09-17
+968,7856,201,3,Late Delivery,2023-09-19
+969,7565,89,1,Defective Product,2022-11-17
+970,2424,80,2,Defective Product,2025-07-30
+971,2530,384,1,Missing Parts,2024-08-27
+972,5405,60,1,Quality Not as Expected,2022-04-26
+973,5059,161,1,Size Issue,2023-02-22
+974,826,292,1,Defective Product,2023-04-10
+975,9398,451,1,Changed Mind,2022-06-18
+976,4925,72,1,Size Issue,2025-05-22
+977,9017,447,2,Wrong Item Delivered,2022-09-01
+978,4596,328,2,Quality Not as Expected,2025-07-31
+979,5577,277,3,Late Delivery,2023-05-29
+980,1638,280,1,Late Delivery,2022-11-10
+981,297,87,1,Defective Product,2023-04-18
+982,5078,461,1,Defective Product,2023-01-23
+983,972,232,2,Late Delivery,2023-05-27
+984,511,103,2,Changed Mind,2025-05-05
+985,4788,7,3,Damaged Product,2022-07-07
+986,84,178,2,Defective Product,2025-01-02
+987,3487,395,2,Late Delivery,2025-11-02
+988,9423,126,1,Changed Mind,2023-09-23
+989,1320,350,2,Defective Product,2025-06-11
+990,2198,474,3,Damaged Product,2025-09-14
+991,4163,187,2,Defective Product,2025-01-03
+992,3077,490,2,Quality Not as Expected,2023-03-15
+993,3211,338,3,Quality Not as Expected,2025-09-10
+994,8953,247,2,Duplicate Order,2023-06-12
+995,892,436,2,Size Issue,2025-08-11
+996,7778,284,1,Damaged Product,2024-05-13
+997,5955,69,3,Defective Product,2023-10-15
+998,5977,284,2,Damaged Product,2024-04-01
+999,9634,46,2,Defective Product,2023-08-27
+1000,8973,402,2,Quality Not as Expected,2022-10-01

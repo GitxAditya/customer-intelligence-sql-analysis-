@@ -1,0 +1,94 @@
+# Import Order Guide
+
+Follow the steps below to set up the Customer Intelligence & Retail Analytics Platform.
+
+---
+
+## Step 1
+
+Run:
+
+create_database.sql
+
+This creates the database.
+
+---
+
+## Step 2
+
+Run:
+
+01_Database/create_tables.sql
+
+This creates all tables with primary keys and foreign keys.
+
+---
+
+## Step 3
+
+Import the datasets into MySQL in the following order.
+
+The order is important because of foreign key relationships.
+
+1. customers.xlsx
+2. products.xlsx
+3. marketing_campaigns.xlsx
+4. orders.xlsx
+5. order_items.xlsx
+6. payments.xlsx
+7. reviews.xlsx
+8. returns.xlsx
+9. customer_campaigns.xlsx
+10. wishlist.xlsx
+
+---
+
+## Step 4
+
+Run
+
+indexes.sql
+
+---
+
+## Step 5
+
+Run
+
+views.sql
+
+---
+
+## Step 6
+
+Run
+
+functions.sql
+
+---
+
+## Step 7
+
+Run
+
+procedures.sql
+
+---
+
+## Step 8
+
+Run
+
+triggers.sql
+
+---
+
+## Step 9
+
+Explore all business reports inside
+
+03_SQL_Reports/
+
+---
+
+Database setup is now complete.

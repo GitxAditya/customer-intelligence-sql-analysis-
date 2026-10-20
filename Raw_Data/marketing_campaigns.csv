@@ -1,0 +1,21 @@
+﻿campaign_id,campaign_name,campaign_type,start_date,end_date,budget
+1,New Year Bonanza,Seasonal,2025-06-02,2025-06-28,109258
+2,Republic Day Sale,Seasonal,2024-07-06,2024-07-21,169425
+3,Valentine Offers,Festival,2025-04-15,2025-04-30,795134
+4,Summer Mega Sale,Seasonal,2024-11-01,2024-11-29,904453
+5,Back to School,Promotion,2024-02-18,2024-03-11,826717
+6,Monsoon Deals,Seasonal,2024-02-01,2024-02-14,348397
+7,Independence Day Sale,Festival,2024-01-30,2024-02-25,385353
+8,Raksha Bandhan Offers,Festival,2025-07-10,2025-08-09,168362
+9,Ganesh Chaturthi Promo,Festival,2024-12-09,2024-12-18,886763
+10,Navratri Sale,Festival,2025-05-21,2025-06-11,199472
+11,Dussehra Discounts,Festival,2024-03-14,2024-04-09,837317
+12,Diwali Mega Sale,Festival,2025-06-09,2025-07-09,483676
+13,Black Friday,Global Event,2024-05-19,2024-06-11,294101
+14,Cyber Monday,Global Event,2024-11-29,2024-12-13,165261
+15,Christmas Carnival,Festival,2025-05-22,2025-06-21,468967
+16,Year End Clearance,Clearance,2025-03-18,2025-04-15,340021
+17,Loyalty Rewards,Retention,2024-05-06,2024-05-26,203226
+18,VIP Customer Exclusive,Retention,2024-04-14,2024-04-23,400787
+19,App Launch Cashback,Acquisition,2024-08-30,2024-09-18,699607
+20,Refer & Earn,Referral,2025-07-22,2025-08-05,228010
